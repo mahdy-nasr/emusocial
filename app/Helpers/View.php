@@ -9,9 +9,9 @@ class View
     public function __construct ()
     {
     	$this->_viewPath = Config::get('base/document').'/../Views/Pages/';
-        echo $this->_viewPath;
+        print_r($this->_viewPath);
     	$this->_templatePath = Config::get('base/document').'/../Views/templates/';
-        echo $this->_templatePath;
+        print_r( $this->_templatePath);
 
     }
 
