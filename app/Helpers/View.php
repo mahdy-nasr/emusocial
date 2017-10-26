@@ -10,7 +10,7 @@ class View
     {
     	$this->_viewPath = dirname(Config::get('base/document')).'/Views/Pages/';
      
-    	$this->_templatePath = dirname(Config::get('base/document')).'/Views/templates/';
+    	$this->_templatePath = dirname(Config::get('base/document')).'/Views/Templates/';
 
     }
 
