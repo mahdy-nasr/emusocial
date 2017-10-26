@@ -2,7 +2,7 @@
 
 
 
-$app->any('/{controller}[/{function}[/{params:.*}]]', function ( $request,  $response,$arguments) {
+$app->any('/{controller}[/[{function}[/[{params:.*}]]]]', function ( $request,  $response,$arguments) {
 	$params = isset($arguments['params'])?explode('/',$arguments['params']):null;
 	$fun = isset($arguments['function'])?$arguments['function']:'index';
 	$controller_name = '\App\Controllers\\'.(isset($arguments['controller'])?ucwords($arguments['controller']):'Home');
