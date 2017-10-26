@@ -8,10 +8,9 @@ class View
     private $_templatePath;
     public function __construct ()
     {
-    	$this->_viewPath = Config::get('base/document').'/../Views/Pages/';
-        var_dump($this->_viewPath);
-    	$this->_templatePath = Config::get('base/document').'/../Views/templates/';
-        var_dump( $this->_templatePath);
+    	$this->_viewPath = dirname(Config::get('base/document')).'/Views/Pages/';
+     
+    	$this->_templatePath = dirname(Config::get('base/document')).'/Views/templates/';
 
     }
 
