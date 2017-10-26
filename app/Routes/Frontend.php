@@ -7,6 +7,7 @@ $app->any('/{controller}[/{function}[/{params:.*}]]', function ( $request,  $res
 	$fun = isset($arguments['function'])?$arguments['function']:'index';
 	$controller_name = '\App\Controllers\\'.(isset($arguments['controller'])?$arguments['controller']:'home');
 	//$controller = new \App\Controllers\Admin($request,  $response);
+	var_dump($controller_name);die;
 	if(class_exists($controller_name)) {
 		$controller = new $controller_name($request,$response,$params);
 		return $controller->$fun();
