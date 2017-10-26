@@ -11,7 +11,7 @@ $settings["database"] =
 	];
 $settings['base'] = 
 	[
-		'url'		=> "http://emusocial.dev",
+		'url'		=> "http://".$_SERVER['SERVER_NAME'],
 		'document'	=> $_SERVER['DOCUMENT_ROOT']
 	];
 	
