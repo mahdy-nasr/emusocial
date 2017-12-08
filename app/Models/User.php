@@ -7,7 +7,6 @@ class User extends \App\Base
     public $data;
     public $id;
     public $type = null;
-    const STUDENT_EMAIL = "@students.emu.edu.tr";
     
     public function __construct()
     {
@@ -29,6 +28,11 @@ class User extends \App\Base
             return false;            
         }
     }
+
+    public function getUserData()
+    {
+        return $this->data;
+    }
     public function getUserType() 
     {
         if ($this->type !== null) {
@@ -37,14 +41,16 @@ class User extends \App\Base
 
         if ($this->data['type'] == 2) {
             $this->type = 'student';
-        } else {
+        } else if ($this->data['type'] == 1) {
             $this->type = 'instructor';
+        } else {
+            $this->type = 'other';
         }
 
         return $this->type;
     }
 
-    public function setUserType($str)
+    public function setUserType($str="student")
     {
         $this->type = $str;
     }
@@ -52,15 +58,18 @@ class User extends \App\Base
     public function login($email,$password)
     {
         $email = trim($email);
-        if ($this->getUserType() == 'student') {
-            $email.= constant('STUDENT_EMAIL');
-        }
-
         if (strlen($password)<3||strlen($email)<6) {
             return false;
         }
+        if ($this->getUserType() == 'student') {
+            $res = $this->db->readOne("select * from user where identification = ?", [$email]);
+        } else {
+            $res = $this->db->readOne("select * from user where email = ?", [$email]);
+        }
+
+        
  
-        $res = $this->db->readOne("select * from user where email = ?", [$email]);
+        
         if (!count($res))
             return false;
         $correctPassword = explode(':',$res['password']);
@@ -73,8 +82,22 @@ class User extends \App\Base
             $this->Cookie::put($this->cookieName,$token,$this->Cookie::$month);
         }
 
-        return true;
+        return $token;
 
+    }
+
+    public function createPage($data)
+    {
+        $page = new Page();
+        $page_id = $page->createUserPage($data);
+
+        return $this->db->write("UPDATE user SET page_id = $page_id WHERE id = {$data['id']}");
+
+    }
+    public function deleteUser($id) 
+    {
+        $this->db->write("delete from page where user_id = ? ",[$id]);
+        $this->db->write("delete from user where id = ? ",[$id]);
     }
 
     public function logout() 
@@ -90,6 +113,44 @@ class User extends \App\Base
 
     }
 
+    public function getUsersCourse($id)
+    {
+        $res = $this->db->read("select user_id from page_user where page_id = ?",[$id]);
+        $stdIds = "";
+        foreach ($res as $key => $value) {
+            $stdIds.= ", ".$value[0];
+        }
+       
+        
+        $stdIds = trim($stdIds,',');
+
+        if (!empty($stdIds))
+            $data = $this->db->read("select user.*, identification as student_number ,department.name as department from user left join department on department_id = department.id  where user.id IN ($stdIds)");
+        else
+            $data = [];
+
+     
+        return $data;
+    }
+
+    public function getAdminUsersCourse($id) {
+        $res = $this->db->read("select user_id from page_admin where page_id = ?",[$id]);
+        $stdIds = "";
+        foreach ($res as $key => $value) {
+            $stdIds.= ", ".$value[0];
+        }
+       
+        
+        $stdIds = trim($stdIds,',');
+
+        if (!empty($stdIds))
+            $data = $this->db->read("select user.*, identification as student_number ,department.name as department from user left join department on department_id = department.id  where user.id IN ($stdIds)");
+        else
+            $data = [];
+
+     
+        return $data;
+    }
 
 
 }

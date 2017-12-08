@@ -13,6 +13,7 @@
           $('#admin_form').attr('action','<?=$base?>admin/addStudent');
           $('#btnCreate').css('display','block');
           $('#btnEdit').css('display','none');
+          $('#btnDelete').css('display','none');
           $('input').val('');
         }
       </script>
@@ -45,25 +46,29 @@
           </div>
 
           <div class="col-sm-6">
-
+          <?php 
+          /*
             <div class="form-group">
               <label>Email</label>
               <input class="form-control"  name='email'   type="email" <?php if(isset($student)):?> readonly="readonly" value="<?=$student['email']?>" <?php else: echo "required";endif;?>  placeholder="Enter student's email">
             </div>
+            */
+          ?>
 
             <div class="form-group" >
               <label>Password</label>
               <input class="form-control"  name='password' <?php if(!isset($student)):?> required<?php endif;?> type="password"   autocomplete="new-password" >
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="">
               <label>Student ID</label>
-              <input class="form-control"  name='student_number'   type="text" <?php if(isset($student)):?> value="<?=$student['student_number']?>" <?php else: echo "required";endif;?>  placeholder="Enter student's ID">
+              <input class="form-control"  name='student_number'   type="text" <?php if(isset($student)):?> value="<?=$student['student_number']?>"  readonly="readonly"  <?php else: echo "required";endif;?>  placeholder="Enter student's ID">
             </div>
 
             
             <?php if(isset($student)):?>
-            <button type="submit"  id='btnEdit' class="btn btn-primary col-12" > Edit </button> 
+            <button type="submit"  id='btnEdit' class="btn btn-primary col-12" style="margin-bottom:5px;" > Edit </button> 
+            <a  id='btnDelete' class="btn btn-danger col-12" href="<?=$base?>admin/deleteStudent/<?=$student['id']?>" > Delete </a> 
             <button type="submit"  id='btnCreate' style="display:none;" class="btn btn-success col-12" > Create </button>
  
           <?php else :?>
@@ -91,7 +96,6 @@
                   <th>id</th>
                   <th>First name</th>
                   <th>Last Name</th>
-                  <th>Email</th>
                   <th>Student ID</th>
                   <th>Department</th>
                   <th>created at</th>
@@ -102,13 +106,12 @@
               <?php foreach ($students as $student) {?>
 
                 <tr>
-                  <td><a href="<?=$base.'admin/studentsList/'.$student['user_id']?>"><?=$student['user_id']?></a></td>
+                  <td><a href="<?=$base.'admin/studentsList/'.$student['id']?>"><?=$student['id']?></a></td>
                   <td><?=$student['first_name']?></td>
                   <td><?=$student['last_name']?></td>
-                  <td><?=$student['email']?></td>
                   <td><?=$student['student_number']?></td>
                   <td><?=$student['department']?></td>
-                  <td><?=$student['created_at']?></td>
+                  <td><?=substr($student['created_at'],0,10)?></td>
                 </tr>
                 <?php }?>
               </tbody>

@@ -13,6 +13,7 @@
           $('#admin_form').attr('action','<?=$base?>admin/addInstructor');
           $('#btnCreate').css('display','block');
           $('#btnEdit').css('display','none');
+          $('#btnDelete').css('display','none');
           $('input').val('');
         }
       </script>
@@ -21,6 +22,11 @@
         <form class='row' id='admin_form' method='POSt' action='<?=$base?>admin/<?php echo !isset($instructor)?"addInstructor":"editInstructor"; ?>' <?php echo !isset($instructor)?"style='display: none;'":""; ?>>
           <input type="hidden" name="role" value="insert">
           <div class='col-sm-6'>
+
+            <div class="form-group">
+              <label>Title</label>
+              <input class="form-control" type="text" name='title' <?php if(isset($instructor)):?> value="<?=$instructor['title']?>" <?php endif;?> placeholder="Dr. , Mr">
+            </div>
 
             <div class="form-group">
               <label>First Name</label>
@@ -51,14 +57,18 @@
               <input class="form-control"  name='email'   type="email" <?php if(isset($instructor)):?> readonly="readonly" value="<?=$instructor['email']?>" <?php else: echo "required";endif;?>  placeholder="Enter instructor's email">
             </div>
 
-            <div class="form-group" style="margin-bottom:45px;">
+            <div class="form-group" >
               <label>Password</label>
               <input class="form-control"  name='password' <?php if(!isset($instructor)):?> required<?php endif;?> type="password"   autocomplete="new-password" >
             </div>
 
-            
+            <div class="form-group" style="margin:0">
+              <input type="checkbox" name="account" value="instructor" <?php if(isset($instructor) && $instructor['type']==1):?> checked="checked" <?php endif;?> > <label>Instructor Account</label>
+            </div>
             <?php if(isset($instructor)):?>
-            <button type="submit"  id='btnEdit' class="btn btn-primary col-12" > Edit </button> 
+            <button type="submit"  id='btnEdit' class="btn btn-primary col-12" style="margin-bottom:5px;" > Edit </button> 
+            <a  id='btnDelete' class="btn btn-danger col-12" href="<?=$base?>admin/deleteInstructor/<?=$instructor['id']?>" > Delete </a> 
+
             <button type="submit"  id='btnCreate' style="display:none;" class="btn btn-success col-12" > Create </button>
  
           <?php else :?>
@@ -84,11 +94,12 @@
               <thead>
                 <tr>
                   <th>id</th>
+                  <th>Title</th>
                   <th>First name</th>
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Department</th>
-                  <th>created at</th>
+                  <th>Role</th>
                 </tr>
               </thead>
         
@@ -96,12 +107,17 @@
               <?php foreach ($instructors as $instructor) {?>
 
                 <tr>
-                  <td><a href="<?=$base.'admin/instructorsList/'.$instructor['user_id']?>"><?=$instructor['user_id']?></a></td>
+                  <td><a href="<?=$base.'admin/instructorsList/'.$instructor['id']?>"><?=$instructor['id']?></a></td>
+                  <td><?=$instructor['title']?></td>
                   <td><?=$instructor['first_name']?></td>
                   <td><?=$instructor['last_name']?></td>
                   <td><?=$instructor['email']?></td>
                   <td><?=$instructor['department']?></td>
-                  <td><?=$instructor['created_at']?></td>
+                  <?php if ($instructor['type']==1):?>
+                  <td>Instructor</td>
+                  <?php else : ?>
+                  <td>Others</td>
+                  <?php endif;?>
                 </tr>
                 <?php }?>
               </tbody>

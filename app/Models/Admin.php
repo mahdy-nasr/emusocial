@@ -1,7 +1,14 @@
 <?php
 namespace App\Models;
 
-
+// cascade deletion of customer and its related items
+// //         //    //  department and its related items
+// //         //    //  courses 
+// user transaction
+// throw exceptoins in errors
+// use translations 
+// use tokens in forms 
+//--------------------------------------
 
 //login
 //
@@ -84,10 +91,7 @@ class Admin extends \App\Base
 
     
 
-    public function getDepartmentsList()
-    {
-        return $this->db->read('select * from department');
-    }
+    
     public function login($email,$password)
     {
         $email = trim($email);
@@ -183,163 +187,23 @@ class Admin extends \App\Base
 
     }
 
-     public function getAdminData($id)
+    public function getAdminData($id)
     {
         return $this->db->readOne("select * from admin where id = ?",[$id]);
     }
 
-    /////////////////////////////////////////////////////////////////
+
+   
+
+    //////////////////////////////////////////
     ///
-    ///               Instructor
+    ///    courses
     ///
-    ////////////////////////////////////////////////////////////////
-    public function getInstructorsList()
-    {
-        $data = $this->db->read("select user.*,instructor.*,department.name as department from ( (user left join instructor on instructor.user_id = user.id) left join department on department_id = department.id ) where user.type = 1");
-        return $data;
-    }
-
-
-    public function getInstructorData($id) 
-    {
-        return $this->db->readOne("select * from user left join instructor on instructor.user_id = user.id where user.id = ?", [$id]);
-    }
-    public function addInstructor($data)
-    {
-        if(!isset($data['email'])||!isset($data['password'])||strlen($data['email'])<5||strlen($data['password'])<3)
-            return false;
-         $res = $this->db->readOne("select * from user where email = ?", [$data['email']]);
-        
-        if ($res)
-            return false;
-
-
-        $insert=[];
-        $insert[]=isset($data['first_name'])?$data['first_name']:'';
-        
-        $insert[]=isset($data['last_name'])?$data['last_name']:'';
-        $insert[]=$data['email'];
-        $salt = date("D,M,d,Y:G:i");
-        $insert[] = md5($salt.$data['password']).':'.$salt;
-        $insert[] = 1;
-        $insert[]=isset($data['department_id'])?$data['department_id']:'';
-       
-
-        if ($this->db->write('insert into user (`first_name`, `last_name`, `email`, `password`,`type`,`department_id`)values (?,?,?,?,?,?)',$insert)) {
-            $insId = $this->db->last_id();
-            $this->db->write("insert into instructor values (null,'','',$insId)");
-            return $insId;
-        }
-        return false;
-
-    }
-
-    public function editInstructor($data)
-    {
-        if(!isset($data['email'])||strlen($data['email'])<5)
-            return false;
-         $res = $this->db->readOne("select * from user where email = ?", [$data['email']]);
-        
-        if (!$res)
-            return false;
-
-
-        $insert=[];
-        $update[]=isset($data['first_name'])?$data['first_name']:'';
-        
-        $update[]=isset($data['last_name'])?$data['last_name']:'';
-       
-        $update[]=isset($data['department_id'])?$data['department_id']:'';
-
-        if (isset($data['password'])&&!strlen($data['password'])>3) {
-            $salt = date("D,M,d,Y:G:i");
-            $password=md5($salt.$data['password']).':'.$salt;
-            $this->db->write('UPDATE `user` SET `password` = '.$password.'where email =\''.$data['email']."'"); 
-        }
-
-        if ($this->db->write('UPDATE `user` SET `first_name` = ?,`last_name` = ?,`department_id` = ? where email =\''.$data['email']."'",$update))
-            return $this->db->last_id();
-
-        return false;
-
-    }
-
-    /////////////////////////////////////////////////////////////////
-    ///
-    ///               Students
-    ///
-    ////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////
+   
     
-    public function getStudentsList()
-    {
-        $data = $this->db->read("select user.*,student.*,department.name as department from ( (user left join student on student.user_id = user.id) left join department on department_id = department.id ) where user.type = 2");
-        return $data;
-    }
-
-
-    public function getStudentData($id) 
-    {
-        return $this->db->readOne("select * from user left join student on student.user_id = user.id where user.id = ?", [$id]);
-    }
-    public function addStudent($data)
-    {
-        if(!isset($data['email'])||!isset($data['password'])||strlen($data['email'])<5||strlen($data['password'])<3)
-            return false;
-         $res = $this->db->readOne("select * from user where email = ?", [$data['email']]);
-        
-        if ($res)
-            return false;
-
-
-        $insert=[];
-        $insert[]=isset($data['first_name'])?$data['first_name']:'';
-        
-        $insert[]=isset($data['last_name'])?$data['last_name']:'';
-        $insert[]=$data['email'];
-        $salt = date("D,M,d,Y:G:i");
-        $insert[] = md5($salt.$data['password']).':'.$salt;
-        $insert[] = 2;
-        $insert[]=isset($data['department_id'])?$data['department_id']:'';
-       
-
-        if ($this->db->write('insert into user (`first_name`, `last_name`, `email`, `password`,`type`,`department_id`)values (?,?,?,?,?,?)',$insert)) {
-            $insId = $this->db->last_id();
-            $this->db->write("insert into student (`student_number`,`user_id`) values (?,$insId)",[$data['student_number']]);
-            return $insId;
-        }
-        return false;
-
-    }
-
-    public function editStudent($data)
-    {
-        if(!isset($data['email'])||strlen($data['email'])<5)
-            return false;
-         $res = $this->db->readOne("select * from user where email = ?", [$data['email']]);
-        
-        if (!$res)
-            return false;
-
-
-        $insert=[];
-        $update[]=isset($data['first_name'])?$data['first_name']:'';
-        
-        $update[]=isset($data['last_name'])?$data['last_name']:'';
-       
-        $update[]=isset($data['department_id'])?$data['department_id']:'';
-
-        if (isset($data['password'])&&!strlen($data['password'])>3) {
-            $salt = date("D,M,d,Y:G:i");
-            $password=md5($salt.$data['password']).':'.$salt;
-            $this->db->write('UPDATE `user` SET `password` = '.$password.'where email =\''.$data['email']."'"); 
-        }
-
-        $f1 = $this->db->write('UPDATE `user` SET `first_name` = ?,`last_name` = ?,`department_id` = ? where email =\''.$data['email']."'",$update);
-        $f2 = $this->db->write('UPDATE `student` SET `student_number` = ? where `user_id` = ?',[$data['student_number'],$res['id']]);
-        return $f1&&$f2;
-
-
-    }
+   
+    
 
    
 

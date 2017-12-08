@@ -13,8 +13,9 @@
   <!-- Custom fonts for this template-->
   <link href="<?=$base?>vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <link href="<?=$base?>vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
+  <link href="<?=$base?>vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  
+  <link href="<?=$base?>css/bootstrap-multiselect.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="<?=$base?>css/sb-admin.css" rel="stylesheet">
 </head>
@@ -53,24 +54,25 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="All Courses">
-          <a class="nav-link" href="charts.html">
+          <a class="nav-link" href="<?=$base?>admin/allCourses">
             <i class="fa fa-fw  fa-institution  "></i>
             <span class="nav-link-text">All Courses</span>
           </a>
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Running courses">
-          <a class="nav-link" href="charts.html">
+          <a class="nav-link" href="<?=$base?>admin/courseRegistration">
             <i class="fa fa-fw  fa-list"></i>
-            <span class="nav-link-text">Running courses</span>
+            <span class="nav-link-text">Courses Registration</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Other Pages">
-          <a class="nav-link" href="charts.html">
+        <!--li class="nav-item" data-toggle="tooltip" data-placement="right" title="Other Pages">
+          <a class="nav-link" href="<?=$base?>admin/otherPages">
             <i class="fa fa-fw  fa-copy"></i>
             <span class="nav-link-text">Other Pages</span>
           </a>
-        </li>
+        </li-->
+        
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Announcments">
           <a class="nav-link" href="charts.html">
             <i class="fa fa-fw fa-bell "></i>
@@ -222,9 +224,19 @@
     <script src="<?=$base?>vendor/jquery-easing/jquery.easing.min.js"></script>
      <script src="<?=$base?>vendor/datatables/jquery.dataTables.js"></script>
     <script src="<?=$base?>vendor/datatables/dataTables.bootstrap4.js"></script>
-    <script src="<?=$base?>js/sb-admin-datatables.min.js"></script>
+    <script src="<?=$base?>js/sb-admin-datatables.js"></script>
+    <script src="<?=$base?>js/bootstrap-multiselect.js"></script>
+
     <!-- Custom scripts for all pages-->
+
     <script src="<?=$base?>js/sb-admin.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#multiselect').multiselect({ enableFiltering: true,buttonWidth: '100%'});
+    });
+    </script>
+   
+
   </div>
 </body>
 

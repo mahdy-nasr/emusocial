@@ -9,7 +9,7 @@ class DB
 	//also with update
 	public static $instance=null;
 	public $db;
-	
+	private $hasTransaction = 0;
 	private function __construct()
 	{
 		try
@@ -34,6 +34,15 @@ class DB
 		return self::$instance;
 	}
 
+	public function startTransaction()
+	{
+		$this->hasTransaction = 1;
+		$this->db->beginTransaction();
+	}
+	public function endTransaction()
+	{
+		$this->db->rollBack();
+	}
 	public function write($sql,$param = null) 
 	{
 		$statement = $this->db->prepare( $sql);
