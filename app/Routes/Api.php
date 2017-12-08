@@ -5,7 +5,7 @@ $app->get('/api/students', function ( $request,  $response,$arguments) {
 
 });
 
-$app->post('/api/student/login', function ( $request,  $response,$arguments) {
+$app->post('/api/student/login[/]', function ( $request,  $response,$arguments) {
     $data = $this->request->getParsedBody();
     return (new \App\APIs\loginStudent($request, $response, $arguments,$data))->run();
 });
