@@ -42,7 +42,7 @@ class Instructor extends User
         
         $insert[]=isset($data['last_name'])?$data['last_name']:'';
         $insert[]=$data['email'];
-        $salt = date("D,M,d,Y:G:i");
+        $salt = time();
         $insert[] = md5($salt.$data['password']).':'.$salt; // password
         $insert[] = isset($data['account'])? 1:3;
      
@@ -85,10 +85,12 @@ class Instructor extends User
         
         $update[] = isset($data['account'])? 1:3;
 
-        if (isset($data['password'])&&!strlen($data['password'])>3) {
-            $salt = date("D,M,d,Y:G:i");
-            $password=md5($salt.$data['password']).':'.$salt;
-            $this->db->write('UPDATE `user` SET `password` = '.$password.'where email =\''.$data['email']."'"); 
+        if (isset($data['password'])&&strlen($data['password'])>3) {
+            $salt = time();
+
+            $password="'".md5($salt.$data['password']).':'.$salt."'";
+
+            $this->db->write('UPDATE `user` SET `password` = '.$password.' where email =\''.$data['email']."'"); 
         }
 
         if ($this->db->write('UPDATE `user` SET `title` = ? ,`first_name` = ?,`last_name` = ?,`department_id` = ? ,`type` = ? where email =\''.$data['email']."'",$update))

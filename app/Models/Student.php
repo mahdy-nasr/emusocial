@@ -41,7 +41,7 @@ class Student extends User
         
         $insert[]=isset($data['last_name'])?$data['last_name']:'';
         $insert[]=isset($data['email'])?$data['email']:'';
-        $salt = date("D,M,d,Y:G:i");
+        $salt = date("D-M-d-Y-G-i");
         $insert[] = md5($salt.$data['password']).':'.$salt;
         $insert[] = 2;
         $insert[]=isset($data['department_id'])?$data['department_id']:'';
@@ -79,10 +79,11 @@ class Student extends User
        
         $update[]=isset($data['department_id'])?$data['department_id']:'';
 
-        if (isset($data['password'])&&!strlen($data['password'])>3) {
-            $salt = date("D,M,d,Y:G:i");
-            $password=md5($salt.$data['password']).':'.$salt;
-            $this->db->write('UPDATE `user` SET `password` = '.$password.'where identification =\''.$data['student_number']."'"); 
+        if (isset($data['password'])&&strlen($data['password'])>3) {
+            $salt = time();
+            $password="'".md5($salt.$data['password']).':'.$salt."'";
+
+            $this->db->write('UPDATE `user` SET `password` = '.$password.' where identification =\''.$data['student_number']."'"); 
         }
 
         $f1 = $this->db->write('UPDATE `user` SET `first_name` = ?,`last_name` = ?,`department_id` = ? where identification =\''.$data['student_number']."'",$update);

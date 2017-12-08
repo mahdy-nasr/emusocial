@@ -53,14 +53,14 @@ class DB
 	{
 		$statement = $this->db->prepare($query);
 		$statement->execute($param);
-		return $statement->fetchAll();
+		return $statement->fetchAll(\PDO::FETCH_ASSOC);
 	}
 	
 	public function readOne($query,$param = null)
 	{
 		$statement = $this->db->prepare( $query);
 		$statement->execute($param);
-		return $statement->fetch();
+		return $statement->fetch(\PDO::FETCH_ASSOC);
 	}
 
 	public function last_id()

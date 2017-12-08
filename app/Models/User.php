@@ -11,6 +11,7 @@ class User extends \App\Base
     public function __construct()
     {
         parent::__construct();
+        $this->setUserType();
     }
 
     public function isLoggedIn()
@@ -61,6 +62,7 @@ class User extends \App\Base
         if (strlen($password)<3||strlen($email)<6) {
             return false;
         }
+
         if ($this->getUserType() == 'student') {
             $res = $this->db->readOne("select * from user where identification = ?", [$email]);
         } else {
@@ -69,7 +71,7 @@ class User extends \App\Base
 
         
  
-        
+      
         if (!count($res))
             return false;
         $correctPassword = explode(':',$res['password']);
@@ -118,16 +120,18 @@ class User extends \App\Base
         $res = $this->db->read("select user_id from page_user where page_id = ?",[$id]);
         $stdIds = "";
         foreach ($res as $key => $value) {
-            $stdIds.= ", ".$value[0];
+            $stdIds.= ", ".$value['user_id'];
         }
        
         
         $stdIds = trim($stdIds,',');
 
         if (!empty($stdIds))
+
             $data = $this->db->read("select user.*, identification as student_number ,department.name as department from user left join department on department_id = department.id  where user.id IN ($stdIds)");
         else
             $data = [];
+
 
      
         return $data;
@@ -137,7 +141,7 @@ class User extends \App\Base
         $res = $this->db->read("select user_id from page_admin where page_id = ?",[$id]);
         $stdIds = "";
         foreach ($res as $key => $value) {
-            $stdIds.= ", ".$value[0];
+            $stdIds.= ", ".$value['user_id'];
         }
        
         

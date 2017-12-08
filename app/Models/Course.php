@@ -31,6 +31,17 @@ class Course extends \App\Base
         return $res;
     }
 
+    public function getCoursesForStudent($id)
+    {
+        $instructor_select = "CONCAT( '{',JSON_STR('first_name',user.first_name),',',JSON_STR('last_name',user.last_name),',',JSON_INT('id',user.id),'}' )";
+  
+        $res = $this->db->read("SELECT course.*, department.name as department, page.id as page_id, 
+            $instructor_select as instructor, course_group.id as group_id from page_user left join page on page_user.page_id = page.id left join course on page.course_id = course.id left join course_group on course_group.course_id = course.id left join user on course_group.instructor_id = user.id left join department on course.department_id = department.id where page_user.user_id = $id");
+        
+
+        return $res;
+    }
+
     public function getCourse($id)
     {
     	$res = $this->db->readOne("SELECT course.*, page.id as page_id from course left join page on page.course_id = course.id where course.id = ? ",[$id]);
