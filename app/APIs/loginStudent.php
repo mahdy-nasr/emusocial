@@ -14,9 +14,10 @@ class loginStudent extends API
     {
         
         $student = new \App\Models\Student();
-        $result = ['RC'=> 400,"msg" => "The student number or password is incorrect!"];
+        $result = [];
         $token = $student->login($this->data['student_number'],$this->data['password']);
         if (!$token || !strlen($token)>10) {
+            $result = ['RC'=> 400,"msg" => "The student number or password is incorrect!"];
             return $this->response->withJson($result, 200);
         } 
         $course = new \App\Models\Course();
