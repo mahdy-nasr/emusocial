@@ -6,6 +6,12 @@ $app->get('/api/students', function ( $request,  $response,$arguments) {
 });
 
 $app->post('/api/student/login[/]', function ( $request,  $response,$arguments) {
-    $data = $this->request->getParsedBody();
-    return (new \App\APIs\loginStudent($request, $response, $arguments,$data))->run();
+
+    return (new \App\APIs\loginStudent($request, $response, $arguments))->run();
+});
+
+$app->post('/api/upload/{type}[/]', function ($request, $response, $arguments) {
+
+    return (new \App\APIs\uploadApi($request, $response, $arguments))->run();
+
 });

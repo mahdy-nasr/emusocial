@@ -47,9 +47,10 @@ class Instructor extends User
         $insert[] = isset($data['account'])? 1:3;
      
         $insert[]=isset($data['department_id'])?$data['department_id']:'';
+        $insert[]=isset($data['gender'])?$data['gender']:'male';
        
 
-        if ($this->db->write('insert into user (`title`,`first_name`, `last_name`, `email`, `password`,`type`,`department_id`)values (?,?,?,?,?,?,?)',$insert)) {
+        if ($this->db->write('insert into user (`title`,`first_name`, `last_name`, `email`, `password`,`type`,`department_id`,`gender`)values (?,?,?,?,?,?,?,?)',$insert)) {
             $insId = $this->db->last_id();
             //$this->db->write("insert into instructor values (null,'','',$insId)");
             $data['id'] = $insId;
@@ -85,6 +86,8 @@ class Instructor extends User
         
         $update[] = isset($data['account'])? 1:3;
 
+        $update[]= isset($data['gender'])?$data['gender']:'male';
+
         if (isset($data['password'])&&strlen($data['password'])>3) {
             $salt = time();
 
@@ -93,7 +96,7 @@ class Instructor extends User
             $this->db->write('UPDATE `user` SET `password` = '.$password.' where email =\''.$data['email']."'"); 
         }
 
-        if ($this->db->write('UPDATE `user` SET `title` = ? ,`first_name` = ?,`last_name` = ?,`department_id` = ? ,`type` = ? where email =\''.$data['email']."'",$update))
+        if ($this->db->write('UPDATE `user` SET `title` = ? ,`first_name` = ?,`last_name` = ?,`department_id` = ? ,`type` = ?, `gender` = ? where email =\''.$data['email']."'",$update))
             return $this->db->last_id();
 
         return false;

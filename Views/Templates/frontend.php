@@ -12,10 +12,15 @@
     <!-- Bootstrap core CSS -->
     <link href="<?=$base?>vendor/bootstrap-3/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?=$base?>css/animate.min.css" rel="stylesheet">
-    <link href="<?=$base?>vendor/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?=$base?>vendor/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?=$base?>vendor/datepicker/datepicker.min.css" rel="stylesheet">
+
+
     <link href="<?=$base?>css/timeline.css" rel="stylesheet">
     <script src="<?=$base?>js/jquery.1.11.1.min.js"></script>
     <script src="<?=$base?>vendor/bootstrap-3/js/bootstrap.min.js"></script>
+    <script src="<?=$base?>vendor/datepicker/datepicker.min.js"></script>
+
     <script src="<?=$base?>js/custom.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -24,11 +29,11 @@
     <![endif]-->
   </head>
   <body class="animated fadeIn">
-  <?php $this->addPart("frontend-parts/loged_nav");?>
+  <?php include $this->partPath("frontend-parts/loged_nav");?>
 
   <?php include $file;?>  
 
-  <?php $this->addPart("frontend-parts/chat"); ?>
+  <?php include $this->partPath("frontend-parts/chat"); ?>
     
     <footer class="welcome-footer">
       <div class="container">

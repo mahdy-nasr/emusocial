@@ -1,4 +1,12 @@
+<?php 
+	$profilePic = $base."img/Profile/".$user['gender']."-avatar.png";
+	if (strlen($user['profile_picture']))
+		$profilePic = $user['profile_picture'];
+?>
 <!-- Fixed navbar -->
+					<script src="<?=$base?>js/jquery.ui.widget.js"></script>
+					<script src="<?=$base?>js/jquery.iframe-transport.js"></script>
+					<script src="<?=$base?>js/jquery.fileupload.js"></script>
     <nav class="navbar navbar-default navbar-fixed-top navbar-principal">
       <div class="container">
         <div class="navbar-header">
@@ -32,8 +40,8 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li>
 					<a href="profile.html">
-						Marthin McKlowin
-						<img src="img/Friends/guy-3.jpg" class="img-nav">
+						<?=$user['first_name'].' '.$user['last_name']?>
+						<img src="<?=$profilePic?>" class="img-nav">
 					</a>
 				</li>
 				<li class="active"><a href="home.html"><i class="fa fa-bars"></i>&nbsp;Home</a></li>

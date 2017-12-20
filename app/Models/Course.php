@@ -33,13 +33,28 @@ class Course extends \App\Base
 
     public function getCoursesForStudent($id)
     {
+       
         $instructor_select = "CONCAT( '{',JSON_STR('first_name',user.first_name),',',JSON_STR('last_name',user.last_name),',',JSON_INT('id',user.id),'}' )";
   
-        $res = $this->db->read("SELECT course.*, department.name as department, page.id as page_id, 
+        $courses = $this->db->read("SELECT course.*, department.name as department, page.id as page_id, 
             $instructor_select as instructor, course_group.id as group_id from page_user left join page on page_user.page_id = page.id left join course on page.course_id = course.id left join course_group on course_group.course_id = course.id left join user on course_group.instructor_id = user.id left join department on course.department_id = department.id where page_user.user_id = $id");
         
 
-        return $res;
+        foreach ($courses as &$course) {
+            # code...
+            $course['instructor'] = json_decode($course['instructor'],1);
+        }
+
+        return $courses;
+    }
+
+    public function getCoursesForInstructor($id)
+    {
+  
+        $courses = $this->db->read("SELECT course.*, department.name as department, page.id as page_id, course_group.id as group_id from page_admin left join page on page_admin.page_id = page.id left join course on page.course_id = course.id left join course_group on course_group.course_id = course.id left join user on course_group.instructor_id = user.id left join department on course.department_id = department.id where page_admin.user_id = {$id} and page.user_id IS NULL");
+        
+
+        return $courses;
     }
 
     public function getCourse($id)

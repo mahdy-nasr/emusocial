@@ -60,7 +60,7 @@ class Admin extends \App\Base
 
         } else if ($this->Cookie::exists($this->cookieName)) {
             $res = $this->db->readOne("select * from token where `token`.`token` = ?", [$this->Cookie::get($this->cookieName)]);
-            $this->data = $this->db->readOne("select * from admin where id = {$res['user_id']}");
+            $this->data = $this->db->readOne("select * from admin where id = {$res['admin_id']}");
             $this->Session::put($this->cookieName, (int)$res['user_id']);
         
         } else {
@@ -106,8 +106,11 @@ class Admin extends \App\Base
         if (md5($correctPassword[1].$password)!= $correctPassword[0])
             return false;
         $this->data = $res;
+
         $token = md5($email.$res['id']);
-        if ($this->db->db->query("INSERT INTO `token` (`user_id`, `token`) VALUES ({$res['id']},'$token')")) {
+
+        $this->db->write("delete from token where admin_id = ".$this->data['id']);
+        if ($this->db->write("INSERT INTO `token` (`admin_id`, `token`) VALUES ({$res['id']},'$token')")) {
             $this->Session::put($this->cookieName,$res['id']);
             $this->Cookie::put($this->cookieName,$token,$this->Cookie::$month);
         }

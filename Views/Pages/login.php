@@ -41,14 +41,14 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-              <form class="navbar-form form-login" role="form">
+              <form class="navbar-form form-login" role="form" action="<?=$base?>home/login" method="post">
                   <div class="form-group">
-                      <input type="text" class="form-control" name="username" placeholder="Username">
+                      <input type="text" class="form-control" required="required" name="identification" placeholder="Student ID, Email">
                   </div>
                   <div class="form-group">
-                      <input type="text" class="form-control" name="password" placeholder="Password">
+                      <input type="text" class="form-control" required="required" name="password" placeholder="Password">
                   </div>
-                  <button type="submit" class="btn btn-default btn-login">Login</button>
+                  <button type="submit" name='submit' class="btn btn-default btn-login">Login</button>
               </form>     
           </ul>        
         </div>
@@ -56,11 +56,16 @@
     </nav><!-- end fixed nav-->
 
 
-     <div class="row-welcome" style="background-image: url('<?=$base?>img/Bg/faces2.png');">
+     <div class="row-welcome" style="background-image: url('<?=$base?>img/login.jpg');">
       <div class="row-body">
-        <div class="welcome-inner">
+        <div class="welcome-inner" >
+        <?php $error_login = \App\Helpers\Session::flash('error_login'); if ($error_login) : ?>
+          <div class="error-div">
+            <p class="error-p" ><?php echo $error_login;?></p>
+          </div>
+        <?php endif;?>
           <!-- welcome message -->
-          <div class="welcome-message">
+          <div class="welcome-message" style="background-color: rgba(0, 0, 0, 0.3); padding:50px;">
             <div class="welcome-title">
               Welcome
             </div>
@@ -75,7 +80,7 @@
           <div class="welcome-inputs">
             <div class=" animated fadeInLeft">
              
-              <img src="<?=$base?>img/emu-logo-badg.png" style='max-width: 70%;position: relative; left:100px;'>
+              <img src="<?=$base?>img/emu-logo-badg.png" style='max-width: 70%;position: relative; left:100px; opacity: 0.95;'>
 
             </div>          
              
@@ -84,12 +89,12 @@
       </div>
     </div>
 
-    <div class="welcome-full animated fadeInLeft">
+    <!--div class="welcome-full animated fadeInLeft" style="height: 30px;">
       <div class="row-body">
-        <!-- some registered users -->
-        <h3 class="font-main-color">Computer Engineering Department</h3>
-        </div><!-- some registered users -->
-      </div>
+        <!- some registered users ->
+        <h4 class="font-main-color">Computer Engineering Department</h4>
+        </div><!- some registered users >
+      </div-->
     </div>
 
 

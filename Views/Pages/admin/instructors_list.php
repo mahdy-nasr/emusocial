@@ -62,6 +62,14 @@
               <input class="form-control"  name='password' <?php if(!isset($instructor)):?> required<?php endif;?> type="password"   autocomplete="new-password" >
             </div>
 
+            <div class="form-group">
+              <label>Selects instructor's gender</label>
+              <select class="form-control" name='gender'>
+                <option value='male' <?php if (isset($student)&&$student['gender']=='male') echo 'selected' ?>>male</option>
+                <option value='female' <?php if (isset($student)&&$student['gender']=='female') echo 'selected' ?>>female</option>
+              </select>
+            </div>
+
             <div class="form-group" style="margin:0">
               <input type="checkbox" name="account" value="instructor" <?php if(isset($instructor) && $instructor['type']==1):?> checked="checked" <?php endif;?> > <label>Instructor Account</label>
             </div>

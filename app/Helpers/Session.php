@@ -36,6 +36,6 @@ class Session
         {
             self::put($name, $str);
         }
-        return "";
+        return $str;
     }
 }

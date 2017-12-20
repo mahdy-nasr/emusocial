@@ -4,7 +4,7 @@ namespace App\Models;
 class User extends \App\Base
 {
     private $cookieName = "user_token";
-    public $data;
+    public $data = null;
     public $id;
     public $type = null;
     
@@ -18,11 +18,13 @@ class User extends \App\Base
     {
         if ($this->Session::exists($this->cookieName)) {
             $this->id = (int) $this->Session::get($this->cookieName);
+            $this->getUserData();
             return true;
         } else if ($this->Cookie::exists($this->cookieName)) {
             $res = $this->db->readOne("select * from token where `token`.`token` = ?", [$this->Cookie::get($this->cookieName)]);
             $this->Session::put($this->cookieName, (int)$res['user_id']);
             $this->id = (int)$res['user_id'];
+            $this->getUserData();
             return true;
         
         } else {
@@ -30,13 +32,20 @@ class User extends \App\Base
         }
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
     public function getUserData()
     {
+      
+        if ($this->data == null)
+            $this->data = $this->db->readOne("select user.*,department.name as department_name from user left join department on user.department_id = department.id where user.id = {$this->id}");
         return $this->data;
     }
     public function getUserType() 
     {
-        if ($this->type !== null) {
+        if ($this->data == null) {
             return $this->type;
         }
 
@@ -56,6 +65,19 @@ class User extends \App\Base
         $this->type = $str;
     }
 
+    public function authinticate($access_token) 
+    {
+        if(empty($access_token))
+            return false;
+        $res = $this->db->readOne("select * from token where `token`.`token` = ?", [$access_token]);
+        if (!$res)
+            return false;
+
+        $this->id = (int)$res['user_id'];
+        $this->getUserData();
+        return true;
+
+    }
     public function login($email,$password)
     {
         $email = trim($email);
@@ -77,9 +99,11 @@ class User extends \App\Base
         $correctPassword = explode(':',$res['password']);
         if (md5($correctPassword[1].$password)!= $correctPassword[0])
             return false;
-        $this->data = $res;
+        $this->id = $res['id'];
+        $this->getUserData();
         $token = md5($email.$res['id']);
-        if ($this->db->db->query("INSERT INTO `token` (`user_id`, `token`) VALUES ({$res['id']},'$token')")) {
+        $this->db->write("delete from token where user_id = ".$this->id);
+        if ($this->db->write("INSERT INTO `token` (`user_id`, `token`) VALUES ({$res['id']},'$token')")) {
             $this->Session::put($this->cookieName,$res['id']);
             $this->Cookie::put($this->cookieName,$token,$this->Cookie::$month);
         }
@@ -153,6 +177,14 @@ class User extends \App\Base
             $data = [];
 
      
+        return $data;
+    }
+
+    public function getUsers($ids)
+    {
+        if(empty($ids))
+            return [];
+        $data = $this->db->read("select user.*,department.name as department_name from user left join department on user.department_id = department.id where user.id IN ($ids)");
         return $data;
     }
 

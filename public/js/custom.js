@@ -17,4 +17,10 @@ $(document).ready(function() {
       $("div.about-tab>div.about-tab-content").removeClass("active");
       $("div.about-tab>div.about-tab-content").eq(index).addClass("active");
   });
+  if ($(".error-div")[0]) {
+    err = $($(".error-div")[0]);
+    //err.fadeIn(1000).delay(2000).fadeOut();
+      err.slideDown(400).delay(2000).slideUp();
+
+  }
 })

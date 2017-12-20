@@ -3,10 +3,8 @@ namespace App\APIs;
 
 class loginStudent extends API
 {
-    private $data;
-    public function __construct($request, $response, $params, $data)
+    public function __construct($request, $response, $params)
     {
-        $this->data = $data;
         parent::__construct($request, $response, $params);
     }
 
@@ -22,10 +20,7 @@ class loginStudent extends API
         } 
         $course = new \App\Models\Course();
         $courses = $course->getCoursesForStudent($student->getUserData()['id']);
-        foreach ($courses as &$course) {
-            # code...
-            $course['instructor'] = json_decode($course['instructor'],1);
-        }
+        
 
         $result['RC'] = 200;
         $result['records'] = [ 'access_token'=> $token, 'profile' => $student->getUserData(), 'courses'=>$courses ];

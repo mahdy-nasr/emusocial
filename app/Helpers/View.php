@@ -14,12 +14,12 @@ class View
 
     }
 
-    public function addPart($partName)
+    public function partPath($partName)
     {
             $base = Config::get('base/url').'/';
 
             extract($this->_data);
-            include dirname(Config::get('base/document')).'/Views/Pages/'.$partName.".php"; 
+            return dirname(Config::get('base/document')).'/Views/Pages/'.$partName.".php"; 
     }
 
     public function load($file,$param = [])

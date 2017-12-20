@@ -12,6 +12,15 @@ class Page extends \App\Base
         $this->id = $page_id;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function checkValidity()
+    {
+        return  $this->db->readOne("SELECT id from page where id = ?",[$this->id]);
+    }
+
 
     public function createUserPage($userData)
     {
@@ -46,9 +55,12 @@ class Page extends \App\Base
         return $this->db->write("insert into page_user (page_id,user_id,instructor_id) values ({$this->id},{$user_id},{$instructor_id})");
     }
 
-    public function getPageOwner()
+    public function getUserPage($user)
     {
-        return $this->db->readOne("SELECT user_id from page where id = ?",[$this->id])['user_id'];
+
+        $data =  $this->db->readOne("SELECT page.* from page where user_id = ?",[$user['id']]);
+        $this->id = $data['id'];
+        return $data;
     }
 
     public function getPageCourse()

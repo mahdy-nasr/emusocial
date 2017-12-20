@@ -65,6 +65,13 @@
               <input class="form-control"  name='student_number'   type="text" <?php if(isset($student)):?> value="<?=$student['student_number']?>"  readonly="readonly"  <?php else: echo "required";endif;?>  placeholder="Enter student's ID">
             </div>
 
+             <div class="form-group">
+              <label>Selects student's gender</label>
+              <select class="form-control" name='gender'>
+                <option value='male' <?php if (isset($student)&&$student['gender']=='male') echo 'selected' ?>>male</option>
+                <option value='female' <?php if (isset($student)&&$student['gender']=='female') echo 'selected' ?>>female</option>
+              </select>
+            </div>
             
             <?php if(isset($student)):?>
             <button type="submit"  id='btnEdit' class="btn btn-primary col-12" style="margin-bottom:5px;" > Edit </button> 

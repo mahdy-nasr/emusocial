@@ -18,5 +18,5 @@ $app->any('/{controller}[/[{function}[/[{params:.*}]]]]', function ( $request,  
 });
 
 $app->get('/', function ( $request,  $response,$arguments) {
-	//return (new \App\Controllers\Home( $request,  $response,$arguments))->index();
+	return (new \App\Controllers\Home( $request,  $response,$arguments))->index();
 });

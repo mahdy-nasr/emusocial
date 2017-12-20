@@ -7,11 +7,17 @@ body{
 }
 :root{
   --main-color: #274380;
-  --main-color-light:#7098ff;
+  --main-color-light:#bacdfc;
 }
 .font-main-color
 {
   color:#274380;
+}
+
+.back-main-color
+{
+  background:#274380;
+  color:#fff;
 }
 
 /* ====================== top navbar =============*/
@@ -32,8 +38,8 @@ body{
 .navbar-principal .navbar-brand li a:visited,
 .navbar-principal .navbar-nav li a {
   color: #fff;
-  font-weight: 500;
-  font-family: font-awesome;
+  font-weight: 100;
+  font-family: 'Anton', sans-serif;;
 }
 
 .navbar-cover .navbar-nav li a {
@@ -300,7 +306,7 @@ body{
     margin: 0 auto;
     overflow: auto;
     margin-top: -20px;
-    height: 520px;
+    height: 600px;
 }
 
 .row-body {
@@ -497,12 +503,24 @@ body{
 .friends li, .photos li {
   float: left;
   margin: 0;
+  margin-bottom:0px;
   width: 33.33%;
+  border-bottom:1px solid black;
+
 }
 .photos li {
   float: left;
   margin: 0;
   width: 50%;
+}
+.friends li h6
+{
+  margin:5px;
+  color: gray;
+}
+.photos li 
+{
+  margin:0px;
 }
 
 .friends li a, .photos li a {
@@ -575,14 +593,14 @@ body{
 
 /* =============  add post form =====================*/
 .profile-info .panel-footer ul li a {
-    color: #7a7a7a;
+    color: #000;
 }
 
 .form-control.p-text-area, .form-control.p-text-area:focus {
     border: 0px solid #fff;
     font-weight: 300;
     box-shadow: none;
-    color: #c3c3c3;
+    color: #000;
     font-size: 16px;
     resize:vertical ;
 }
@@ -610,7 +628,7 @@ body{
 }
 .profile-info.panel-success .panel-footer{
   background-color: var(--main-color-light);
-  border-color: #d6e9c6;
+  border-color: var(--main-color);
 }
 
 .post .post-heading {
@@ -1356,7 +1374,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 }
 
 #navbar .btn-login{
-  border-radius: 0px !important;
+  border-radius: 5px !important;
 }
 
 .panel-login .panel-heading {
@@ -1367,3 +1385,87 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .panel-login {
     border: 0px solid #fff !important;
 }
+.error-div
+{
+  width:70%; background:#ff7070;color:#fff; margin:50px auto; border-radius:5px;display: none;
+}
+.error-p
+{
+  text-align:center; font-size:20px;
+}
+.link
+{
+
+}
+.link:hover
+{
+  background: var(--main-color-light);
+
+}
+.name
+{
+  color: black;
+}
+.bar {
+    height: 20px;
+    background: green;
+}
+
+
+#file-container
+{
+  display: none;
+  border-top:1px dashed gray; 
+  background: #fcfcfc;
+  color:gray;
+  padding:0;
+  padding-left: 3px;
+  margin-bottom:5px;
+}
+.file-element
+{
+  margin:0;padding:0;
+}
+.announcement-selected
+{
+    background-color: #eee;
+
+}
+.announcement-selected:hover
+{
+    background-color: #eee;
+}
+
+.announcement-not-selected:hover,.announcement-not-selected:focus
+{
+    background-color: var(--main-color-light) !important;
+}
+
+.no-padding
+{
+  padding: 0 !important;;
+}
+
+.no-margin
+{
+  margin:0 !important;;
+}
+
+.no-padding-margin
+{
+  padding:0 !important;;
+  margin:0 !important;;
+}
+
+.icon-input
+{
+  cursor:pointer;border-radius:0; width:38px;
+}
+
+
+
+
+
+
+
+
