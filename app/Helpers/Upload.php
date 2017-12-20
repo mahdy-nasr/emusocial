@@ -24,7 +24,7 @@ class Upload
         $this->db = DB::getInstance();
         $this->files = $this->reArrayFiles();
         $this->path = dirname(Config::get('base/document')).'/public/uploads/';
-        $this->link = Config::get('base/url').'/uploads/';
+        $this->link = 'uploads/';
         $this->type = $type;
     }
     public function getErrors()

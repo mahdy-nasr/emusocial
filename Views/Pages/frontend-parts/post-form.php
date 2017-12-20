@@ -82,11 +82,11 @@
 			          </div>
 
 
-			          <input id="videoupload" type="file" name="postfile[]"  accept="video/*,  video/x-m4v, video/webm, video/x-ms-wmv, video/x-msvideo, video/3gpp, video/flv, video/x-flv, video/mp4, video/quicktime, video/mpeg, video/ogv, .ts, .mkv" data-url="http://emusocial.dev/api/upload/video/" multiple style="display:none;">	
+			          <input id="videoupload" type="file" name="postfile[]"  accept="video/*,  video/x-m4v, video/webm, video/x-ms-wmv, video/x-msvideo, video/3gpp, video/flv, video/x-flv, video/mp4, video/quicktime, video/mpeg, video/ogv, .ts, .mkv" data-url="<?=$base?>api/upload/video/" multiple style="display:none;">	
 						
-						<input id="imageupload" type="file" name="postfile[]"  accept="image/*" data-url="http://emusocial.dev/api/upload/image/" multiple style="display:none;" />	
+						<input id="imageupload" type="file" name="postfile[]"  accept="image/*" data-url="<?=$base?>api/upload/image/" multiple style="display:none;" />	
 						
-						<input id="fileupload" type="file" name="postfile[]" data-url="http://emusocial.dev/api/upload/file/" multiple style="display:none;" />	
+						<input id="fileupload" type="file" name="postfile[]" data-url="<?=$base?>api/upload/file/" multiple style="display:none;" />	
 			        </div><!-- end add post form-->
 				
 

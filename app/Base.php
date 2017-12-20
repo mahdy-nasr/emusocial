@@ -16,4 +16,33 @@ abstract  class Base
 		$this->db = Helpers\DB::getInstance();
 		$this->view = new Helpers\View();
 	}
+	private function from_camel_case($input) 
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret =  $matches[0];
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+
+        return implode('_', $ret);
+    }
+    
+	public function __call($name, $args) 
+    {
+        $method = substr($name,0,3);
+        if (!in_array($method, ['get','set']))
+            return false;
+        $key = $this->from_camel_case(substr($name,3));
+     
+        if (!isset($this->data[$key]))
+            return NULL;
+        if (count($args)) {
+            $res = $this->data[$key];
+            foreach ($args as $key) {
+                $res = $res[$key];
+            }
+            return $res;
+        }
+        return $this->data[$key];
+    }
 }

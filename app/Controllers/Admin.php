@@ -182,7 +182,7 @@ class Admin extends Base_controller
         }
         if($this->admin->isLoggedIn())
             return $this->response->withStatus(302)->withHeader('Location', $this->Config::get('base/url').'/admin');
-        echo $this->view->load('admin:login');
+        echo $this->view->load('admin_login');
     }
 
     public function logout()

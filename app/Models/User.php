@@ -14,6 +14,7 @@ class User extends \App\Base
         $this->setUserType();
     }
 
+
     public function isLoggedIn()
     {
         if ($this->Session::exists($this->cookieName)) {

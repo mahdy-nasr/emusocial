@@ -32,7 +32,9 @@ class Home extends Base_controller
         $data['user'] = $this->user->getUserData();
         $data['page'] = $page->getUserPage($data['user']);
         $data['type'] = 'profile';
-
+        $posts_collection = new \App\Models\PostCollection($page->getId());
+        $data['posts'] = $posts_collection->getPagePosts();
+      
         if ($this->user->getUserType() == 'student') {   
             $data['courses'] = $course->getCoursesForStudent($this->user->getId());
         } else {

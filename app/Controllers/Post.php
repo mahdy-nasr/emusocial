@@ -30,7 +30,8 @@ class Post extends Base_controller
     	$page = new \App\Models\Page($this->args[0]);
     	if (!$page->checkValidity())
     		return $this->redirect('/');
-    	$post = new \App\Models\Post($this->user,$page);
+    	$post = new \App\Models\Post();
+        $post->setUserAndPage($this->user,$page);
     	if (!$post->createPost($this->post_data)) {
     		$this->Session::flash('error_post','problem adding post!');
     	}

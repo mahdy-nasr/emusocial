@@ -18,4 +18,5 @@ $app = new \Slim\App( [
 
 require __DIR__ . "/app/Routes/Api.php";
 require __DIR__ . "/app/Routes/Frontend.php";
+require __DIR__ . "/app/Helpers/Helper.php";
 

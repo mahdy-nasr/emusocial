@@ -1,7 +1,7 @@
 <?php 
 	$profilePic = $base."img/Profile/".$user['gender']."-avatar.png";
 	if (strlen($user['profile_picture']))
-		$profilePic = $user['profile_picture'];
+		$profilePic = $base.$user['profile_picture'];
 ?>
 <!-- Fixed navbar -->
 					<script src="<?=$base?>js/jquery.ui.widget.js"></script>

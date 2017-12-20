@@ -632,14 +632,14 @@ body{
 }
 
 .post .post-heading {
-  height: 95px;
-  padding: 20px 15px;
+  height: 70px;
+  padding: 8px 15px;
 }
 .post .post-heading .avatar {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   display: block;
-  margin-right: 15px;
+  margin-right: 20px;
   border: 1px solid rgba(0, 0, 0, .1);
 }
 .post .post-heading .meta .title {
@@ -657,22 +657,45 @@ body{
   height: auto;
   cursor: pointer;
 }
+.post{
+  padding:0;
+}
+.post .post-image {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0 !important;
+}
 .post .post-description {
-  padding: 15px;
+  padding-left: 15px;
+
 }
 .post .post-description p {
   font-size: 14px;
 }
 .post .post-description .stats {
-  margin-top: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   color: #7f7f7f;
 }
 .post .post-description .stats a {
+    display: inline-block;
+    font-size: 19px;
+    font-weight: bold;
+    line-height: 14px;
+    
+}
+.post .post-description .stats a:hover {
+    color: var(--main-color);
+}
+a.not-liked {
+  color: #7f7f7f;
+}
+
+.post .post-description .stats a .stats-num{
     color: #7f7f7f;
     display: inline-block;
     font-size: 12px;
-    font-weight: bold;
-    line-height: 14px;
+    font-weight:400;
+    line-height: 14px; 
 }
 .post .post-description .stats .stat-item {
   display: inline-block;
@@ -682,23 +705,26 @@ body{
   margin-right: 1px;
 }
 .post .post-footer {
+
   padding: 0px;
+  height: auto;
+
 }
 .post .post-footer .add-comment-input{
-  border-radius: 0px;
-  border-left: 0px;
-  border-right: 0px;
+ max-width: 90%;border-radius:0 !important;
 }
 .post .post-footer .comments-list {
+  border: 1px solid #ddd;
   padding-top: 1px;
   margin-bottom: 0px;
   list-style-type: none;
   background: #eee;
+
 }
 .post .post-footer .comments-list .comment {
   display: block;
   width: 100%;
-  margin: 20px 0;
+  margin: 13px 0;
 }
 .post .post-footer .comments-list .comment .avatar {
   width: 35px;
@@ -723,6 +749,17 @@ body{
 }
 .post .post-footer .comments-list .comment .comment-body {
   margin-left: 50px;
+}
+
+.post .post-footer .comments-list .comment .comment-footer{
+  margin: 0;
+  padding: 0; 
+  margin-top: -5px;
+}
+.post .post-footer .comments-list .comment .comment-footer a{
+  margin-left: 5px;
+  line-height: 10px;
+  font-size: 12px;
 }
 .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;

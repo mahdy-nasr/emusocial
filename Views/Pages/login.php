@@ -46,7 +46,7 @@
                       <input type="text" class="form-control" required="required" name="identification" placeholder="Student ID, Email">
                   </div>
                   <div class="form-group">
-                      <input type="text" class="form-control" required="required" name="password" placeholder="Password">
+                      <input type="password" class="form-control" required="required" name="password" placeholder="Password">
                   </div>
                   <button type="submit" name='submit' class="btn btn-default btn-login">Login</button>
               </form>     

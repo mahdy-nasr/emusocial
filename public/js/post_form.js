@@ -153,5 +153,6 @@
 			        		autoHide:true,
 			        		date: new Date(),
 			        		startDate: new Date(),
+			        		format: 'yyyy-mm-dd',
 			        		trigger:'#basic-addon1'
 			        	});
