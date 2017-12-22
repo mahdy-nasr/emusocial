@@ -1,128 +1,164 @@
-$start_post=0;$limit_post=10; 
-function videoShow(link,name) {
+var post = new function() 
+{
+	this.start_post = 0;
+	this.limit_post = 10;
+	this.base = '';
+	this.profile_id=0;
+	
+	this.modal = {
+		title: 'h4.modal-title',
+		body: 'div.modal-body',
+		id: "file-preview"
+	};
+
+	this.css_class = {
+		liked: "font-main-color",
+		not_liked :"not-liked"
+	};
+
+	this.post_main_container = 'post-cont';
+	this.loading_div = "id-post-load-more";
+	
+	this.init =  function (obj) {
+		console.log(obj.base);
+		this.base = obj.base;
+		this.profile_id = obj.profile_id;
+	};
+
+	this.fileShow = function (link,name,type) {
 			console.log(link+name);
-			$('#file-preview h4.modal-title').html(name);
-			elem = "<video width='100%'' controls><source src='"+link+"' type='video/mp4'></video>";
-			$('#file-preview div.modal-body').html(elem);
-			$('#file-preview').modal('show');
+			$id  = '#'+this.modal.id;
+			$($id+' '+this.modal.title).html(name);
+
+			if (type == 'video') {
+				elem = "<video width='100%'' controls><source src='"+link+"' type='video/mp4'></video>";
+			} else if (type == 'image') {
+				elem = "<img  style='display:block;margin:0 auto;' src='"+link+"' class='image show-in-modal' alt='image post' >";
+			} else {
+							elem ="<a href='"+link+"' style='text-align:center' download='download'><h5>Download the file</h5></a>";
+			}
+
+			$($id+' '+this.modal.body).html(elem);
+			$($id).modal('show');
 			return false;
 		}
 
-		function imageShow(link,name) {
-			console.log(link+name);
-			$('#file-preview h4.modal-title').html(name);
-			elem = "<img  style='display:block;margin:0 auto;' src='"+link+"' class='image show-in-modal' alt='image post' >";
-			$('#file-preview div.modal-body').html(elem);
-			$('#file-preview').modal('show');
-			return false;
-		}
 
-		function fileShow(link,name) {
-			console.log(link+name);
-			$('#file-preview h4.modal-title').html(name);
-			elem ="<a href='"+link+"' style='text-align:center' download='download'><h5>Download the file</h5></a>";
-			$('#file-preview div.modal-body').html(elem);
-			$('#file-preview').modal('show');
-			return false;
-		}
-		function deletePost($id)
+	this.deletePost = function($id)
 		{
 			id = parseInt($id);
 			ans = window.confirm('do you want delete this post?');
 			if (ans)
-			window.location = $base+"post/deletePost/"+id+"/profile";
+			window.location = this.base+"post/deletePost/"+id+"/profile";
 			return false;
 		}
 
-		
-		function doLike(elem,idd) 
+	 this.doLike = function (elem,idd) 
 		{
 			//console.log(elem.getAttribute('value'));
 			
-			func = $(elem).hasClass('font-main-color')?"removeLike":"doLike";
-			console.log($base);
-			
+			func = $(elem).hasClass(this.css_class.liked)?"removeLike":"doLike";
+			console.log(this);
+			//base = 
 			$.ajax({
 					  type: "POST",
-					  url: $base+"post/"+func,
+					  url: this.base+"post/"+func,
 					  data: {post_id: idd},
 					  cache: false,
 					  dataType: "html",
-					  success: function(data){
+					  success: function(obj,data) {
 					  	console.log(data);
-					  	obj=JSON.parse(data) 
+					  	res=JSON.parse(data) 
 
-					  	if (obj.RC != 200)
+					  	if (res.RC != 200)
 					  		return 
-					  	$(elem).find('span').html(obj.count);
-					  	$(elem).toggleClass('font-main-color');
-						$(elem).toggleClass('not-liked');
-					  }.bind(elem)
+					  	$(elem).find('span').html(res.count);
+					  	$(elem).toggleClass(obj.css_class.liked);
+						$(elem).toggleClass(obj.css_class.not_liked);
+					  }.bind(elem,this)
 					});
 			
 
 			return false;
 		}
 
-		$(document).off('click', 'a.post-user-del').on('click', 'a.post-user-del', function(){
-			$(this).parent().next().slideToggle();return false;
-			});
-		$(document).off('click', 'ul.opt-del-post a').on('click', 'ul.opt-del-post a', function(){
-
-			return deletePost($(this).attr('link'));
-			});
-		$(document).off('click', 'a.video-list').on('click', 'a.video-list', function(){
-			return videoShow($(this).attr('link'),$(this).attr('name'));
-			});
-
-		$(document).off('click', 'a.image-list').on('click', 'a.image-list', function(){
-			return imageShow($(this).attr('link'),$(this).attr('name'));
-			});
-
-		$(document).off('click', 'a.ffile-list').on('click', 'a.ffile-list', function(){
-			return fileShow($(this).attr('link'),$(this).attr('name'));
-			});
-
-
-		$(document).off('click', 'a.like-stat').on('click', 'a.like-stat', function(){
-			//alert($(this).attr('link'));
-			return doLike(this,$(this).attr('link'));
-			});
-	
-		$(document).off('click', 'a.stat-com').on('click', 'a.stat-com', function(){
-
-		return false;
-			});
-
-
-		function refreshPostsHTML()
+		this.refreshPostsHTML = function ()
 		{
 			//$post_id_selector = "#comments_"+$post_id;
-			 $start_post+=10;$limit_post+=10;
+			 this.start_post+=10;this.limit_post+=10;
+			 post_container = '#'+this.post_main_container;
+			 loading_div = '#'+this.loading_div;
+
+
 			$.ajax({
 					  type: "GET",
-					  url: $base+"post/getProfilePosts?id="+$profile_id,
-					  data: {start: $start_post, limit: $limit_post},
+					  url: this.base+"post/getProfilePosts?id="+this.profile_id,
+					  data: {start: this.start_post, limit: this.limit_post},
 					  cache: false,
 					  dataType: "html",
 					  success: function(data){
 					  	//console.log(data);
 					  	console.log(data.length);
 					  	if(data.length<50) {
-					  		$('#id-post-load-more').css('display','none');
+					  		$(loading_div).css('display','none');
 					  	} else{
-					  		$('#id-post-load-more').css('display','block');
+					  		$(loading_div).css('display','block');
 					  	}
-					  	$('#post-cont').append(data);
+					  	$(post_container).append(data);
 					  
 					  }
 					});
 		}
+		this.run = function()
+		{
+				$(document).off('click', 'a.post-user-del').on('click', 'a.post-user-del', function(){
+				$(this).parent().next().slideToggle();return false;
+				});
 
-$(window).scroll(function() {
-   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-       refreshPostsHTML();
-      // $(window).scrollTop($(document).height() - 150);
+				$(document).off('click', 'ul.opt-del-post a').on('click', 'ul.opt-del-post a', function(){
 
-   }
-});
+					return post.deletePost($(this).attr('link'));
+					});
+				$(document).off('click', 'a.video-list').on('click', 'a.video-list', function(){
+					return post.fileShow($(this).attr('link'),$(this).attr('name'),'video');
+					});
+
+				$(document).off('click', 'a.image-list').on('click', 'a.image-list', function(){
+					return post.fileShow($(this).attr('link'),$(this).attr('name'),'image');
+					});
+
+				$(document).off('click', 'a.ffile-list').on('click', 'a.ffile-list', function(){
+					return post.fileShow($(this).attr('link'),$(this).attr('name'),'file');
+					});
+
+
+				$(document).off('click', 'a.like-stat').on('click', 'a.like-stat', function(){
+					//alert($(this).attr('link'));
+					return post.doLike(this,$(this).attr('link'));
+					});
+			
+				$(document).off('click', 'a.stat-com').on('click', 'a.stat-com', function(){
+
+				return false;
+					});
+
+				$(window).scroll(function() {
+				   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+				       post.refreshPostsHTML();
+				      // $(window).scrollTop($(document).height() - 150);
+
+				   }
+				});
+		}
+
+
+
+}
+
+
+
+		
+
+
+		
+

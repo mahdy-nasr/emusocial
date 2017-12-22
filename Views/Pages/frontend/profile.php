@@ -45,8 +45,24 @@
 
 	    			 <?php include $this->partPath("frontend-parts/post-view");?>
 	    			 </div>
-	    			  <script type="text/javascript" src="<?=$base?>js/post-view.js"></script>
+
+
+
+	    			 <script type="text/javascript" src="<?=$base?>js/post-view.js"></script>
 	    			 <script type="text/javascript" src="<?=$base?>js/comment-view.js"></script>
+	    			 
+	    			 <script type="text/javascript">
+	    			 	post.init({
+	    			 		base:'<?=$base?>',
+	    			 		profile_id:'<?=$profile->getId()?>'
+	    			 	});
+
+	    			 	post.run();
+
+	    			 	comment.init({base:'<?=$base?>'});
+
+	    			 	comment.run();
+	    			 </script>
 
 			        
 
