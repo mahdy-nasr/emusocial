@@ -57,6 +57,7 @@ class Admin extends \App\Base
     {
         if ($this->Session::exists($this->cookieName)) {
             $this->data = $this->db->readOne("select * from admin where id = ".$this->Session::get($this->cookieName));
+        
 
         } else if ($this->Cookie::exists($this->cookieName)) {
             $res = $this->db->readOne("select * from token where `token`.`token` = ?", [$this->Cookie::get($this->cookieName)]);
@@ -128,7 +129,7 @@ class Admin extends \App\Base
         if ($this->Cookie::exists($this->cookieName))
             $this->Cookie::delete($this->cookieName);
         
-        return ($this->db->write('delete from token where user_id = '.$this->data['id']));
+        return $this->db->write('delete from token where user_id = '.$this->data['id']);
 
     }
 

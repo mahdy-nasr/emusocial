@@ -21,29 +21,8 @@ class Home extends Base_controller
 
     public function index()
     {
-        if (!$this->user->isLoggedIn())
-            return $this->redirect("/home/login/");
-         //$this->user->logout();
-        $page = new \App\Models\Page();
-        $course = new \App\Models\Course();
-        $friend = new \App\Models\Friend($this->user->getId());
-       
-        $data = [];
-        $data['user'] = $this->user->getUserData();
-        $data['page'] = $page->getUserPage($data['user']);
-        $data['type'] = 'profile';
-        $posts_collection = new \App\Models\PostCollection($page->getId());
-        $data['posts'] = $posts_collection->getPagePosts();
-      
-        if ($this->user->getUserType() == 'student') {   
-            $data['courses'] = $course->getCoursesForStudent($this->user->getId());
-        } else {
-            $data['courses'] = $course->getCoursesForInstructor($this->user->getId());
-        }
-
-        $data['friends'] = $this->user->getUsers($friend->getFriendsId(0,6));
-
-    	echo $this->view->load('frontend:profile',$data);
+        die("404");
+        
     }
 
     public function login()

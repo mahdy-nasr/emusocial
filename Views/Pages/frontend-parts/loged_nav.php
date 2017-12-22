@@ -1,8 +1,4 @@
-<?php 
-	$profilePic = $base."img/Profile/".$user['gender']."-avatar.png";
-	if (strlen($user['profile_picture']))
-		$profilePic = $base.$user['profile_picture'];
-?>
+
 <!-- Fixed navbar -->
 					<script src="<?=$base?>js/jquery.ui.widget.js"></script>
 					<script src="<?=$base?>js/jquery.iframe-transport.js"></script>
@@ -40,8 +36,8 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li>
 					<a href="profile.html">
-						<?=$user['first_name'].' '.$user['last_name']?>
-						<img src="<?=$profilePic?>" class="img-nav">
+						<?=$user->getName()?>
+						<img src="<?=$user->getProfilePicture()?>" class="img-nav">
 					</a>
 				</li>
 				<li class="active"><a href="home.html"><i class="fa fa-bars"></i>&nbsp;Home</a></li>

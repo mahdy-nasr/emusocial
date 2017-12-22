@@ -1,26 +1,42 @@
-<?php   
-		$coverPic = \App\Helpers\Config::get("picture/profile_cover");
-		if(!empty($page['cover_picture'])) {
-			$coverPic = $page['cover_picture'];
-		}
-?>
+
 	    <!-- cover content -->
 	    <div class="row">
 	      <div class="col-md-10 no-paddin-xs">
 	      	<!-- cover and profile image-->
 	        <div class="col-md-12 col-sm-12 col-xs-12 cover-content">
-				<div class="cover-container" style="background-image:url(<?=$base.$coverPic?>);">
+				<div class="cover-container" style="background-image:url(<?=$base.$page->getCoverPicture()?>);">
 					<div class="social-avatar" >
 						
-					   <img class="img-avatar" src="<?=$profilePic?>" height="100" width="100">
-					   <h4 class="fg-white text-center text-shadow"><?=$user['title'].' '.$user['first_name'].' '.$user['last_name']?></h4>
+					   <img class="img-avatar" src="<?=$profile->getProfilePicture()?>" height="100" width="100">
+					   <h4 class="fg-white text-center text-shadow"><?=$profile->getFullName()?></h4>
 					   <h5 class="fg-white text-center" style="opacity:0.8;"></h5>
 					   <hr class="border-black75 text-shadow" style="border-width:2px;" >
+					   <?php $diff = ($profile->getId() != $user->getId()); 
+					   $friend_status = $friend->getUserStatus($profile->getId()); ?>
+					   
 					   <div class="text-center">
-					    <button role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue" type="button">
+					   <?php if ($diff && $friend_status == $friend::IS_NOT_FRIEND):?>
+					    <a href="<?=$base?>Profile/addFriend?id=<?=$profile->getId()?>" role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue" type="button">
 					      <span>Add Friend</span>
-					    </button>
+					    </a>
+
+					     <?php elseif ($diff && $friend_status == $friend::IS_FRIEND):?>
+				     	<a href="<?=$base?>Profile/removeRequest?id=<?=$profile->getId()?>" role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue font-main-color" type="button">
+				      		<i class="fa fa-check"></i> <span> Friend</span>
+				    	</a>
+
+						<?php elseif ($diff && $friend_status == $friend::IS_FRIEND_R_FROM_ME):?>
+					    	<a href="<?=$base?>Profile/removeRequest?id=<?=$profile->getId()?>" role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue font-main-color" type="button">
+				      			 <span> Remove Requeste</span>
+				    		</a>
+
+				    	<?php elseif ($diff && $friend_status == $friend::IS_FRIEND_R_TO_ME):?>
+					    	<a href="<?=$base?>Profile/acceptRequest?id=<?=$profile->getId()?>" role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue font-main-color" type="button">
+				      			<span> Accept Requeste</span>
+				    		</a>
+					    <?php endif;?>
 					   </div>
+					
 					</div>
 				</div>
 	        </div><!-- end cover and profile image-->

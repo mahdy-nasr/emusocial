@@ -7,19 +7,31 @@ class Post extends \App\Base
     private $page_id = null;
     private $files_table = 'upload';
     private $id;
+    private $allComments = 0;
     protected $data;
     const IMAGE_TYPE = 'image';
     const VIDEO_TYPE = 'video';
     const FILE_TYPE = 'file';
 
-    public function __construct($data = null)
+    public function __construct($data = null,$allComments=0)
     {
         parent::__construct();
         
+        $this->allComments = $allComments;    
+
         if ($data && is_array($data))
-            $this->getFullPost($data);    
+            $this->getFullPost($data);
+        else if ($data)
+        {
+            $this->loadPostById($data);
+        }
+
     }
 
+    public function setAllComments()
+    {
+        $this->allComments = 1;
+    }
     
 
 
@@ -58,10 +70,10 @@ class Post extends \App\Base
         return $this->db->write("INSERT into event (`date`,`time`,`place`,`title`,`post_id`) VALUES (:eDate, :eTime, :ePlace, :eTitle, :ePost_id)",$event_data);
     }
 
-    public function setUserAndPage($user,$page)
+    public function setUserAndPage($user_id,$page_id)
     {
-        $this->user_id = $user->getId();
-        $this->page_id = $page->getId();
+        $this->user_id = $user_id;
+        $this->page_id = $page_id;
     }
 
     public function createPost($data)
@@ -105,9 +117,39 @@ class Post extends \App\Base
     	return true;
     }
 
-    public function editPost($data)
+    public function deletePost($post_id, $user_id)
     {
+        $res = $this->db->readOne("SELECT * from post where id = ?",[$post_id]);
 
+        if (!$res || $res['user_id'] != $user_id) {
+            return false;
+        }
+
+
+        $res = $this->db->read("SELECT * from upload where post_id = ?",[$post_id]);
+       //    var_dump($res);die;
+        if ($res) {
+            foreach ($res as $row) {
+                $path = dirname($this->Config::get('base/document')).'/public/'.$row['link'];
+                if(file_exists($path))
+                    unlink($path);
+            }
+        }
+     
+      
+        $queries = [
+                        ["DELETE from upload where post_id = ?",[$post_id]],
+                        ["DELETE from event where post_id = ?",[$post_id]],
+                        ["DELETE from like_post where post_id = ?",[$post_id]],
+                        ["DELETE from post where id = ?",[$post_id]]
+                    ];
+        return $this->db->runTransaction($queries);
+    
+    }
+
+    public function hasMultibleFiles()
+    {
+        return ((  count($this->data['videos']) +  count($this->data['images']) + count($this->data['files']) ) > 1 );
     }
 
     private function loadEvent()
@@ -128,12 +170,15 @@ class Post extends \App\Base
         $files  = [];
         if ($res) {
             foreach ($res as $row) {
+                $row['name'] = substr($row['link'],strpos($row['link'],'_')+1);
                 if ($row['type'] == self::IMAGE_TYPE )
                     $images[] = $row;
                 else if ($row['type'] == self::VIDEO_TYPE)
                     $videos[] = $row;
                 else
                     $files[] = $row;
+
+
             }
         }
 
@@ -146,9 +191,11 @@ class Post extends \App\Base
     private function loadComments()
     {
         $comments = new CommentCollection($this->id);
-        $this->data['comments'] = $comments->getComments(); 
+        $this->data['comments'] = $comments->getComments($this->allComments); 
+        $this->data['all_comments'] = $comments->countAllComments();
     }
-    public function getPostById($id)
+
+    public function loadPostById($id)
     {
         $res = $this->db->readOne("SELECT post.* from post where post.id = ?",[$id]);
         if (!$res)
@@ -156,10 +203,11 @@ class Post extends \App\Base
         $this->data = $res;
         $this->id = $this->data['id'];
 
-        $this->getEvent();
-        $this->getFiles();
-        $this->getComments();
-        $this->getLikes();
+        $this->loadEvent();
+        $this->loadFiles();
+        $this->loadComments();
+        $this->loadLikes();
+        $this->loadUser();
         return ;
     }
 
@@ -190,8 +238,8 @@ class Post extends \App\Base
 
     private function loadLikes()
     {
-        $res = $this->db->read("SELECT like_post.*, CONCAT(user.first_name,' ',user.last_name) as user_name from like_post left join user on like_post.user_id = user.id where post_id = {$this->id}");
-       $this->data['likes'] = ($res)? $res: []; 
+        
+       $this->data['likes'] = new Like('post',$this->getId());
        return;
     }
 
@@ -201,7 +249,7 @@ class Post extends \App\Base
         if (!$data)
             $this->data['user'] = [];
         else 
-            $this->data['user'] = $data;
+            $this->data['user'] = new User($data);
         return true;
     }
 

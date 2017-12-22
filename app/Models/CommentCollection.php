@@ -13,11 +13,21 @@ class CommentCollection extends \App\Base
         	$this->post_id = $post_id;
     }
 
-    public function getComments($start = 0, $limit = 10)
+    public function countAllComments()
+    {
+        return  count($this->db->read("SELECT comment.id from comment  where post_id = {$this->post_id} and parent_id = 0"));
+    }
+
+    public function getComments($all)
     {
         if ($this->comments)
             return $this->comments;
-    	$data = $this->db->read("SELECT user.*,comment.* from comment left join user  on user.id = comment.user_id  where post_id = {$this->post_id} and parent_id = 0 ORDER BY comment.created_at DESC LIMIT $start,$limit");
+        $limit = "";
+        if (!$all) {
+            $limit = "LIMIT 0,3";
+        }
+
+    	$data = $this->db->read("SELECT user.*,comment.* from comment left join user  on user.id = comment.user_id  where post_id = {$this->post_id} and parent_id = 0 ORDER BY comment.created_at DESC ".$limit);
        // var_dump($data[0]);die;
         $res = [];
         if ($data) {

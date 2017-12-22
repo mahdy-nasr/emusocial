@@ -18,6 +18,7 @@ class Admin extends Base_controller
         $this->instructor =  new \App\Models\Instructor();
         $this->student = new \App\Models\Student();
         $this->user =  new \App\Models\User();
+        $this->usersCollection = new \App\Models\UserCollection();
         $this->course = new \App\Models\Course();
     }
 
@@ -287,8 +288,8 @@ class Admin extends Base_controller
             $data['course']  = $this->course->getCourse((int)$this->args[0]);
         else
             $data['course'] = $this->course->getCourse((int)$data['courses'][0]['id']);
-        $data['users'] = $this->user->getUsersCourse($data['course']['page_id']);
-        $data['admins'] = $this->user->getAdminUsersCourse($data['course']['page_id']);
+        $data['users'] = $this->usersCollection->getUsersCourse($data['course']['page_id']);
+        $data['admins'] = $this->usersCollection->getAdminUsersCourse($data['course']['page_id']);
         echo $this->view->load('admin:course_registration',$data);
 
     }

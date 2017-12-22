@@ -9,7 +9,7 @@ class Session
     }
     public static function exists($name)
     {
-        return (isset($_SESSION[$name]))?true:false;
+        return (isset($_SESSION[$name]) && $_SESSION[$name])?true:false;
     }
     public static function delete($name)
     {

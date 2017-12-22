@@ -4,6 +4,7 @@ namespace App\Models;
 class Page extends \App\Base
 {
     public $id;
+    protected $data;
     const COURSE_TYPE = 1;
     const OTHER_TYPE = 2;
     public function __construct($page_id=null)
@@ -55,12 +56,23 @@ class Page extends \App\Base
         return $this->db->write("insert into page_user (page_id,user_id,instructor_id) values ({$this->id},{$user_id},{$instructor_id})");
     }
 
-    public function getUserPage($user)
+    public function getCoverPicture()
+    {
+        $coverPic = \App\Helpers\Config::get("picture/profile_cover");
+        if(!empty($this->data['cover_picture'])) {
+            $coverPic = $this->data['cover_picture'];
+        }
+        return $coverPic;
+    }
+
+    public function getUserPage($user = null)
     {
 
-        $data =  $this->db->readOne("SELECT page.* from page where user_id = ?",[$user['id']]);
+            $id = (!$user)?$this->id:$user['id'];
+        $data =  $this->db->readOne("SELECT page.* from page where user_id = ?",[$id]);
         $this->id = $data['id'];
-        return $data;
+        $this->data = $data;
+        return $this;
     }
 
     public function getPageCourse()

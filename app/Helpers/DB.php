@@ -39,6 +39,24 @@ class DB
 		$this->hasTransaction = 1;
 		$this->db->beginTransaction();
 	}
+
+	public function runTransaction($queries)
+	{
+		$this->db->beginTransaction();
+		$done = true;
+		try {
+			foreach ($queries as $query) {
+				$this->write($query[0],$query[1]);
+			}
+			$this->db->commit();
+		}
+		catch(PDOException $e) {
+			$done = false;
+			$this->db->rollBack();
+		}
+		return $done;
+
+	}
 	public function endTransaction()
 	{
 		$this->db->rollBack();

@@ -5,27 +5,51 @@ class User extends \App\Base
 {
     private $cookieName = "user_token";
     public $data = null;
-    public $id;
+    public $id = null;
     public $type = null;
     
-    public function __construct()
+    public function __construct($data_or_id = null)
     {
         parent::__construct();
-        $this->setUserType();
+        $this->setUserType('student');
+
+        if (is_array($data_or_id)) {
+            $this->data = $data_or_id;
+            $this->id = $data_or_id['id'];
+        } else {
+            $this->id = $data_or_id;
+            $this->loadUser();
+        }
     }
 
+    public function getProfilePicture()
+    {
+        $tmp = "img/Profile/".$this->data['gender']."-avatar.png";
+        if (!empty($this->data['profile_picture']))
+            $tmp = $this->data['profile_picture'];
+        return $tmp;
+    }
 
+    public function getName()
+    {
+        return $this->data['first_name'].' '.$this->data['last_name'];
+    }
+
+    public function getFullName()
+    {
+        return $this->data['title'].' '.$this->getName();
+    }
     public function isLoggedIn()
     {
         if ($this->Session::exists($this->cookieName)) {
             $this->id = (int) $this->Session::get($this->cookieName);
-            $this->getUserData();
+            $this->loadUser();
             return true;
         } else if ($this->Cookie::exists($this->cookieName)) {
             $res = $this->db->readOne("select * from token where `token`.`token` = ?", [$this->Cookie::get($this->cookieName)]);
             $this->Session::put($this->cookieName, (int)$res['user_id']);
             $this->id = (int)$res['user_id'];
-            $this->getUserData();
+            $this->loadUser();
             return true;
         
         } else {
@@ -37,11 +61,21 @@ class User extends \App\Base
     {
         return $this->id;
     }
+
+   
+
+    private function loadUser()
+    {
+       if ($this->data != null || !$this->id)
+        return $this;
+
+        $this->data = $this->db->readOne("SELECT user.*,department.name as department_name,page.id as page_id from user left join department on user.department_id = department.id left join page on user.id = page.user_id where user.id = {$this->id}");
+        return $this;
+    }
     public function getUserData()
     {
       
-        if ($this->data == null)
-            $this->data = $this->db->readOne("select user.*,department.name as department_name from user left join department on user.department_id = department.id where user.id = {$this->id}");
+        $this->loadUser();
         return $this->data;
     }
     public function getUserType() 
@@ -101,7 +135,7 @@ class User extends \App\Base
         if (md5($correctPassword[1].$password)!= $correctPassword[0])
             return false;
         $this->id = $res['id'];
-        $this->getUserData();
+        $this->loadUser();
         $token = md5($email.$res['id']);
         $this->db->write("delete from token where user_id = ".$this->id);
         if ($this->db->write("INSERT INTO `token` (`user_id`, `token`) VALUES ({$res['id']},'$token')")) {
@@ -140,54 +174,7 @@ class User extends \App\Base
 
     }
 
-    public function getUsersCourse($id)
-    {
-        $res = $this->db->read("select user_id from page_user where page_id = ?",[$id]);
-        $stdIds = "";
-        foreach ($res as $key => $value) {
-            $stdIds.= ", ".$value['user_id'];
-        }
-       
-        
-        $stdIds = trim($stdIds,',');
-
-        if (!empty($stdIds))
-
-            $data = $this->db->read("select user.*, identification as student_number ,department.name as department from user left join department on department_id = department.id  where user.id IN ($stdIds)");
-        else
-            $data = [];
-
-
-     
-        return $data;
-    }
-
-    public function getAdminUsersCourse($id) {
-        $res = $this->db->read("select user_id from page_admin where page_id = ?",[$id]);
-        $stdIds = "";
-        foreach ($res as $key => $value) {
-            $stdIds.= ", ".$value['user_id'];
-        }
-       
-        
-        $stdIds = trim($stdIds,',');
-
-        if (!empty($stdIds))
-            $data = $this->db->read("select user.*, identification as student_number ,department.name as department from user left join department on department_id = department.id  where user.id IN ($stdIds)");
-        else
-            $data = [];
-
-     
-        return $data;
-    }
-
-    public function getUsers($ids)
-    {
-        if(empty($ids))
-            return [];
-        $data = $this->db->read("select user.*,department.name as department_name from user left join department on user.department_id = department.id where user.id IN ($ids)");
-        return $data;
-    }
+  
 
 
 }

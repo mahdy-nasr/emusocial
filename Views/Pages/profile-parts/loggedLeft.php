@@ -5,12 +5,12 @@
 						<div class="panel-body">
 						  <ul class="list-unstyled">
 						    
-						    <li><i class="fa fa-user"></i><?=ucwords($user['title'].' '.$user['first_name'].' '.$user['last_name'])?></li>
-						    <li><i class="fa fa-id-card-o"></i>Student Number: <?=$user['identification']?></li>
-						    <li><i class="fa fa-university"></i>Department: <?=$user['department_name']?></li>
-						    <li><i class="fa fa-transgender"></i>Gender: <?=ucfirst($user['gender'])?></li>
-						    <?php if(strlen($user['date_of_birth'])>3):?>
-						    <li><i class="fa fa-calendar"></i>Born on <?=$user['date_of_birth']?></li>
+						    <li><i class="fa fa-user"></i><?=ucwords($profile->getFullName())?></li>
+						    <li><i class="fa fa-id-card-o"></i>Student Number: <?=$profile->getIdentification()?></li>
+						    <li><i class="fa fa-university"></i>Department: <?=$profile->getDepartmentName()?></li>
+						    <li><i class="fa fa-transgender"></i>Gender: <?=ucfirst($profile->getGender())?></li>
+						    <?php if(strlen($profile->getDateOfBirth())>3):?>
+						    <li><i class="fa fa-calendar"></i>Born on <?=$profile->getDateOfBirth()?></li>
 							<?php endif;?>
 						  </ul>
 						</div>
@@ -62,17 +62,13 @@
 						</div>
 						<div class="panel-body text-center">
 						  <ul class="friends">
-						  <?php foreach ($friends as $friend) {
-						  	if(empty($friend['profile_picture']))
-						  		$friend['profile_picture'] = "img/Profile/".$friend['gender']."-avatar.png";
-						  	$friend['name'] = $friend['first_name'].' '.$friend['last_name']
-						  	?>
+						  <?php foreach ($friends as $friend) {?>
 						    <li>
 						        <a href="#">
-						            <img src="<?=$base.$friend['profile_picture']?>"  title="<?=$friend['name']?>" class="img-responsive ">
+						            <img src="<?=$base.$friend->getProfilePicture()?>"  title="<?=$friend->getName()?>" class="img-responsive ">
 						 
 						        </a>
-						        <h6 ><?=$friend['name']?></h6>
+						        <h6 ><?=$friend->getName()?></h6>
 						    </li>
 						    <?php }?>
 						  </ul>
