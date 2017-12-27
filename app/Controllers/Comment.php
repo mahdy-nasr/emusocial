@@ -38,10 +38,10 @@ class Comment extends Base_controller
     {
         if (!$this->user->isLoggedIn())
             return $this->redirect('home/login'); 
-        if (!isset($this->post_data['post_id'])) 
+        if (!isset($this->post_data['comment_id'])) 
             return json_encode(["RC"=>400]);
 
-        $comment = new \App\Models\Comment($this->post_data['post_id']);
+        $comment = new \App\Models\Comment($this->post_data['comment_id']);
 
 
 
@@ -54,10 +54,10 @@ class Comment extends Base_controller
     {
        if (!$this->user->isLoggedIn())
             return $this->redirect('home/login'); 
-        if (!isset($this->post_data['post_id'])) 
+        if (!isset($this->post_data['comment_id'])) 
             return json_encode(["RC"=>400]);
 
-        $comment = new \App\Models\Comment($this->post_data['post_id']);
+        $comment = new \App\Models\Comment($this->post_data['comment_id']);
 
      
 

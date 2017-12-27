@@ -15,8 +15,6 @@ class likeApi extends API
             return $this->forbiddenResponse();
         }
 
-        if (!$user->isLoggedIn())
-            return $this->redirect('home/login'); 
         if (!isset($this->data['post_id'])) 
             return json_encode(["RC"=>400]);
 
@@ -25,7 +23,7 @@ class likeApi extends API
        
 
         $post->getLikes()->doLike($user->getId());
-        return json_encode(['RC'=>200,'count'=>$post->getLikes('count')]);
+        return $this->json(['RC'=>200,'count'=>$post->getLikes('count')]);
     }
 
     public function dislikePost()
@@ -42,7 +40,7 @@ class likeApi extends API
 
 
         $post->getLikes()->removeLike($user->getId());
-        return json_encode(['RC'=>200,'count'=>$post->getLikes('count')]);
+        return $this->json(['RC'=>200,'count'=>$post->getLikes('count')]);
     }
     
     public function likeComment()
@@ -51,15 +49,15 @@ class likeApi extends API
             return $this->forbiddenResponse();
         }
 
-        if (!isset($this->data['post_id'])) 
+        if (!isset($this->data['comment_id'])) 
             return json_encode(["RC"=>400]);
 
-        $comment = new \App\Models\Comment($this->data['post_id']);
+        $comment = new \App\Models\Comment($this->data['comment_id']);
 
 
 
         $comment->getLikes()->doLike($user->getId());
-        return json_encode(['RC'=>200,'count'=>$comment->getLikes('count')]);
+        return $this->json(['RC'=>200,'count'=>$comment->getLikes('count')]);
     }
 
     public function dislikeComment()
@@ -68,15 +66,15 @@ class likeApi extends API
             return $this->forbiddenResponse();
         }
 
-        if (!isset($this->data['post_id'])) 
+        if (!isset($this->data['comment_id'])) 
             return json_encode(["RC"=>400]);
 
-        $comment = new \App\Models\Comment($this->data['post_id']);
+        $comment = new \App\Models\Comment($this->data['comment_id']);
 
      
 
         $comment->getLikes()->removeLike($user->getId());
-        return json_encode(['RC'=>200,'count'=>$comment->getLikes('count')]);
+        return $this->json(['RC'=>200,'count'=>$comment->getLikes('count')]);
 
     }
 

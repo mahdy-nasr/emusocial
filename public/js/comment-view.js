@@ -20,7 +20,7 @@ var comment = new function()
 			$.ajax({
 					  type: "POST",
 					  url: this.base+"comment/"+func,
-					  data: {post_id: id},
+					  data: {comment_id: id},
 					  cache: false,
 					  dataType: "json",
 					  success: function(obj){

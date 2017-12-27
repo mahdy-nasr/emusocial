@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-class Like extends \App\Base
+class Like extends \App\Base implements \JsonSerializable
 {
     protected $entity_id;
     protected $entity_id_name;
@@ -16,8 +16,10 @@ class Like extends \App\Base
         $this->table_name = 'like_'.$name;
         $this->loadLikes();
     }
-
-   
+    
+    public function jsonSerialize() {
+        return $this->data;
+    }
 
     private function loadLikes()
     {

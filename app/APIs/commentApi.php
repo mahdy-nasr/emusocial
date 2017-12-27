@@ -18,13 +18,13 @@ class commentApi extends API
 
         //$page = new \App\Models\Page($this->user->getPageId());
         $comment = new \App\Models\Comment();
-        $this->post_data['user_id'] = $user->getId();
+        $this->data['user_id'] = $user->getId();
 
-        if (!$comment->addComment($this->post_data)) {
-            return json_encode(['RC'=>400,'msg'=>'problem']);
+        if (!$comment->addComment($this->data)) {
+            return $this->json(['RC'=>400,'msg'=>'problem']);
         }
   
-        return  json_encode(['RC'=>200]);
+        return  $this->json(['RC'=>200]);
     }
 
     public function deleteComment()
@@ -33,16 +33,16 @@ class commentApi extends API
             return $this->forbiddenResponse();
         }
 
-        if (!isset($this->args[0])) {
-            return json_encode(["RC"=>400]);
+        if (!isset($this->data['comment_id'])) {
+            return $this->json(["RC"=>400]);
         }
 
        
 
-        $comment = new \App\Models\Comment($this->args[0]);
-        $comment->deleteComment($this->args[0], $user->getId());
+        $comment = new \App\Models\Comment($this->data['comment_id']);
+        $comment->deleteComment($this->data['comment_id'], $user->getId());
 
-        return  json_encode(["RC"=>200,"post_id"=>$comment->getPostId()]);
+        return  $this->json(["RC"=>200,"post_id"=>$comment->getPostId()]);
 
     }
     
@@ -56,12 +56,12 @@ class commentApi extends API
         $data['user'] = $this->user;
         $data['type'] = 'profile';
         if(!$this->request->getQueryParam('post_id'))
-             return json_encode(["RC"=>400]);
+             return $this->json(["RC"=>400]);
 
         $data['post'] = new \App\Models\Post($this->request->getQueryParam('post_id'),1);
       
 
-        return   json_encode(["RC"=>200,"records"=>$data['post']->getComments()]);
+        return   $this->json(["RC"=>200,"records"=>$data['post']->getComments()]);
     }
 
  

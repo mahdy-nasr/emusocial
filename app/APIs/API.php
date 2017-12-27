@@ -43,5 +43,10 @@ abstract class  API extends \App\Base
         $result = ['RC'=>403,'msg'=>"forbidden requist, this API require authintication!"];
         return $this->response->withJson($result, 200);
     }
+
+    public function json($data)
+    {
+        return $this->response->withJson($data, 200);
+    }
     
 }
