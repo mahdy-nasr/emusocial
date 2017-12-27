@@ -65,10 +65,10 @@ class Page extends \App\Base
         return $coverPic;
     }
 
-    public function getUserPage($user = null)
+    public function getUserPage($user_id)
     {
 
-            $id = (!$user)?$this->id:$user['id'];
+            $id = $user_id;
         $data =  $this->db->readOne("SELECT page.* from page where user_id = ?",[$id]);
         $this->id = $data['id'];
         $this->data = $data;

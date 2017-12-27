@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-class Post extends \App\Base
+class Post extends \App\Base implements \JsonSerializable
 {
     private $user_id = null;
     private $page_id = null;
@@ -26,6 +26,10 @@ class Post extends \App\Base
             $this->loadPostById($data);
         }
 
+    }
+
+    public function jsonSerialize() {
+        return $this->data;
     }
 
     public function setAllComments()
@@ -114,7 +118,7 @@ class Post extends \App\Base
 	    }
 
 
-    	return true;
+    	return $this->id;
     }
 
     public function deletePost($post_id, $user_id)

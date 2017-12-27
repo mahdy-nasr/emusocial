@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-class CommentCollection extends \App\Base
+class CommentCollection extends \App\Base implements \JsonSerializable
 {
     private $post_id;
     private $id;
@@ -11,6 +11,10 @@ class CommentCollection extends \App\Base
         parent::__construct();
         if ($post_id)
         	$this->post_id = $post_id;
+    }
+
+    public function jsonSerialize() {
+        return $this->comments;
     }
 
     public function countAllComments()
@@ -38,5 +42,7 @@ class CommentCollection extends \App\Base
     	$this->comments = $res;
     	return $this->comments;
     }
+
+
 
 }

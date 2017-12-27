@@ -92,13 +92,13 @@ class Post extends Base_controller
         else 
             $profile = $this->user;
 
-         $page = new \App\Models\Page($profile->getId());
+         $page = new \App\Models\Page();
  
        
         $data = [];
         $data['profile'] = $profile;
         $data['user'] = $this->user;
-        $data['page'] = $page->getUserPage();
+        $data['page'] = $page->getUserPage($profile->getId());
         $data['type'] = 'profile';
         $posts_collection = new \App\Models\PostCollection($page->getId());
         

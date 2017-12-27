@@ -8,7 +8,7 @@ class loginStudent extends API
         parent::__construct($request, $response, $params);
     }
 
-    public function run()
+    public function runPost()
     {
         
         $student = new \App\Models\Student();

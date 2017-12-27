@@ -16,9 +16,11 @@ class User extends \App\Base
         if (is_array($data_or_id)) {
             $this->data = $data_or_id;
             $this->id = $data_or_id['id'];
-        } else {
+        } else if ($data_or_id) {
             $this->id = $data_or_id;
             $this->loadUser();
+        } else {
+            $this->isLoggedIn();
         }
     }
 
@@ -109,7 +111,7 @@ class User extends \App\Base
             return false;
 
         $this->id = (int)$res['user_id'];
-        $this->getUserData();
+        $this->loadUser();
         return true;
 
     }

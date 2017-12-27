@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-class Comment extends \App\Base
+class Comment extends \App\Base implements \JsonSerializable
 {
     protected $data;
     protected $id;
@@ -16,6 +16,10 @@ class Comment extends \App\Base
         else if ($data)
         	$this->loadFullById($data,$with_replies);
 
+    }
+
+    public function jsonSerialize() {
+        return $this->data;
     }
     private function getCommentAttributes()
     {

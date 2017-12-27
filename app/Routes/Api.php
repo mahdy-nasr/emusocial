@@ -7,11 +7,30 @@ $app->get('/api/students', function ( $request,  $response,$arguments) {
 
 $app->post('/api/student/login[/]', function ( $request,  $response,$arguments) {
 
-    return (new \App\APIs\loginStudent($request, $response, $arguments))->run();
+    return (new \App\APIs\loginStudent($request, $response, $arguments))->runPost();
 });
 
 $app->post('/api/upload/{type}[/]', function ($request, $response, $arguments) {
 
-    return (new \App\APIs\uploadApi($request, $response, $arguments))->run();
+    return (new \App\APIs\uploadApi($request, $response, $arguments))->runPost();
+
+});
+
+$app->post('/api/createProfilePost[/]', function ($request, $response, $arguments) {
+
+    return (new \App\APIs\postApi($request, $response, $arguments))->createProfile();
+
+});
+
+$app->get('/api/profileTimeline[/]', function ($request, $response, $arguments) {
+
+    return (new \App\APIs\postApi($request, $response, $arguments))->getProfilePosts();
+
+});
+
+
+$app->post('/api/deletePost[/]', function ($request, $response, $arguments) {
+
+    return (new \App\APIs\postApi($request, $response, $arguments))->deletePost();
 
 });

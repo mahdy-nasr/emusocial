@@ -8,7 +8,7 @@ class uploadApi extends API
         parent::__construct($request, $response, $params);
     }
 
-    public function run()
+    public function runPost()
     {
 
         if (!$this->authorized()) {

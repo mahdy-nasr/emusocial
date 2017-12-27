@@ -28,7 +28,7 @@ public function index()
         else 
             $profile = $this->user;
 
-        $page = new \App\Models\Page($profile->getId());
+        $page = new \App\Models\Page();
         $course = new \App\Models\Course();
         $friend = new \App\Models\Friend($profile->getId());
         $users = new \App\Models\UserCollection();
@@ -37,7 +37,7 @@ public function index()
         $data['user'] = $this->user;
 
         $data['profile'] = $profile;     
-        $data['page'] = $page->getUserPage();
+        $data['page'] = $page->getUserPage($profile->getId());
         $data['type'] = 'profile';
         $posts_collection = new \App\Models\PostCollection($page->getId());
         $data['posts'] = $posts_collection->getPagePosts();

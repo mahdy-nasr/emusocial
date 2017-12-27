@@ -3,11 +3,11 @@ namespace App;
 
 abstract  class Base
 {
-	public $Config;
-	public $db;
-	public $Session;
-	public $Cookie;
-	public $view;
+	protected $Config;
+	protected $db;
+	protected $Session;
+	protected $Cookie;
+	protected $view;
 	public function __construct() 
 	{
 		$this->Config = new Helpers\Config;

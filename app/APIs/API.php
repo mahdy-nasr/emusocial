@@ -29,9 +29,13 @@ abstract class  API extends \App\Base
         }
         if (!$user->isLoggedIn()) {
             $token = isset($this->data['ACCESSTOKEN'])  ? $this->data['ACCESSTOKEN'] : $_SERVER['HTTP_ACCESSTOKEN'];
-            return $user->isLoggedIn()||$user->authinticate($token);
+            if ($user->authinticate($token))
+                return $user;
+            return false;
         }
-        return $user->isLoggedIn();
+        
+        $user->isLoggedIn();
+        return $user;
     }
 
     public function forbiddenResponse() 

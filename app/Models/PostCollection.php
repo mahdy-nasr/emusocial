@@ -1,16 +1,20 @@
 <?php
 namespace App\Models;
 
-class PostCollection extends \App\Base
+class PostCollection extends \App\Base implements \JsonSerializable
 {
     
-    private $posts;
+    protected $posts;
     private $page_id;
     public function __construct($page_id = null)
     {
         parent::__construct();
         if ($page_id)
             $this->page_id = $page_id;
+    }
+
+    public function jsonSerialize() {
+        return $this->posts;
     }
 
     public function setPageId($id)
