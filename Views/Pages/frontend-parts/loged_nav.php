@@ -14,7 +14,7 @@
           </button>
           <a class="navbar-brand" href="index.html">
             <img src="<?=$base?>img/emu-logo.png" class="img-logo">
-            <b>EMU Social Network</b>
+            <b style="font-weight:50;">EMU Social Network</b>
           </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
@@ -34,16 +34,29 @@
 			  </form>
 			</div>        
 			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="profile.html">
+				<li class="active dropdown" id='sdrop-nav'>
+					<a href="#"  class='dropdown-toggle' data-toggle="dropdown">
 						<?=$user->getName()?>
 						<img src="<?=$user->getProfilePicture()?>" class="img-nav">
+						<span class="caret"></span>
 					</a>
+					<style type="text/css">
+
+					</style>
+					<ul class="dropdown-menu back-main-color"  >
+					    <li><a href="<?=$base?>profile">Profile timeline</a></li>
+					    <li><a href="#">About</a></li>
+					    <li class="divider"></li>
+					    <li><a href="<?=$base?>home/logout">Logout</a></li>
+					</ul>
+
 				</li>
-				<li class="active"><a href="home.html"><i class="fa fa-bars"></i>&nbsp;Home</a></li>
+				<li class=""><a href="<?=$base?>"><i class="fa fa-home"></i>&nbsp;Home</a></li>
 				<li><a href="messages.html"><i class="fa fa-comments"></i></a></li>
 				<li><a href="notifications.html"><i class="fa fa-globe"></i></a></li>
-				<li><a href="#" class="nav-controller"><i class="fa fa-user"></i>Users</a></li>
+				<!--li class="active"><a href="home.html"><i class="fa fa-bars"></i>&nbsp;Home</a></li-->
+
+				<li><a href="#" class="nav-controller"><i class="fa fa-user"></i> Chat</a></li>
 			</ul>
         </div>
       </div>

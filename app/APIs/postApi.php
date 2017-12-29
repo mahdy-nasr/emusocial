@@ -63,7 +63,7 @@ class postApi extends API
         $data['posts'] = $posts_collection->getPagePosts($start, $limit);
         $data['profile'] = $profile;
         //$data['user'] = $user;
-        $data['page'] = $page->getUserPage();
+        $data['page'] = $page->getUserPage($profile->getId());
        // $data['type'] = 'profile';
         
 

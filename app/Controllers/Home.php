@@ -21,7 +21,12 @@ class Home extends Base_controller
 
     public function index()
     {
-        die("404");
+        if (!$this->user->isLoggedIn()){
+            return $this->redirect("/home/login/");
+        }
+        $data = [];
+        $data['user'] = $this->user;
+        echo $this->view->load('frontend:home', $data);
         
     }
 
@@ -38,6 +43,16 @@ class Home extends Base_controller
             return $this->redirect("/home/login/");
         } else {
             echo $this->view->load('login');
+        }
+    }
+
+    public function logout()
+    {
+        if (!$this->user->isLoggedIn()){
+            return $this->redirect("/home/login/");
+        } else {
+            $this->user->logout();
+            return $this->redirect("/home/login/");
         }
     }
 }

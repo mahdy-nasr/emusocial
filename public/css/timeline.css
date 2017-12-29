@@ -21,6 +21,28 @@ body{
 }
 
 /* ====================== top navbar =============*/
+
+
+ .cover-container-course {
+
+    height:250px;
+    margin-top:-25px;
+    
+    position:relative;
+    background: linear-gradient(90DEG,#274380, #fcb131);
+}
+.cover-container-course img{
+  max-width: 80%;position: relative;top:55px;left:30px;
+            border-right: 2px solid #fff; padding-right: 20px;
+            
+}
+
+.cover-title {
+  position:relative;text-align: left;top:70px;color:#fff;
+  font-size: 27px;
+}
+
+
 .navbar-principal {
     background-color:#fff;
     background-color: var(--main-color);
@@ -38,7 +60,7 @@ body{
 .navbar-principal .navbar-brand li a:visited,
 .navbar-principal .navbar-nav li a {
   color: #fff;
-  font-weight: 100;
+  font-weight:100;
   font-family: 'Anton', sans-serif;;
 }
 
@@ -55,6 +77,23 @@ body{
   color: #fff;
   background: rgba(0, 0, 0, .2);
 }
+
+li#sdrop-nav a
+{
+  color:#fff;
+  background:none;
+}
+li#sdrop-nav.active a.dropdown-toggle
+{
+  color:#fff;
+   background: rgba(0, 0, 0, .2);
+}
+
+li#sdrop-nav a:hover, li#sdrop-nav a:active 
+{
+   color: #fff;
+  background: rgba(0, 0, 0, .2);
+} 
 .navbar-cover .navbar-nav li a:hover{
   background-color: #f9f9f9;
 }

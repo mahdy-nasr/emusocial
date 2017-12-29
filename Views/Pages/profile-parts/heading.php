@@ -7,7 +7,7 @@
 				<div class="cover-container" style="background-image:url(<?=$base.$page->getCoverPicture()?>);">
 					<div class="social-avatar" >
 						
-					   <img class="img-avatar" src="<?=$profile->getProfilePicture()?>" height="100" width="100">
+					   <img class="img-avatar" src="<?=$base.$profile->getProfilePicture()?>" height="100" width="100">
 					   <h4 class="fg-white text-center text-shadow"><?=$profile->getFullName()?></h4>
 					   <h5 class="fg-white text-center" style="opacity:0.8;"></h5>
 					   <hr class="border-black75 text-shadow" style="border-width:2px;" >
