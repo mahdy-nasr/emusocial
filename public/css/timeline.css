@@ -43,6 +43,7 @@ body{
 }
 
 
+
 .navbar-principal {
     background-color:#fff;
     background-color: var(--main-color);
@@ -1480,9 +1481,33 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 {
   width:70%; background:#ff7070;color:#fff; margin:50px auto; border-radius:5px;display: none;
 }
-.error-p
+.error-div-fixed
+{
+  width:70%; background:#ff7070;color:#fff; margin:10px auto; border-radius:5px;display: none;
+  padding: 2px;
+}
+
+.error-div .error-p
 {
   text-align:center; font-size:20px;
+}
+
+.error-div-fixed .error-p
+{
+  text-align:center; font-size:18px;
+  border-bottom: 1px solid #fff;
+}
+
+.error-div-fixed p.error-p a
+{
+
+  margin-left:30px;color:#fff;
+
+}
+
+p.error-d {
+  font-size:16px;
+  margin-left: 10px;
 }
 .link
 {
@@ -1600,6 +1625,50 @@ ul.opt-del a
 .announcement-class {
     font-size: 24px; border: 1px solid #000;padding:5px;border-radius:5px;margin-right: 50px;
   }
+
+
+ul.event-ul li{
+              border-bottom:1px solid gray;
+           
+              text-decoration: none;
+              color:#3d3838 !important;
+              margin:3px;padding:5px;
+            }
+.user-detail .panel-body .event-ul li:hover i {
+  color:#000;
+  margin-right: 5px;
+}
+        
+ul.event-ul li:hover {
+              background-color: var(--main-color-light);
+              color:black;
+}
+
+
+.numbers-div div.row {
+  margin:0;
+  width:100%;
+}
+.numbers-div div.row div.r {
+  border-right:1px solid gray;
+
+}
+.numbers-div div.row div.r {
+  border-right:1px solid gray;
+}
+.numbers-div div.row div.b {
+  border-bottom:1px solid gray;
+}
+.numbers-div div.row div.col-xs-6 h4 {
+  text-align: center;
+  font-size: 16px;
+  color: var(--main-color);
+}
+
+.numbers-div div.row div.col-xs-6 p {
+  text-align: center;
+  font-size: 24px;
+}
 
 
 

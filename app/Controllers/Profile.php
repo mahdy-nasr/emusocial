@@ -29,7 +29,7 @@ public function index()
             $profile = $this->user;
 
         $page = new \App\Models\Page();
-        $course = new \App\Models\Course();
+        $course = new \App\Models\Course_Collection();
         $friend = new \App\Models\Friend($profile->getId());
         $users = new \App\Models\UserCollection();
 
@@ -39,6 +39,8 @@ public function index()
         $data['profile'] = $profile;     
         $data['page'] = $page->getUserPage($profile->getId());
         $data['type'] = 'profile';
+        $data['referer'] = '/profile?id='.$profile->getId();
+        $data['post_page_id'] = $this->user->getPageId();
         $posts_collection = new \App\Models\PostCollection($page->getId());
         $data['posts'] = $posts_collection->getPagePosts();
       

@@ -153,7 +153,7 @@ class Post extends \App\Base implements \JsonSerializable
 
     public function hasMultibleFiles()
     {
-        return ((  count($this->data['videos']) +  count($this->data['images']) + count($this->data['files']) ) > 1 );
+        return count($this->data['files'])||((  count($this->data['videos']) +  count($this->data['images'])) > 1 );
     }
 
     private function loadEvent()

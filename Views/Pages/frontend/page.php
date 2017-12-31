@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	$base = '<?=$base?>';
-	$profile_id = '<?=$profile->getId()?>';
+	$page_id = '<?=$course->getPageId()?>';
 </script>
 <!-- Modal -->
 <div id="file-preview" class="modal fade" role="dialog">
@@ -31,38 +31,18 @@
 	    <div class="row">
 	    	<div class="col-md-10 no-paddin-xs">
 
-	    		<?php include $this->partPath("page-parts/loggedLeft");?>
+	    		<div class="col-md-4 user-detail no-paddin-xs">
+	    			<?php include $this->partPath("page-parts/loggedLeft");?>
+	    		</div>
 
 	    		<!-- right content-->
-	    		<div class="col-md-7 no-paddin-xs">
+	    		<div class="col-md-8 no-paddin-xs">
 	    			 
-	    			 <?php 
-	    			 if ($profile->getId() == $user->getId()) {
-	    			 	include $this->partPath("frontend-parts/post-form");
-	    			 }
-	    			 ?>
-	    			 <div id='post-cont'>
-
-	    			 <?php include $this->partPath("frontend-parts/post-view");?>
-	    			 </div>
+	    			<?php include($file2);?>
 
 
 
-	    			 <script type="text/javascript" src="<?=$base?>js/post-view.js"></script>
-	    			 <script type="text/javascript" src="<?=$base?>js/comment-view.js"></script>
-	    			 
-	    			 <script type="text/javascript">
-	    			 	post.init({
-	    			 		base:'<?=$base?>',
-	    			 		profile_id:'<?=$profile->getId()?>'
-	    			 	});
-
-	    			 	post.run();
-
-	    			 	comment.init({base:'<?=$base?>'});
-
-	    			 	comment.run();
-	    			 </script>
+	    		
 
 			        
 
@@ -142,9 +122,7 @@
 					      </ul>
 					  </div>
 					</div--><!-- end third post -->
-					<div class="panel panel-white post-load-more panel-shadow text-center" id='id-post-load-more'>
-						<img src="<?=$base?>img/loading-posts.gif" style="max-width:100%;max-height:50px;">
-					</div>
+					
 	    		</div><!-- end right content-->	
 	    	</div>
 	    </div>   

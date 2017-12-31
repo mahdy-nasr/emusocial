@@ -37,7 +37,7 @@
 				<li class="active dropdown" id='sdrop-nav'>
 					<a href="#"  class='dropdown-toggle' data-toggle="dropdown">
 						<?=$user->getName()?>
-						<img src="<?=$user->getProfilePicture()?>" class="img-nav">
+						<img src="<?=$base.$user->getProfilePicture()?>" class="img-nav">
 						<span class="caret"></span>
 					</a>
 					<style type="text/css">

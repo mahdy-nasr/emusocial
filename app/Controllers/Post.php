@@ -18,7 +18,7 @@ class Post extends Base_controller
         $this->user = new \App\Models\User();
     }
 
-    public function createProfilePost()
+    public function createPost()
     {
     	if (!$this->user->isLoggedIn())
     		return $this->redirect('home/login');
@@ -26,14 +26,17 @@ class Post extends Base_controller
 
     	//$page = new \App\Models\Page($this->user->getPageId());
     	$post = new \App\Models\Post();
+        if (!isset($this->post_data['referer'])||!isset($this->post_data['page_id']))
+            return $this->redirect('/');
 
-        $post->setUserAndPage($this->user->getId(), $this->user->getPageId());
+        $post->setUserAndPage($this->user->getId(), $this->post_data['page_id']);
     	if (!$post->createPost($this->post_data)) {
     		$this->Session::flash('error_post','problem adding post!');
     	}
   
-    	return $this->redirect("/Profile");
+    	return $this->redirect($this->post_data['referer']);
     }
+
 
     public function doLike()
     {
@@ -82,6 +85,7 @@ class Post extends Base_controller
         return $this->view->load('frontend-parts/comment-view',$data);
     }
 
+
     public function getProfilePosts()
     {
          if (!$this->user->isLoggedIn())
@@ -117,17 +121,43 @@ class Post extends Base_controller
         if (!isset($this->args[0]) || !isset($this->args[1])) {
             return $this->redirect('/');
         }
+        $post = new \App\Models\Post($this->args[0]);
 
         if ($this->args[1] == 'profile') {
             $referer = "/Profile";
         } else {
-
+             $referer = '/page?page_id='.$post->getPageId();
         }
 
-        $post = new \App\Models\Post();
+        
         $post->deletePost($this->args[0], $this->user->getId());
 
         return $this->redirect($referer);
+    }
+
+    public function getCoursePosts()
+    {
+         if (!$this->user->isLoggedIn())
+             die('no way!');
+
+        if (!$id = $this->request->getQueryParam('id')) 
+            die('no way!');
+
+         $page = new \App\Models\Page($id);
+         $posts_collection = new \App\Models\PostCollection($page->getId());
+
+       
+        $data = [];
+        $data['user'] = $this->user;
+        $data['type'] = 'course';
+        
+
+        if(!$this->request->getQueryParam('start')||!$this->request->getQueryParam('limit'))
+            die('no way!');
+        $data['posts'] = $posts_collection->getPagePosts($this->request->getQueryParam('start'), $this->request->getQueryParam('limit'));
+      
+
+        return $this->view->load('frontend-parts/post-view',$data);
     }
 }
 

@@ -92,6 +92,7 @@ class Instructor extends User
             $salt = time();
 
             $password="'".md5($salt.$data['password']).':'.$salt."'";
+            
 
             $this->db->write('UPDATE `user` SET `password` = '.$password.' where email =\''.$data['email']."'"); 
         }

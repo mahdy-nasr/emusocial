@@ -42,7 +42,7 @@ abstract  class Base
          
 		        foreach ($args as $key) {
                     if (is_array($res)) 
-		                $res = $res[$key];
+		                $res = isset($res[$key])?$res[$key]:null;
 		            else {
                 		$function = str_replace(" ","",ucwords(str_replace("_"," ",(string)$args[0]) ) );
                     

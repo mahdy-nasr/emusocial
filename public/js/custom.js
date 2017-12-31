@@ -23,4 +23,11 @@ $(document).ready(function() {
       err.slideDown(400).delay(2000).slideUp();
 
   }
+
+  if ($(".error-div-fixed")[0]) {
+    err = $($(".error-div-fixed")[0]);
+    //err.fadeIn(1000).delay(2000).fadeOut();
+      err.slideDown(500);
+
+  }
 })

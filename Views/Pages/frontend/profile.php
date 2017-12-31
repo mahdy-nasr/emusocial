@@ -54,6 +54,7 @@
 	    			 <script type="text/javascript">
 	    			 	post.init({
 	    			 		base:'<?=$base?>',
+	    			 		type:'<?=$type?>',
 	    			 		profile_id:'<?=$profile->getId()?>'
 	    			 	});
 

@@ -53,7 +53,7 @@ class commentApi extends API
         }
        
         $data = [];
-        $data['user'] = $this->user;
+        $data['user'] = $user;
         $data['type'] = 'profile';
         if(!$this->request->getQueryParam('post_id'))
              return $this->json(["RC"=>400]);

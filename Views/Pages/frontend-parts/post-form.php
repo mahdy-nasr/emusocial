@@ -7,7 +7,7 @@
 					</script>
 
         			<div class="panel profile-info panel-success">
-			          <form method='post' action="<?=$base?>post/create<?=ucfirst($type);?>Post/?>" id='post_post'>
+			          <form method='post' action="<?=$base?>post/createPost/?>" id='post_post'>
 			              <textarea class="form-control input-lg p-text-area" rows="4" name='text' placeholder="Whats in your mind today?"></textarea>
 			              <div style="width:100%; display:none;margin:0;padding:0;" id='event-div'>
 
@@ -51,9 +51,10 @@
 			              
 			              <input type="hidden" id='file' name='files' value='[]'>
 			              <input type="hidden" id='deleted' name='deleted' value='[]'>
-
-			              
-			              <input type="hidden" id='announcement' name='announcement' value="0">
+			              <input type="hidden" name="referer" value="<?=$referer?>">
+			              <input type="hidden" name="page_id" value="<?=$post_page_id?>">
+			            
+			            	<input type="hidden" id='announcement' name='announcement' value="0">
 			          </form>
 			          <div id="progress" style="display:none;">
 						    <div class="bar" style="width: 0%;"></div>
@@ -72,7 +73,7 @@
 			                  <li><a href="#" onclick="return image();"><i class="fa fa-camera"></i></a></li>
 			                  <li><a href="#" onclick="return video();"><i class=" fa fa-film"></i></a></li>
 			                  <li><a href="#" onclick="return file();"><i class=" fa fa-file-o"></i></a></li>
-			                  <?php if($type == 'course'):?>
+			                  <?php if($user_role == 'i'):?>
 			                  <li><a href="#" onclick="return doDate();"><i class=" fa fa-calendar"></i></a></li>
 			                  <li><a href="#" class="announcement-not-selected" onclick="return announce(this);" ><i class=" fa fa-bullhorn"></i></a></li>
 			              	  <?php endif;?>

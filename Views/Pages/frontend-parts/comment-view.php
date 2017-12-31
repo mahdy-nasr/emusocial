@@ -4,7 +4,7 @@
 
 	<li class="comment">
 		<a class="pull-left" href="#">
-			<img class="avatar" src="<?=$user->getProfilePicture()?>" alt="avatar">
+			<img class="avatar" src="<?=$base.$user->getProfilePicture()?>" alt="avatar">
 		</a>
 		<form class="comment-body" onsubmit="return false;">
 			<input type="text"   name="comment" class="form-control add-comment-input" placeholder="Add a comment...">
@@ -21,7 +21,7 @@
       <?php foreach ($post->getComments() as $comment) {?>
       <li class="comment">
           <a class="pull-left" href="#">
-              <img class="avatar" src="<?=$comment->getUser('profile_picture')?>" alt="avatar">
+              <img class="avatar" src="<?=$base.$comment->getUser('profile_picture')?>" alt="avatar">
           </a>
           <div class="comment-body">
               <div class="comment-heading" style='position: relative;'>
@@ -59,7 +59,7 @@
   	  
 		      	  <li class="comment">
 		              <a class="pull-left" href="#">
-		                  <img class="avatar" src="<?=$user->getProfilePicture();?>" alt="avatar">
+		                  <img class="avatar" src="<?=$base.$user->getProfilePicture();?>" alt="avatar">
 		              </a>
 		              <form class="comment-body" onSubmit="return false;" >
 
@@ -73,7 +73,7 @@
 
 		          <li class="comment">
 			          	<a class="pull-left" href="#">
-			              	<img class="avatar" src="<?=$reply->getUser('profile_picture')?>" alt="avatar">
+			              	<img class="avatar" src="<?=$base.$reply->getUser('profile_picture')?>" alt="avatar">
 			          	</a>
 			          	<div class="comment-body">
 				              <div class="comment-heading" style='position: relative;'>

@@ -179,7 +179,7 @@ class Admin extends \App\Base
         $update[]=isset($data['department_id'])?$data['department_id']:'';
 
         if (isset($data['password'])&&!strlen($data['password'])>3) {
-            $salt = date("D,M,d,Y:G:i");
+            $salt = date("D-M-d-Y-G-i");
             $password=md5($salt.$data['password']).':'.$salt;
             $this->db->write('UPDATE `admin` SET `password` = '.$password.'where email =\''.$data['email']."'"); 
         }

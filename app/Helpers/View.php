@@ -28,17 +28,26 @@ class View
 
     	$base = Config::get('base/url').'/';
 
-        $template = explode(':',$file);
+        $arr = explode(':',$file);
+        //var_dump($arr);die;
        // var_dump($template);
-        if (count($template) == 2) {
-            $file = $this->_viewPath.$template[0]."/".$template[1].'.php';
-            $template = $this->_templatePath.$template[0].'.php';
+        if (count($arr) > 1) {
+            $template = $this->_templatePath.$arr[0].'.php';
+             $file = $this->_viewPath.$arr[0]."/".$arr[1].'.php';
+            $files = [];
+            
+            for($i=2;$i<count($arr);$i++) {
+                $files['file'.$i] = $this->_viewPath.$arr[1]."-parts/".$arr[$i].'.php';
+            }
+            extract($files);
+            
         } else {
-            $template = $this->_viewPath.$template[0].'.php';
+            $template = $this->_viewPath.$arr[0].'.php';
         }
+
         $this->_data = $param;
 
-
+        
 	    extract($param);
 	    ob_start();
 	    include($template);

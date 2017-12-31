@@ -1,9 +1,15 @@
+function ucfirst(string) 
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 var post = new function() 
 {
 	this.start_post = 0;
 	this.limit_post = 10;
 	this.base = '';
 	this.profile_id=0;
+	this.type='profile';
 	
 	this.modal = {
 		title: 'h4.modal-title',
@@ -22,6 +28,7 @@ var post = new function()
 	this.init =  function (obj) {
 		console.log(obj.base);
 		this.base = obj.base;
+		this.type = obj.type;
 		this.profile_id = obj.profile_id;
 	};
 
@@ -49,7 +56,7 @@ var post = new function()
 			id = parseInt($id);
 			ans = window.confirm('do you want delete this post?');
 			if (ans)
-			window.location = this.base+"post/deletePost/"+id+"/profile";
+			window.location = this.base+"post/deletePost/"+id+"/"+this.type;
 			return false;
 		}
 
@@ -92,7 +99,7 @@ var post = new function()
 
 			$.ajax({
 					  type: "GET",
-					  url: this.base+"post/getProfilePosts?id="+this.profile_id,
+					  url: this.base+"post/get"+ucfirst(this.type)+"Posts?id="+this.profile_id,
 					  data: {start: this.start_post, limit: this.limit_post},
 					  cache: false,
 					  dataType: "html",

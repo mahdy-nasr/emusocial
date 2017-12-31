@@ -5,9 +5,10 @@ namespace App\Controllers;
 class Page extends Base_controller
 {
     public $user;
-    public $instructor;
-    public $student;
+    public $page;
     public $course;
+    public $posts_collection;
+    public $data;
 
 
 
@@ -15,86 +16,117 @@ class Page extends Base_controller
     public function __construct($request,$response,$params)
     {
         parent::__construct($request,$response,$params);
-        $this->user = new \App\Models\User();
-    }
 
-public function index()
-    {
+
+        $this->user = new \App\Models\User();
         if (!$this->user->isLoggedIn())
             return $this->redirect("/home/login/");
          //$this->user->logout();
-         if ($this->request->getQueryParam('id')) 
-            $profile = new \App\Models\User($this->request->getQueryParam('id'));
-        else 
-            $profile = $this->user;
+        if (!$page_id = $this->request->getQueryParam('page_id')) 
+        	return $this->redirect('/');
 
-        $page = new \App\Models\Page();
-        $course = new \App\Models\Course();
-        $friend = new \App\Models\Friend($profile->getId());
-        $users = new \App\Models\UserCollection();
+        $this->page = new \App\Models\Page($page_id);
+        $this->course = new \App\Models\Course($this->page);
+        $this->posts_collection = new \App\Models\PostCollection($this->page->getId());
 
-        $data = [];
-        $data['user'] = $this->user;
+        $this->data = [];
+        $this->data['user'] = $this->user;
+        $this->data['course'] = $this->course;
 
-        $data['profile'] = $profile;     
-        $data['page'] = $page->getUserPage($profile->getId());
-        $data['type'] = 'profile';
-        $posts_collection = new \App\Models\PostCollection($page->getId());
-        $data['posts'] = $posts_collection->getPagePosts();
-      
-        if ($profile->getUserType() == 'student') {   
-            $data['courses'] = $course->getCoursesForStudent($profile->getId());
-        } else {
-            $data['courses'] = $course->getCoursesForInstructor($profile->getId());
-        }
+        $this->data['user_role'] = ($this->course->getInstructors($this->user->getId())!=null)?'i':'g';
+        
+        if ($this->data['user_role'] == 'g') {
+       		$this->data['user_role'] = ($this->course->getStudents($this->user->getId())!= null)?'s':'g';
+    	}
+    	$this->data['type'] = 'course';
 
-        $data['friend'] = new \App\Models\Friend($this->user->getId());
-        $data['friends'] = $users->getUsers($friend->getFriendsId(0,6));
-
-        echo $this->view->load('frontend:page',$data);
     }
 
-    public function addFriend()
+	public function index()
     {
-        if (!$this->user->isLoggedIn())
-            return $this->redirect("/home/login/");
+        $data = $this->data;
+        $data['sub_page'] = 'timeline';
+        $data['referer'] = '/page?page_id='.$this->page->getId();
+        $data['post_page_id'] = $this->page->getId();
+        $data['posts'] = $this->posts_collection->getPagePosts();
 
-        if (!($id = $this->request->getQueryParam('id'))) 
-            return $this->redirect("/profile");
-
-        $friend = new \App\Models\Friend($this->user->getId());
-        $friend->makeFriendRequist($id);
-        return $this->redirect("/profile?id=$id");
-
+        echo $this->view->load('frontend:page:timeline',$data);
     }
 
-    public function removeRequest()
+    public function announcements()
     {
-        if (!$this->user->isLoggedIn())
-            return $this->redirect("/home/login/");
+       
 
-        if (!($id = $this->request->getQueryParam('id'))) 
-            return $this->redirect("/profile");
 
-        $friend = new \App\Models\Friend($this->user->getId());
-        $friend->removeFriendRequist($id);
-        return $this->redirect("/profile?id=$id");
+        $data = $this->data;
+        $data['sub_page'] = 'announcements';
+        $data['referer'] = '/page/announcements/?page_id='.$this->page->getId();
+        $data['post_page_id'] = $this->page->getId();
+        $data['posts'] = $this->posts_collection->getAnnouncements();
+
+        echo $this->view->load('frontend:page:announcements',$data);
 
     }
 
-    public function acceptRequest()
+    public function events()
     {
-        if (!$this->user->isLoggedIn())
-            return $this->redirect("/home/login/");
+       
 
-        if (!($id = $this->request->getQueryParam('id'))) 
-            return $this->redirect("/profile");
 
-        $friend = new \App\Models\Friend($this->user->getId());
-        $friend->acceptFriendRequist($id);
-        return $this->redirect("/profile?id=$id");
+        $data = $this->data;
+        $data['sub_page'] = 'events';
+        $data['referer'] = '/page/events/?page_id='.$this->page->getId();
+        $data['post_page_id'] = $this->page->getId();
+        $data['posts'] = $this->posts_collection->getEventPosts();
+
+        echo $this->view->load('frontend:page:announcements',$data);
 
     }
+
+    public function allfiles() 
+    {
+    	$data = $this->data;
+        $data['sub_page'] = 'all_files';
+        $data['referer'] = '/page/allfiles/?page_id='.$this->page->getId();
+        $data['post_page_id'] = $this->page->getId();
+        $data['files'] = $this->posts_collection->getAllFiles();
+
+        echo $this->view->load('frontend:page:files',$data);
+    }
+
+    public function instructorFiles() 
+    {
+    	$data = $this->data;
+        $data['sub_page'] = 'instructorFiles';
+        $data['referer'] = '/page/instructorFiles/?page_id='.$this->page->getId();
+        $data['post_page_id'] = $this->page->getId();
+        $data['files'] = $this->posts_collection->getInstructorFiles();
+
+        echo $this->view->load('frontend:page:files',$data);
+    }
+
+    public function grades()
+    {
+    	$data = $this->data;
+    	$grades = new \App\Models\Grade($this->page->getId());
+
+    	$data['sub_page'] = 'grades';
+        $data['referer'] = '/page/grades/?page_id='.$this->page->getId();
+        $data['post_page_id'] = $this->page->getId();
+        
+        if ($data['user_role'] == 'i') {
+        	$data['file_name'] = $grades->getUploadFileName();
+        	$data['students'] = $grades->getAllStudentGrades();
+        	echo $this->view->load('frontend:page:instructor_grades',$data);
+    	} else if($data['user_role'] == 's') {
+    		$data['grades'] = $grades->getStudentGrades($this->user->getIdentification());
+    		echo $this->view->load('frontend:page:student_grades',$data);
+    	} else {
+    		die("404!");
+    	}
+    }
+
+    public function broadcast(){}
  
 
     

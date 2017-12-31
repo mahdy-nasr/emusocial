@@ -19,8 +19,8 @@
 	        <div class="col-md-12  col-sm-12 col-xs-12">
 	          <div class="panel-options">
 	            <div class="navbar navbar-default navbar-cover">
-	              <div class="container-fluid">
-	                <div class="navbar-header">
+	              <div class="container-fluid" style="padding:0;">
+	                <div class="navbar-header" >
 	                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#profile-opts-navbar">
 	                    <span class="sr-only">Toggle navigation</span>
 	                    <span class="icon-bar"></span>
@@ -29,15 +29,28 @@
 	                  </button>
 	                </div>
 
-	                <div class="collapse navbar-collapse" id="profile-opts-navbar">
-	                  <ul class="nav navbar-nav navbar-right">
-	                    <li class="active"><a href="#"><i class="fa fa-tasks"></i>Timeline</a></li>
-	                    <li><a href="about.html"><i class="fa fa-info-circle"></i>Announcments</a></li>
-	                    <li><a href="friends.html"><i class="fa fa-users"></i>Events</a></li>
-	                    <li><a href="photos.html"><i class="fa fa-file-image-o"></i>Files</a></li>
-	                    <li><a href="photos.html"><i class="fa fa-file-image-o"></i>Grades</a></li>
-	                    <li><a href="photos.html"><i class="fa fa-file-image-o"></i>Broudcasts</a></li>
-	                    <li><a href="messages.html"><i class="fa fa-comment"></i>Students</a></li>
+	                <div class="collapse navbar-collapse" id="profile-opts-navbar" style="padding:0;">
+	                  <ul class="nav navbar-nav navbar-right" style="margin:0;">
+	                    <li class="<?=($sub_page=='timeline')?'active':''?>">
+	                    	<a href="<?=$base?>page/?page_id=<?=$post_page_id?>"><i class="fa fa-tasks"></i>&nbsp;Timeline</a>
+	                    </li>
+	                    <li class="<?=($sub_page=='announcements')?'active':''?>">
+	                    	<a href="<?=$base?>page/announcements/?page_id=<?=$post_page_id?>"><i class="fa fa-bullhorn"></i>Announcments</a>
+	                    </li>
+	                    <li class="<?=($sub_page=='events')?'active':''?>">
+	                    	<a href="<?=$base?>page/events/?page_id=<?=$post_page_id?>"><i class="fa fa-calendar"></i>Events</a>
+	                    </li>
+	                    <li class="<?=($sub_page=='instructorFiles')?'active':''?>">
+	                    	<a href="<?=$base?>page/instructorFiles/?page_id=<?=$post_page_id?>"><i class="fa  fa-files-o"></i>Instructor Files</a>
+	                    </li>
+	                    <li class="<?=($sub_page=='all_files')?'active':''?>">
+	                    	<a href="<?=$base?>page/allfiles/?page_id=<?=$post_page_id?>"><i class="fa fa-files-o"></i>Files</a>
+	                    </li>
+	                    <li class="<?=($sub_page=='grades')?'active':''?>">
+	                    	<a href="<?=$base?>page/grades/?page_id=<?=$post_page_id?>"><i class="fa fa-percent"></i>Grades</a>
+	                    </li>
+	                    <li><a href="photos.html"><i class="fa fa-info-circle"></i>Broadcast&nbsp;</a></li>
+	                    <li><a href="messages.html"><i class="fa fa-users"></i>Students</a></li>
 
 	                  </ul>
 	                </div>

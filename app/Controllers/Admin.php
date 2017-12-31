@@ -19,7 +19,7 @@ class Admin extends Base_controller
         $this->student = new \App\Models\Student();
         $this->user =  new \App\Models\User();
         $this->usersCollection = new \App\Models\UserCollection();
-        $this->course = new \App\Models\Course();
+        $this->course = new \App\Models\Course_Collection();
     }
 
     public function index()

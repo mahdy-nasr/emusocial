@@ -122,11 +122,9 @@ class User extends \App\Base
             return false;
         }
 
-        if ($this->getUserType() == 'student') {
-            $res = $this->db->readOne("select * from user where identification = ?", [$email]);
-        } else {
-            $res = $this->db->readOne("select * from user where email = ?", [$email]);
-        }
+    
+        $res = $this->db->readOne("select * from user where identification = ? or email = ?", [$email,$email]);
+        $this->getUserType();
 
         
  
