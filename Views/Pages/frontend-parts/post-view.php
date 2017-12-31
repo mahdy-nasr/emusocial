@@ -21,7 +21,7 @@
 					          <i class="announcement-class fa fa-bullhorn "></i>
 					          
 					          <?php endif;?>
-					          <?php if($user->getId() == $post->getUser('id')):?>
+					          <?php if($user->getId() == $post->getUser('id')||isset($user_role)&&$user_role=='i'):?>
 					              <a href="#"  class="post-user-del">...</a>
 					               <?php endif;?>
 					          </div>

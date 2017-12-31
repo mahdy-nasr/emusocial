@@ -124,8 +124,9 @@ class Post extends \App\Base implements \JsonSerializable
     public function deletePost($post_id, $user_id)
     {
         $res = $this->db->readOne("SELECT * from post where id = ?",[$post_id]);
+        $type = $this->db->readOne("SELECT type from user where id = ?",[$user_id])['type'];
 
-        if (!$res || $res['user_id'] != $user_id) {
+        if (!$res || ($res['user_id'] != $user_id && $type == 2)) {
             return false;
         }
 

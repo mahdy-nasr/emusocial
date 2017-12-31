@@ -49,7 +49,9 @@
 	                    <li class="<?=($sub_page=='grades')?'active':''?>">
 	                    	<a href="<?=$base?>page/grades/?page_id=<?=$post_page_id?>"><i class="fa fa-percent"></i>Grades</a>
 	                    </li>
-	                    <li><a href="photos.html"><i class="fa fa-info-circle"></i>Broadcast&nbsp;</a></li>
+	                    <li class="<?=($sub_page=='broadcast')?'active':''?>">
+	                    	<a href="<?=$base?>page/broadcast/?page_id=<?=$post_page_id?>"><i class="fa fa-info-circle"></i>Broadcast&nbsp;</a>
+	                    </li>
 	                    <li><a href="messages.html"><i class="fa fa-users"></i>Students</a></li>
 
 	                  </ul>

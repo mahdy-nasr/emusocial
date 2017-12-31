@@ -27,7 +27,7 @@
               <div class="comment-heading" style='position: relative;'>
                   <h4 class="comment-user-name"><a href="#"><?=$comment->getUser('name')?></a></h4>
                   <h5 class="time"><?=passedTime($comment->getCreatedAt()).' ago'?></h5>
-                  <?php if($user->getId() == $comment->getUser('id')):?>
+                  <?php if($user->getId() == $comment->getUser('id')||isset($user_role)&&$user_role=='i'):?>
                   <a class='del-com'  href='#' >...</a>
                   <?php endif;?>
                   <ul class='opt-del'>
@@ -79,7 +79,7 @@
 				              <div class="comment-heading" style='position: relative;'>
 				                  <h4 class="comment-user-name"><a href="#"><?=$reply->getUser('name')?></a></h4>
 				                  <h5 class="time"><?=passedTime($reply->getCreatedAt()).' ago'?></h5>
-				                  <?php if($user->getId() == $reply->getUser('id')):?>
+				                  <?php if($user->getId() == $reply->getUser('id')||isset($user_role)&&$user_role=='i'):?>
 				                  <a class='del-com'  href='#' >...</a>
 				                  <?php endif;?>
 				                  <ul class='opt-del'>

@@ -18,7 +18,7 @@ class loginStudent extends API
             $result = ['RC'=> 400,"msg" => "The student number or password is incorrect!"];
             return $this->response->withJson($result, 200);
         } 
-        $course = new \App\Models\Course();
+        $course = new \App\Models\Course_Collection();
         $courses = $course->getCoursesForStudent($student->getUserData()['id']);
         
 

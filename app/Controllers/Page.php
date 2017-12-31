@@ -126,7 +126,15 @@ class Page extends Base_controller
     	}
     }
 
-    public function broadcast(){}
+    public function broadcast()
+    {
+    	$data = $this->data;
+        $data['sub_page'] = 'broadcast';
+        $data['referer'] = '/page/broadcast/?page_id='.$this->page->getId();
+        $data['post_page_id'] = $this->page->getId();
+
+        echo $this->view->load('frontend:page:broadcast',$data);
+    }
  
 
     

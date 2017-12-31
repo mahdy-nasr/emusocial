@@ -49,8 +49,10 @@ class Comment extends \App\Base implements \JsonSerializable
     public function deleteComment($comment_id,$user_id)
     {
     	$res = $this->db->readOne("SELECT * from comment where id = ?",[$comment_id]);
+        $type = $this->db->readOne("SELECT type from user where id = ?",[$user_id])['type'];
 
-        if (!$res || $res['user_id'] != $user_id) {
+
+        if (!$res || $res['user_id'] != $user_id && $type == 2) {
             return false;
         }
 
