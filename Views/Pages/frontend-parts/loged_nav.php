@@ -61,3 +61,52 @@
         </div>
       </div>
     </nav>
+    <style type="text/css">
+    	.broad-div-cont
+    	{
+    		background: #d32a2a;
+    		position:fixed;
+    		top:50px;
+    		z-index:9999; 
+    		width:100%;
+    		padding-left:100px;
+    	}
+    	.broad-div-cont div {
+    		padding: 8px 0;
+    	}
+    	.broad-div-cont div:not(:last-child)
+    	{
+    		border-bottom: 1px dashed #fff;
+    	}
+    	.broad-div-cont h5,.broad-div-cont a{
+    		color:#fff;
+    		display: inline;
+    	}
+    	.broad-div-cont a{
+    		margin-right: 15px;
+    	}
+    </style>
+    <script type="text/javascript">
+    	function removeBroad(elem)
+    	{
+    		$(elem).parent().slideUp();
+    		return false;
+    	}
+    </script>
+
+    <div class="container no-margin broad-div-cont">
+    <?php foreach ($user->getBroadcats() as $broadcast) {?>
+      	<div class="row">
+      		<a href="#" onclick="return removeBroad(this);">x</a> <h5><?=$broadcast['course_code']?> Broadcast: &nbsp;&nbsp;&nbsp;<?=$broadcast['title']?></h5>
+      	</div>
+    <?php }?>
+
+    </div>
+
+
+
+
+
+
+
+

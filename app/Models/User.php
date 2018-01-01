@@ -24,6 +24,13 @@ class User extends \App\Base
         }
     }
 
+    public function getBroadcats()
+    {
+        $broad = new Broadcast();
+        $res = $broad->getUserBroadcast($this->id);
+        $broad->ackUserBroadcast($this->id);
+        return $res;
+    }
     public function getProfilePicture()
     {
         $tmp = "img/Profile/".$this->data['gender']."-avatar.png";

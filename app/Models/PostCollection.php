@@ -53,7 +53,7 @@ class PostCollection extends \App\Base implements \JsonSerializable
         $post_ids = $this->db->read("SELECT id from post where page_id = {$this->page_id}");
 
         $post_ids = '('.trim(implode(',',array_column($post_ids,'id')), ",").')';
-        if($post_ids) {
+        if(strlen($post_ids)>2) {
             return $this->db->readOne("SELECT $sel from upload where post_id IN $post_ids")['count'];
         } else {
             return  0;
@@ -66,6 +66,9 @@ class PostCollection extends \App\Base implements \JsonSerializable
 
         $post_ids = '('.trim(implode(',',array_column($post_ids,'id')), ",").')';
 
+        if(strlen($post_ids)<=2)
+            return [];
+        
         $res = $this->db->read("SELECT upload.* , user.id as user_id, CONCAT(user.first_name,' ',user.last_name) as username, user.title as user_title from upload left join post on upload.post_id = post.id left join user on post.user_id = user.id where post_id IN $post_ids ORDER BY created_at DESC");
        
      
@@ -84,7 +87,8 @@ class PostCollection extends \App\Base implements \JsonSerializable
         $post_ids = $this->db->read("SELECT id from post where page_id = {$this->page_id}");
 
         $post_ids = '('.trim(implode(',',array_column($post_ids,'id')), ",").')';
-
+        if(strlen($post_ids)<=2)
+            return [];
         $res = $this->db->read("SELECT upload.* , user.id as user_id, CONCAT(user.first_name,' ',user.last_name) as username, user.title as user_title from upload left join post on upload.post_id = post.id left join user on post.user_id = user.id where post_id  IN $post_ids and user.type = 1 ORDER BY created_at DESC");
        
      

@@ -118,22 +118,33 @@ class Page extends Base_controller
         	$data['file_name'] = $grades->getUploadFileName();
         	$data['students'] = $grades->getAllStudentGrades();
         	echo $this->view->load('frontend:page:instructor_grades',$data);
-    	} else if($data['user_role'] == 's') {
+    	} else  {
     		$data['grades'] = $grades->getStudentGrades($this->user->getIdentification());
     		echo $this->view->load('frontend:page:student_grades',$data);
-    	} else {
-    		die("404!");
-    	}
+    	} 
     }
 
-    public function broadcast()
+    public function broadcasts()
+    {
+    	$broadcast = new \App\Models\Broadcast();
+    	$data = $this->data;
+        $data['sub_page'] = 'broadcasts';
+        $data['referer'] = '/page/broadcasts/?page_id='.$this->page->getId();
+        $data['post_page_id'] = $this->page->getId();
+        $data['broadcasts'] = $broadcast->getPageBroadcast($this->page->getId());
+
+        echo $this->view->load('frontend:page:broadcasts',$data);
+    }
+
+    public function students()
     {
     	$data = $this->data;
-        $data['sub_page'] = 'broadcast';
-        $data['referer'] = '/page/broadcast/?page_id='.$this->page->getId();
+    	$data['sub_page'] = 'students';
+        $data['referer'] = '/page/students/?page_id='.$this->page->getId();
         $data['post_page_id'] = $this->page->getId();
+        $data['students'] = [];
+        echo $this->view->load('frontend:page:students',$data);
 
-        echo $this->view->load('frontend:page:broadcast',$data);
     }
  
 

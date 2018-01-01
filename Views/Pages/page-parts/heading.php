@@ -9,9 +9,9 @@
 						<img src="<?=$base?>img/emu-logo.png" >
 					</div>
 					<div class="col-xs-9">
-						<h2 class='cover-title'>CMPE462</h2>	
+						<h2 class='cover-title'><?=strtoupper($course->getCode())?></h2>	
 
-						<h2 class='cover-title'>Functional and logic programming</h2>	
+						<h2 class='cover-title'><?=ucwords($course->getName())?></h2>	
 					</div>
 				</div>
 	        </div><!-- end cover and profile image-->
@@ -49,10 +49,12 @@
 	                    <li class="<?=($sub_page=='grades')?'active':''?>">
 	                    	<a href="<?=$base?>page/grades/?page_id=<?=$post_page_id?>"><i class="fa fa-percent"></i>Grades</a>
 	                    </li>
-	                    <li class="<?=($sub_page=='broadcast')?'active':''?>">
-	                    	<a href="<?=$base?>page/broadcast/?page_id=<?=$post_page_id?>"><i class="fa fa-info-circle"></i>Broadcast&nbsp;</a>
+	                    <li class="<?=($sub_page=='broadcasts')?'active':''?>">
+	                    	<a href="<?=$base?>page/broadcasts/?page_id=<?=$post_page_id?>"><i class="fa fa-info-circle"></i>Broadcast&nbsp;</a>
 	                    </li>
-	                    <li><a href="messages.html"><i class="fa fa-users"></i>Students</a></li>
+	                    <li class="<?=($sub_page=='students')?'active':''?>">
+	                    	<a href="<?=$base?>page/students/?page_id=<?=$post_page_id?>"><i class="fa fa-users"></i>Students</a>
+	                   	</li>
 
 	                  </ul>
 	                </div>
