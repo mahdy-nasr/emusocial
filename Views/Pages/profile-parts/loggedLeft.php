@@ -29,7 +29,7 @@
 						  	# code...
 						  ?>
 						    <li class="list-group-item link">
-						    	<a href='#' >
+						    	<a href="<?=$base."page/?page_id={$course['page_id']}"?>" >
 						    		<div class="col-xs-12">
 						        		<span class="name"><?=$course['code']?></span>
 						      		</div>

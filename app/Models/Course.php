@@ -102,24 +102,8 @@ class Course extends \App\Base implements \JsonSerializable
 
     private function loadEvents()
     {
-        $res =  $this->db->read("SELECT * FROM `post` RIGHT JOIN `event` on post.id = event.post_id WHERE post.page_id = {$this->page_id} ");
-        if (!$res) {
-            $this->data['events'] = ['active'=>[], 'passed'=>[], 'count'=>0];
-            return;
-        }
-        $new = [];
-        $old = [];
-        $now = time();
-        foreach ($res as $row) {
-            $event_time = strtotime($row['date'].' '.$row['time']);
-            if ($event_time <= $now) {
-                $old[] = $row;
-            } else {
-                $new[] = $row;
-            }
-        }
-
-        $this->data['events'] = ['active'=>$new, 'passed'=>$old, 'count'=>count($res)];
+        $events = new EventCollection();
+        $this->data['events'] = $events->getCoursePageEvents($this->page_id);
     }
 
     private function loadNumbers()

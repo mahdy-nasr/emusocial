@@ -33,8 +33,8 @@
 
   <?php include $file;?>  
 
-  <?php include $this->partPath("frontend-parts/chat"); ?>
-    
+  <?php include $this->partPath("frontend-parts/side-chat"); ?>
+  <?php if(!isset($sub_page) || $sub_page != 'chat'):?>
     <footer class="welcome-footer">
       <div class="container">
         <p>
@@ -49,5 +49,6 @@
         </p>
       </div>
     </footer>
+  <?php endif;?>
   </body>
 </html>

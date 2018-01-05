@@ -24,6 +24,8 @@
         border:1px solid var(--main-color);
         padding: 5px;
         box-shadow: 0 0 10px gray;
+        height: 210px;
+        position: relative;
     }
      div.std-div img{
         width: 70%;
@@ -37,9 +39,12 @@
     }
     div.std-div > a{
         text-align: center;;
+        position: absolute;
+        top:170px;
+        left:10px;right: 10px;
+        margin: 0 auto;
         display: block;
         padding: 4px;
-        margin: 5px 0;
         border:1px solid gray;
         color:#fff;
         background: var(--main-color);
@@ -57,7 +62,9 @@
         <div class='std-div'>
             <img src="<?=$base.$std->getProfilePicture();?>" >
             <h5><a href="<?=$base."profile/?id={$std->getId()}"?>"><?=$std->getFullName();?></a></h5>
-            <a href="#"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;Message</a>
+            <a <?php if($user->getId() != $std->getId())echo "href='#'";?> >
+                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;Message
+            </a>
         </div>
     </div>
 

@@ -19,12 +19,12 @@
 </div>
 
 <style type="text/css">
-  .title-div,.msg-div
+  .title-div,.msg-div,.check-div
   {
     margin:5px 0;
   }
 </style>
-<?php if($user_role == 'i'):?>
+<?php if($user_role == 'i' && !$course->getReadonly()):?>
 <div class="content" style="box-shadow:0 0 10px  gray; padding:20px; border-radius:5px; margin-bottom:30px;" >
     <form action="<?=$base?>broadcast/postBroadcast" method="post">
         <input type="hidden" name='page_id' value="<?=$post_page_id?>">
@@ -36,6 +36,19 @@
         <div class="row input-group no-padding msg-div ">
           <textarea name='msg' cols="80%" rows="4" class="form-control" placeholder="write the Broadcast details"></textarea>
         </div>
+        <?php if(!$course->getIsDepartment()):?>
+          <input type="hidden" name="user_type" value="2">
+        <?php else:?>
+        <div class="row input-group  check-div" style="width:100%;">
+            <div class="form-group" style="text-align:center; border:1px solid #c6c6c6;">
+                <input type="radio" name="user_type" value="2" > <label> For Students</label>
+                <span style="margin-left:55px;"></span>
+                <input type="radio" name="user_type" value="1" > <label> For Instructors</label>
+                <span style="margin-left:55px;"></span>
+                <input type="radio" name="user_type" value="3" > <label> For All</label>
+            </div>
+        </div>
+      <?php endif;?>
         <input type="submit" class="btn btn-primary" style="width: 100%;" value="Submit Broadcast">
     </form>
 </div>

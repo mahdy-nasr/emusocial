@@ -12,7 +12,15 @@
 					              <a href="#" class="post-user-name"><?=$post->getUser('name')?></a>
 					      
 					          </div>
-					          <h6 class="text-muted time"><?=passedTime($post->getCreatedAt())?> ago</h6>
+					          
+					          <?php 
+					          $post_link="/profile/viewPost/?id={$user->getId()}&post_id={$post->getId()}";
+					          	if ($type == 'course') {
+					          		$post_link = "/page/viewPost/?page_id={$post_page_id}&post_id={$post->getId()}";
+					          	}
+					          ?>
+
+					          <a href="<?=$post_link?>"><h6 class="text-muted time"><?=passedTime($post->getCreatedAt())?> ago</h6></a>
 					      </div>
 					      <div class="pull-right meta" style='position: relative;;'>
 					          <div class="title h5 opt-div">

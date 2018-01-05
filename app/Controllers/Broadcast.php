@@ -31,8 +31,9 @@ class Broadcast extends Base_controller
             return $this->redirect('/');
 
     	$broadcast = new \App\Models\Broadcast();
-        $broadcast->addBroadcast($this->post_data);
 
+        $broadcast->addBroadcast($this->post_data);
+        
   
     	return $this->redirect($this->post_data['referer']);
     }

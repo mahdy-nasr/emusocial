@@ -36,7 +36,7 @@
           <td width='10%'><?=$id?></td>
           <td><?=$element?></td>
           <td><a href="<?=$base.$file['link']?>" download='download'><?=$file['name']?></a></td>
-          <td><a href="<?=$base.'post/view/'.$file['post_id']?>" >post <?=$file['post_id']?></a></td>
+          <td><a href="<?=$base."page/viewPost/?page_id={$post_page_id}&post_id=".$file['post_id']?>" >post <?=$file['post_id']?></a></td>
           <td><a href="<?=$base.'profile?id='.$file['user_id']?>" ><?=$file['username']?></a></td>
           <td><?=substr($file['created_at'],0,10)?></td>
         </tr>

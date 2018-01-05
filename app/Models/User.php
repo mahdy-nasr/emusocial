@@ -27,18 +27,26 @@ class User extends \App\Base
     public function getBroadcats()
     {
         $broad = new Broadcast();
-        $res = $broad->getUserBroadcast($this->id);
-        $broad->ackUserBroadcast($this->id);
+        $res = $broad->getUserBroadcast($this->id, $this->data['type']);
+        $broad->ackUserBroadcast($this->id, $this->data['type']);
         return $res;
     }
     public function getProfilePicture()
     {
+        
         $tmp = "img/Profile/".$this->data['gender']."-avatar.png";
         if (!empty($this->data['profile_picture']))
             $tmp = $this->data['profile_picture'];
         return $tmp;
     }
 
+    public function getCoverPicture(){
+        
+        $tmp = "img/faces.png";
+        if (!empty($this->data['cover_picture']))
+            $tmp = $this->data['cover_picture'];
+        return $tmp;
+    }
     public function getName()
     {
         return $this->data['first_name'].' '.$this->data['last_name'];

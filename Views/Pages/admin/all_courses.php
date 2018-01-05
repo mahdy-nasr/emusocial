@@ -58,6 +58,10 @@
 	              </select>
 	            </div>
 
+              <div class="form-group" style="margin:0">
+                <input type="checkbox" name="is_department" value="is_department" <?php if(isset($course) && $course['is_department']==1):?> checked="checked" <?php endif;?> > <label>As Department</label>
+              </div>
+
 	            
 
           	</div>
@@ -79,7 +83,7 @@
               <div class="form-group col-12">
                 <label class="col-12">Course Instructors</label>
                 <div id="newCourseInst"<?php if (isset($course)) echo "style='display:none'";?>>
-                  <select  required="required" class='col-12'  id='multiselect' multiple='multiple' name="instructors[]" >
+                  <select  <?php if (!isset($course)) echo 'required="required"'; ?> class='col-12'  id='multiselect' multiple='multiple' name="instructors[]" >
                   <?php foreach ($instructors as $inst) { ?>
                  
                           <option value="<?=$inst['id']?>"><?=$inst['first_name'].' '.$inst['last_name']?></option>

@@ -73,7 +73,7 @@
 			                  <li><a href="#" onclick="return image();"><i class="fa fa-camera"></i></a></li>
 			                  <li><a href="#" onclick="return video();"><i class=" fa fa-film"></i></a></li>
 			                  <li><a href="#" onclick="return file();"><i class=" fa fa-file-o"></i></a></li>
-			                  <?php if($user_role == 'i'):?>
+			                  <?php if(isset($user_role)&&$user_role == 'i'):?>
 			                  <li><a href="#" onclick="return doDate();"><i class=" fa fa-calendar"></i></a></li>
 			                  <li><a href="#" class="announcement-not-selected" onclick="return announce(this);" ><i class=" fa fa-bullhorn"></i></a></li>
 			              	  <?php endif;?>

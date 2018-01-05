@@ -29,6 +29,8 @@
 </div>
  <?php endif;?>
 
+ <?php if (!$course->getReadonly()):?>
+
 <div class="content" style="box-shadow:0 0 10px  gray; padding:20px; border-radius:5px;" >
   <div class="row" style="border:1px solid #dbdbdb; border-radius:5px; max-width:100%;margin:0;">
     <p style="text-align:center; color:green;"><?=$file_name?><a style="margin-left:30px;" href='#' onclick="return deleteGrades();" >x</a></p>
@@ -111,6 +113,10 @@ $(function () {
       });
  });
 </script>
+
+<?php endif;?>
+
+
 <?php if(count($students)) :?>
 <link rel="stylesheet" type="text/css" href="<?=$base?>vendor/datatables/jquery.dataTables.min.css">
 <script type="text/javascript" src="<?=$base?>vendor/datatables/jquery.dataTables.js"></script>

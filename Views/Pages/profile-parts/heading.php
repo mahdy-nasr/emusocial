@@ -4,7 +4,7 @@
 	      <div class="col-md-10 no-paddin-xs">
 	      	<!-- cover and profile image-->
 	        <div class="col-md-12 col-sm-12 col-xs-12 cover-content">
-				<div class="cover-container" style="background-image:url(<?=$base.$page->getCoverPicture()?>);">
+				<div class="cover-container" style="background-image:url(<?=$base.$user->getCoverPicture()?>);">
 					<div class="social-avatar" >
 						
 					   <img class="img-avatar" src="<?=$base.$profile->getProfilePicture()?>" height="100" width="100">
@@ -56,11 +56,21 @@
 
 	                <div class="collapse navbar-collapse" id="profile-opts-navbar">
 	                  <ul class="nav navbar-nav navbar-right">
-	                    <li class="active"><a href="#"><i class="fa fa-tasks"></i>Timeline</a></li>
-	                    <li><a href="about.html"><i class="fa fa-info-circle"></i>About</a></li>
-	                    <li><a href="friends.html"><i class="fa fa-users"></i>Friends</a></li>
-	                    <li><a href="photos.html"><i class="fa fa-file-image-o"></i>Photos</a></li>
-	                    <li><a href="messages.html"><i class="fa fa-comment"></i>Messages</a></li>
+	                    <li class="<?=($sub_page=='timeline')?'active':''?>">
+	                    	<a href="<?=$base."profile/?id={$profile->getId()}"?>"><i class="fa fa-tasks"></i>Timeline</a>
+	                    </li>
+	                    <li class="<?=($sub_page=='about')?'active':''?>">
+	                    	<a href="<?=$base."profile/about/?id={$profile->getId()}"?>"><i class="fa fa-info-circle"></i>About</a>
+	                    </li>
+	                    <li class="<?=($sub_page=='friends')?'active':''?>">
+	                    	<a href="<?=$base."profile/friends/?id={$profile->getId()}"?>"><i class="fa fa-users"></i>Friends</a>
+	                    </li>
+	                    <li class="<?=($sub_page=='photos')?'active':''?>">
+	                    	<a href="<?=$base."profile/photos/?id={$profile->getId()}"?>"><i class="fa fa-file-image-o"></i>Photos</a>
+	                    </li>
+	                    <li class="<?=($sub_page=='chat')?'active':''?>">
+	                    	<a href="<?=$base."profile/chat/?id={$profile->getId()}"?>"><i class="fa fa-comment"></i>Messages</a>
+	                    </li>
 	                  </ul>
 	                </div>
 	              </div>

@@ -87,8 +87,10 @@ class Comment extends \App\Base implements \JsonSerializable
 
     	if (!$res)
     		return false;
+        $id = $this->db->last_id();
 
-    	return $this->db->last_id();
+        
+    	return $id;
 
     }
 

@@ -102,10 +102,10 @@ class PostCollection extends \App\Base implements \JsonSerializable
         return $files;
     }
 
-    public function getEventPosts()
+    public function getEventPosts($start=0,$limit=10) 
     {
         // for event class
-        $res = $this->db->read("SELECT post.* FROM `post` RIGHT JOIN `event` on post.id = event.post_id WHERE post.page_id = {$this->page_id} order by created_at DESC");
+        $res = $this->db->read("SELECT post.* FROM `post` RIGHT JOIN `event` on post.id = event.post_id WHERE post.page_id = {$this->page_id} order by created_at DESC limit $start,$limit");
         if (!$res)
             return;
         $posts = [];
@@ -116,9 +116,9 @@ class PostCollection extends \App\Base implements \JsonSerializable
 
     }
 
-    public function getAnnouncements()
+    public function getAnnouncements($start=0,$limit=10) 
     {
-        $res = $this->db->read("SELECT * FROM `post` WHERE announcement = 1 and post.page_id = {$this->page_id} order by created_at DESC");
+        $res = $this->db->read("SELECT * FROM `post` WHERE announcement = 1 and post.page_id = {$this->page_id} order by created_at DESC limit $start,$limit");
         if (!$res)
             return;
         $posts = [];

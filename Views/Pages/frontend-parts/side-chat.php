@@ -5,12 +5,12 @@
         <p class="text-center chat-title">Online users</p>  
         <a href="messages.html" class="list-group-item">
           <i class="fa fa-check-circle connected-status"></i>
-          <img src="<?=$profilePic?>" class="img-chat img-thumbnail">
+          <img src="<?=$base.$user->getProfilePicture()?>" class="img-chat img-thumbnail">
           <span class="chat-user-name">mohamed khaled</span>
         </a>
         <a href="messages.html" class="list-group-item">
           <i class="fa fa-times-circle absent-status"></i>
-          <img src="<?=$profilePic?>" class="img-chat img-thumbnail">
+          <img src="<?=$base.$user->getProfilePicture()?>" class="img-chat img-thumbnail">
           <span class="chat-user-name">saudu aliu</span>
         </a>
        

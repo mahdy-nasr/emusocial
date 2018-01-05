@@ -53,6 +53,27 @@ class Page extends Base_controller
         echo $this->view->load('frontend:page:timeline',$data);
     }
 
+    public function viewPost()
+    {
+       
+
+
+        $data = $this->data;
+        if (!$post_id = $this->request->getQueryParam('post_id')) 
+            return $this->redirect("/page/?page_id={$this->page->getId()}");
+        $data['sub_page'] = 'viewPost';
+        $data['referer'] = "/page/viewPost/?page_id={$this->page->getId()}&post_id={$post_id}";
+        $data['post_page_id'] = $this->page->getId();
+        $post_model = new \App\Models\Post($post_id);
+        if ($post_model->getPageId() != $this->page->getId())
+            return $this->redirect("/page/?page_id={$this->page->getId()}");
+
+        $data['posts'] = [$post_model];
+
+        echo $this->view->load('frontend:page:viewPost',$data);
+
+    }
+
     public function announcements()
     {
        
@@ -63,22 +84,22 @@ class Page extends Base_controller
         $data['referer'] = '/page/announcements/?page_id='.$this->page->getId();
         $data['post_page_id'] = $this->page->getId();
         $data['posts'] = $this->posts_collection->getAnnouncements();
-
+        $data['refresh_url'] = "post/getAnnouncementPosts/";
         echo $this->view->load('frontend:page:announcements',$data);
 
     }
 
     public function events()
     {
-       
-
+       //$noti = new \App\Models\Notification($this->user);
+       //$noti->getAllNotification();
 
         $data = $this->data;
         $data['sub_page'] = 'events';
         $data['referer'] = '/page/events/?page_id='.$this->page->getId();
         $data['post_page_id'] = $this->page->getId();
         $data['posts'] = $this->posts_collection->getEventPosts();
-
+        $data['refresh_url'] = "post/getEventsPosts/";
         echo $this->view->load('frontend:page:announcements',$data);
 
     }
@@ -131,7 +152,11 @@ class Page extends Base_controller
         $data['sub_page'] = 'broadcasts';
         $data['referer'] = '/page/broadcasts/?page_id='.$this->page->getId();
         $data['post_page_id'] = $this->page->getId();
-        $data['broadcasts'] = $broadcast->getPageBroadcast($this->page->getId());
+        if($data['user_role'] == 'i') {
+            $data['broadcasts'] = $broadcast->getPageBroadcast($this->page->getId(),5);
+        } else {
+            $data['broadcasts'] = $broadcast->getPageBroadcast($this->page->getId(),$this->user->getType());
+        }
 
         echo $this->view->load('frontend:page:broadcasts',$data);
     }

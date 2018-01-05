@@ -12,7 +12,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="<?=$base?>">
             <img src="<?=$base?>img/emu-logo.png" class="img-logo">
             <b style="font-weight:50;">EMU Social Network</b>
           </a>

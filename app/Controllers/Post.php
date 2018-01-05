@@ -125,12 +125,16 @@ class Post extends Base_controller
 
         if ($this->args[1] == 'profile') {
             $referer = "/Profile";
+            $post->deletePost($this->args[0], $this->user->getId());
         } else {
              $referer = '/page?page_id='.$post->getPageId();
+             $course = new \App\Models\Course($post->getPageId());
+            if ($course->getInstructors($this->user->getId())) {        
+                $post->deletePost($this->args[0], $this->user->getId());
+            }
         }
 
         
-        $post->deletePost($this->args[0], $this->user->getId());
 
         return $this->redirect($referer);
     }
@@ -150,11 +154,61 @@ class Post extends Base_controller
         $data = [];
         $data['user'] = $this->user;
         $data['type'] = 'course';
-        
+        $data['post_page_id'] = $id;
 
         if(!$this->request->getQueryParam('start')||!$this->request->getQueryParam('limit'))
             die('no way!');
         $data['posts'] = $posts_collection->getPagePosts($this->request->getQueryParam('start'), $this->request->getQueryParam('limit'));
+      
+
+        return $this->view->load('frontend-parts/post-view',$data);
+    }
+
+    public function getAnnouncementPosts()
+    {
+         if (!$this->user->isLoggedIn())
+             die('no way!');
+
+        if (!$id = $this->request->getQueryParam('id')) 
+            die('no way!');
+
+         $page = new \App\Models\Page($id);
+         $posts_collection = new \App\Models\PostCollection($page->getId());
+
+       
+        $data = [];
+        $data['user'] = $this->user;
+        $data['type'] = 'course';
+        $data['post_page_id'] = $id;
+
+        if(!$this->request->getQueryParam('start')||!$this->request->getQueryParam('limit'))
+            die('no way!');
+        $data['posts'] = $posts_collection->getAnnouncements($this->request->getQueryParam('start'), $this->request->getQueryParam('limit'));
+      
+
+        return $this->view->load('frontend-parts/post-view',$data);
+    }
+
+    public function getEventsPosts()
+    {
+         if (!$this->user->isLoggedIn())
+             die('no way!');
+
+        if (!$id = $this->request->getQueryParam('id')) 
+            die('no way!');
+
+         $page = new \App\Models\Page($id);
+         $posts_collection = new \App\Models\PostCollection($page->getId());
+
+       
+        $data = [];
+        $data['user'] = $this->user;
+        $data['type'] = 'course';
+        $data['post_page_id'] = $id;
+
+        if(!$this->request->getQueryParam('start')||!$this->request->getQueryParam('limit'))
+            die('no way!');
+        $data['posts'] = $posts_collection->getEventPosts($this->request->getQueryParam('start'), $this->request->getQueryParam('limit'));
       
 
         return $this->view->load('frontend-parts/post-view',$data);

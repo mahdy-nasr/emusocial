@@ -37,7 +37,7 @@ class Course_Collection extends \App\Base
         $instructor_select = "CONCAT( '{',JSON_STR('first_name',user.first_name),',',JSON_STR('last_name',user.last_name),',',JSON_INT('id',user.id),'}' )";
   
         $courses = $this->db->read("SELECT course.*, department.name as department, page.id as page_id, 
-            $instructor_select as instructor, course_group.id as group_id from page_user left join page on page_user.page_id = page.id left join course on page.course_id = course.id left join course_group on course_group.course_id = course.id left join user on course_group.instructor_id = user.id left join department on course.department_id = department.id where page_user.user_id = $id");
+            $instructor_select as instructor, course_group.id as group_id from page_user left join page on page_user.page_id = page.id left join course on page.course_id = course.id left join course_group on course_group.course_id = course.id left join user on course_group.instructor_id = user.id left join department on course.department_id = department.id where page_user.user_id = $id and course_group.instructor_id =  page_user.instructor_id and course.readonly = 0");
         
 
         foreach ($courses as &$course) {
@@ -51,8 +51,7 @@ class Course_Collection extends \App\Base
     public function getCoursesForInstructor($id)
     {
   
-        $courses = $this->db->read("SELECT course.*, department.name as department, page.id as page_id, course_group.id as group_id from page_admin left join page on page_admin.page_id = page.id left join course on page.course_id = course.id left join course_group on course_group.course_id = course.id left join user on course_group.instructor_id = user.id left join department on course.department_id = department.id where page_admin.user_id = {$id} and page.user_id IS NULL");
-        
+        $courses = $this->db->read("SELECT course.*, department.name as department, page.id as page_id from page_admin left join page on page_admin.page_id = page.id left join course on page.course_id = course.id left join user on page_admin.user_id = user.id left join department on course.department_id = department.id where page_admin.user_id = {$id} and page.user_id IS NULL and course.readonly = 0");
 
         return $courses;
     }
@@ -81,10 +80,11 @@ class Course_Collection extends \App\Base
         $insert[]=$data['semester'];
         $insert[]=$data['year'];
         $insert[]=$data['department_id'];
+        $insert[] = isset($data['is_department'])? 1:0;
 
         // create a page to the course
         
-        $this->db->write('insert into course (`name`, `code`, `semester`, `year`,`department_id`) values (?,?,?,?,?)',$insert);
+        $this->db->write('insert into course (`name`, `code`, `semester`, `year`,`department_id`,`is_department`) values (?,?,?,?,?,?)',$insert);
         $data['id'] = $this->db->last_id();
 
         $values_str = str_repeat(",({$data['id']},?)",count($data['instructors']));
@@ -95,6 +95,9 @@ class Course_Collection extends \App\Base
 
         $page = new Page();
         $page_id = $page->createCouresPage($data);
+        if (isset($data['is_department'])) {
+            $this->db->write("INSERT INTO page_user (`user_id`,`page_id`,`instructor_id`) SELECT user.id as user_id ,$page_id as page_id,{$data['instructors'][0]} as instructor_id from user where user.department_id = ? or user.department_id = 1",[$data['department_id']] );
+        }
         return;
     }
 
@@ -132,6 +135,13 @@ class Course_Collection extends \App\Base
         if(isset($data['department_id']))
          	$update[]=$data['department_id'];
         $query.= isset($data['department_id'])?' , department_id = ?':'';
+
+         if(isset($data['is_department']))
+            $update[]=1;
+        else
+            $update[]=0;
+        $query.= ' , is_department = ?';
+        
         $update[] = $data['id'];
         
         
@@ -145,6 +155,9 @@ class Course_Collection extends \App\Base
 
     public function deleteCourse($id)
     {
+        $page_id = $this->db->readOne("SELECT id from page where page.course_id = ?",[$id])['id'];
+        $this->db->write("DELETE from page_user where page_id = {$page_id}");
+        $this->db->write("DELETE from page_admin where page_id = {$page_id}");
         $this->db->write("delete from page where course_id = ?",[$id]);
         return $this->db->write("delete from course where id = ?",[$id]);
     }

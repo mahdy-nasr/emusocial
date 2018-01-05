@@ -668,7 +668,12 @@ li#sdrop-nav a:hover, li#sdrop-nav a:active
 }
 .profile-info.panel-success .panel-footer{
   background-color: var(--main-color-light);
-  border-color: var(--main-color);
+  border-color: var(--main-color) ;
+}
+
+.panel-success {
+  background-color: var(--main-color-light);
+  border-color: var(--main-color) !important ;
 }
 
 .post .post-heading {

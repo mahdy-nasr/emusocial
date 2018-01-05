@@ -10,6 +10,8 @@ var post = new function()
 	this.base = '';
 	this.profile_id=0;
 	this.type='profile';
+	this.autoPull = true;
+	this.refreshPostURL='';
 	
 	this.modal = {
 		title: 'h4.modal-title',
@@ -30,6 +32,9 @@ var post = new function()
 		this.base = obj.base;
 		this.type = obj.type;
 		this.profile_id = obj.profile_id;
+		this.refreshPostURL = obj.refreshPostURL;
+		this.autoPull = obj.autoPull;
+
 	};
 
 	this.fileShow = function (link,name,type) {
@@ -99,7 +104,7 @@ var post = new function()
 
 			$.ajax({
 					  type: "GET",
-					  url: this.base+"post/get"+ucfirst(this.type)+"Posts?id="+this.profile_id,
+					  url: this.base+this.refreshPostURL+"?id="+this.profile_id,
 					  data: {start: this.start_post, limit: this.limit_post},
 					  cache: false,
 					  dataType: "html",
@@ -148,7 +153,8 @@ var post = new function()
 
 				return false;
 					});
-
+			if (this.autoPull) {
+				console.log(this.autoPull+'why !!');
 				$(window).scroll(function() {
 				   if($(window).scrollTop() + $(window).height() == $(document).height()) {
 				       post.refreshPostsHTML();
@@ -156,6 +162,7 @@ var post = new function()
 
 				   }
 				});
+			}
 		}
 
 

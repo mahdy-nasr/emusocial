@@ -4,10 +4,15 @@ namespace App\Controllers;
 
 class Profile extends Base_controller
 {
-    public $user;
-    public $instructor;
-    public $student;
-    public $course;
+    protected $user;
+    protected $course_collection;
+    protected $profile;
+    protected $page;
+    protected $friend;
+    protected $user_collection;
+    protected $post_collection;
+
+    protected $data = [];
 
 
 
@@ -15,47 +20,85 @@ class Profile extends Base_controller
     public function __construct($request,$response,$params)
     {
         parent::__construct($request,$response,$params);
-        $this->user = new \App\Models\User();
+        
+        if ($this->init()===false)
+            return $this->redirect("/home/login/");   
     }
 
-public function index()
+    public function index()
     {
-        if (!$this->user->isLoggedIn())
-            return $this->redirect("/home/login/");
-         //$this->user->logout();
-         if ($this->request->getQueryParam('id')) 
-            $profile = new \App\Models\User($this->request->getQueryParam('id'));
-        else 
-            $profile = $this->user;
+        
 
-        $page = new \App\Models\Page();
-        $course = new \App\Models\Course_Collection();
-        $friend = new \App\Models\Friend($profile->getId());
-        $users = new \App\Models\UserCollection();
+        $data = $this->data;
+        $data['referer'] = '/profile?id='.$this->profile->getId();
+        $data['posts'] = $this->post_collection->getPagePosts();
+        $data['sub_page'] = 'timeline';
 
-        $data = [];
-        $data['user'] = $this->user;
-
-        $data['profile'] = $profile;     
-        $data['page'] = $page->getUserPage($profile->getId());
-        $data['type'] = 'profile';
-        $data['referer'] = '/profile?id='.$profile->getId();
-        $data['post_page_id'] = $this->user->getPageId();
-        $posts_collection = new \App\Models\PostCollection($page->getId());
-        $data['posts'] = $posts_collection->getPagePosts();
-      
-        if ($profile->getUserType() == 'student') {   
-            $data['courses'] = $course->getCoursesForStudent($profile->getId());
-        } else {
-            $data['courses'] = $course->getCoursesForInstructor($profile->getId());
-        }
-
-        $data['friend'] = new \App\Models\Friend($this->user->getId());
-        $data['friends'] = $users->getUsers($friend->getFriendsId(0,6));
-
-        echo $this->view->load('frontend:profile',$data);
+        echo $this->view->load('frontend:profile:home:timeline',$data);
     }
 
+    public function viewPost()
+    {
+       
+
+
+        $data = $this->data;
+        if (!$post_id = $this->request->getQueryParam('post_id')) 
+            return $this->redirect("/");
+
+        $data['referer'] = '/profile/viewPost/?id='.$this->profile->getId().'&post_id='.$post_id;
+        $data['sub_page'] = 'timeline';
+
+        $post_model = new \App\Models\Post($post_id);
+        if ($post_model->getPageId() != $this->profile->getPageId())
+            return $this->redirect("/profile");
+
+        $data['posts'] = [$post_model];
+
+        echo $this->view->load('frontend:profile:home:viewPost',$data);
+
+    }
+
+    public function about()
+    {
+        $data = $this->data;
+        $events = new \App\Models\EventCollection();
+        $data['events'] = $events->getUserRunningEvents($this->profile->getId());
+        $data['referer'] = '/profile/about/?id='.$this->profile->getId();
+        $data['sub_page'] = 'about';
+
+        echo $this->view->load('frontend:profile:about',$data);   
+    }
+
+    public function friends()
+    {
+         $data = $this->data;
+
+        $data['referer'] = '/profile/friends/?id='.$this->profile->getId();
+        $data['sub_page'] = 'friends';
+
+        echo $this->view->load('frontend:profile:friends',$data);   
+    }
+
+    public function photos()
+    {
+         $data = $this->data;
+
+        $data['referer'] = '/profile/photos/?id='.$this->profile->getId();
+        $data['sub_page'] = 'photos';
+
+        echo $this->view->load('frontend:profile:photos',$data);   
+    }
+
+    public function chat()
+    {
+         $data = $this->data;
+
+        $data['referer'] = '/profile/chat/?id='.$this->profile->getId();
+        $data['sub_page'] = 'chat';
+
+        echo $this->view->load('frontend:chat',$data);   
+    }
     public function addFriend()
     {
         if (!$this->user->isLoggedIn())
@@ -96,6 +139,40 @@ public function index()
         $friend->acceptFriendRequist($id);
         return $this->redirect("/profile?id=$id");
 
+    }
+
+    private function init()
+    {
+        $this->user = new \App\Models\User();
+
+        if (!$this->user->isLoggedIn())
+            return false;;
+
+        if ($this->request->getQueryParam('id')) 
+            $this->profile = new \App\Models\User($this->request->getQueryParam('id'));
+        else 
+            $this->profile = $this->user;
+
+        $this->page = new \App\Models\Page();
+        $this->course_collection = new \App\Models\Course_Collection();
+        $this->friend = new \App\Models\Friend($this->profile->getId());
+        $this->user_collection = new \App\Models\UserCollection();
+        $this->post_collection = new \App\Models\PostCollection($this->profile->getPageId());
+
+        $this->data['friend'] = new \App\Models\Friend($this->user->getId());
+        $this->data['user'] = $this->user;
+        $this->data['profile'] = $this->profile;
+        $this->data['type'] = 'profile';
+        $this->data['post_page_id'] = $this->user->getPageId();
+
+        if ($this->profile->getUserType() == 'student') {   
+            $this->data['courses'] = $this->course_collection->getCoursesForStudent($this->profile->getId());
+        } else {
+            $this->data['courses'] = $this->course_collection->getCoursesForInstructor($this->profile->getId());
+        }
+
+        $this->data['friends'] = $this->user_collection->getUsers($this->friend->getFriendsId(0,6));
+        return true;
     }
  
 
