@@ -1,22 +1,23 @@
 <!-- left content (detail, frields, photos) -->
-	    		<div class="col-md-5 user-detail no-paddin-xs">
+	    		<div class="col-md-5 user-detail no-paddin-xs" >
+	    		<div style="height: 600px; overflow-y: auto;position: fixed;">
 	    			<!-- user detail -->
 					<!-- groups -->
 					<div class="panel panel-white panel-groups">
 						<div class="panel-heading">
 						  <h3 class="panel-title">My Courses</h3>
 						</div>
-						<div class="panel-body">
-						  <ul class="list-group">
+						<div class="panel-body no-padding-margin">
+						  <ul class="list-group no-margin">
 						  <?php foreach ($courses as $key => $course) {
 						  	# code...
 						  ?>
-						    <li class="list-group-item link">
+						    <li class="list-group-item link no-margin" style="padding:0 15px;border-radius:0;">
 						    	<a href="<?=$base."page/?page_id={$course['page_id']}"?>" >
-						    		<div class="col-xs-12">
+						    		<div class="col-xs-12 no-padding-margin">
 						        		<span class="name"><?=$course['code']?></span>
 						      		</div>
-						    		<div class='col-xs-12'>
+						    		<div class='col-xs-12 no-padding-margin'>
 						      			<h5><?=$course['name']?></h5>
 						      		</div>
 						      		<div class="clearfix"></div>
@@ -66,7 +67,6 @@
 						  <a href="#" class="btn btn-success">Read more...</a>
 						</div-->
 					</div><!-- end user detail -->
-			
-
+			</div>
              										
 	    		</div><!-- end left content (detail, frields, photos) -->

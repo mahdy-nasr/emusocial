@@ -59,6 +59,10 @@ $routes =
 
     '/course/post' => 'post;courseApi;post',
 
+    ///////////////////////////////////////////////////////////////////////////////
+
+    '/home/userTimeline' => 'get;timelineApi;getUserTimeline',
+
 ];
 
 

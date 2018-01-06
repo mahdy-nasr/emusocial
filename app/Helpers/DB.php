@@ -25,7 +25,7 @@ class DB
 	
 	public static function getInstance()
 	{
-		if(!isset(self::$_instance))
+		if(!isset(self::$instance))
 		{
 			self::$instance=new DB();
 			return self::$instance;

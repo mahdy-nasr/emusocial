@@ -1,7 +1,7 @@
 
 <!-- Timeline content -->
     <div class="container container-timeline" style="margin-top:100px;">
-    	<div class="col-md-offset-1 col-md-10">
+    	<div class=" col-md-10">
 	    	<?php include $this->partPath("home-parts/loggedLeft");?>
 	    	<div class="col-md-7 no-paddin-xs">
 	    		<?php include $this->partPath("frontend-parts/post-form");?>
@@ -23,7 +23,7 @@
 					post.init({
 						base:'<?=$base?>',
 						type:'<?=$type?>',
-						profile_id:'<?=$profile->getId()?>',
+						profile_id:'<?=$user->getId()?>',
 						autoPull:true,
 						refreshPostURL:"home/getTimelinePosts/"
 					});

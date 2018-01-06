@@ -7,7 +7,7 @@
 					</script>
 
         			<div class="panel profile-info panel-success">
-			          <form method='post' action="<?=$base?>post/createPost/?>" id='post_post'>
+			          <form method='post' action="<?=$base?>post/createPost/" id='post_post'>
 			              <textarea class="form-control input-lg p-text-area" rows="4" name='text' placeholder="Whats in your mind today?" style="border-radius:0 !important;"></textarea>
 			              <div style="width:100%; display:none;margin:0;padding:0;" id='event-div'>
 

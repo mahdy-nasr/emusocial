@@ -14,9 +14,10 @@
 					          </div>
 					          
 					          <?php 
-					          $post_link="/profile/viewPost/?id={$user->getId()}&post_id={$post->getId()}";
-					          	if ($type == 'course') {
-					          		$post_link = "/page/viewPost/?page_id={$post_page_id}&post_id={$post->getId()}";
+					          $post_link = "/page/viewPost/?page_id={$post->getPageId()}&post_id={$post->getId()}";
+					          
+					          	if ($post->getIsUser()) {
+					          		$post_link="/profile/viewPost/?id={$post->getIsUser()}&post_id={$post->getId()}";
 					          	}
 					          ?>
 

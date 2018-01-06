@@ -29,6 +29,8 @@ class Home extends Base_controller
         $posts_collection = new \App\Models\PostCollection($this->user->getPageId());
         $data = [];
         $data['user'] = $this->user;
+        $data['type'] = 'profile';
+        $data['referer'] = "/";
         $data['courses'] = $courses->getCoursesForStudent($this->user->getId());
         $data['events'] = $events->getUserRunningEvents($this->user->getId());
         $data['posts'] = $posts_collection->getTimelinePosts($this->user->getId());
@@ -42,28 +44,27 @@ class Home extends Base_controller
         if (!$this->user->isLoggedIn())
             return $this->redirect("/home/login/");
 
-        if ($this->request->getQueryParam('id')) 
-            $profile = new \App\Models\User($this->request->getQueryParam('id'));
-        else 
-            $profile = $this->user;
-
-         $page = new \App\Models\Page();
+        $page = new \App\Models\Page();
  
        
         $data = [];
-        $data['profile'] = $profile;
         $data['user'] = $this->user;
-        $data['page'] = $page->getUserPage($profile->getId());
+        $data['page'] = $page->getUserPage($this->user->getId());
         $data['type'] = 'profile';
+        $data['post_page_id'] = $this->user->getPageId();
+
         $posts_collection = new \App\Models\PostCollection($page->getId());
         
 
         if(!$this->request->getQueryParam('start')||!$this->request->getQueryParam('limit'))
             die('no way!');
-        $data['posts'] = $posts_collection->getPagePosts($this->request->getQueryParam('start'), $this->request->getQueryParam('limit'));
+        $start = $this->request->getQueryParam('start', 0);
+        $limit = $this->request->getQueryParam('limit', 10);
+
+        $data['posts'] = $posts_collection->getTimelinePosts($this->user->getId(), $start, $limit);
       
 
-        return $this->view->load('frontend-parts/post-view',$data);
+        return $this->view->load('frontend-parts/post-view', $data);
     }
 
     public function login()

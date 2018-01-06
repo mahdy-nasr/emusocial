@@ -23,6 +23,7 @@ class PostCollection extends \App\Base implements \JsonSerializable
         $this->page_id = $id;
     }
 
+
     public function getData()
     {
         return $this->posts;
@@ -102,7 +103,26 @@ class PostCollection extends \App\Base implements \JsonSerializable
         return $files;
     }
 
-    public function getEventPosts($start=0,$limit=10) 
+    public function getTimelinePosts($user_id, $start = 0, $limit = 10)
+    {
+        $friends_ids = "SELECT IF(from_id = {$user_id}, to_id, from_id) as user_id from friend where (from_id = {$user_id} or to_id = {$user_id} ) and accept = 1 ";
+        $friends_pages_ids = "SELECT user.page_id from ($friends_ids) as fr left join user on user.id = fr.user_id";
+  
+
+        $courses_pages = "SELECT page_id from page_user where user_id = {$user_id}";
+
+        $res = $this->db->read("SELECT post.* ,user.id as is_user from post left join user on user.page_id = post.page_id where post.page_id = {$this->page_id} or post.page_id IN ($friends_pages_ids) or post.page_id IN ($courses_pages) order by post.created_at DESC limit $start,$limit");
+
+
+         if (!$res)
+            return;
+        $posts = [];
+        foreach ($res as $row) {
+            $posts[] = new Post($row);
+        }
+        return  $posts;
+    }
+    public function getEventPosts($start=0, $limit=10) 
     {
         // for event class
         $res = $this->db->read("SELECT post.* FROM `post` RIGHT JOIN `event` on post.id = event.post_id WHERE post.page_id = {$this->page_id} order by created_at DESC limit $start,$limit");

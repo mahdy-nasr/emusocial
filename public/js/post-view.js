@@ -5,8 +5,8 @@ function ucfirst(string)
 
 var post = new function() 
 {
-	this.start_post = 0;
-	this.limit_post = 10;
+	this.start_post = 5;
+	this.limit_post = 5;
 	this.base = '';
 	this.profile_id=0;
 	this.type='profile';
@@ -97,7 +97,8 @@ var post = new function()
 		this.refreshPostsHTML = function ()
 		{
 			//$post_id_selector = "#comments_"+$post_id;
-			 this.start_post+=10;this.limit_post+=10;
+			 this.start_post+=this.limit_post;
+			 console.log(this.start_post+" and limit is "+this.limit_post);
 			 post_container = '#'+this.post_main_container;
 			 loading_div = '#'+this.loading_div;
 
