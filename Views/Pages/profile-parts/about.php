@@ -21,7 +21,7 @@
                         <h4 class="fa fa-graduation-cap sz"></h4><br/>Running Courses
                       </a>
                       <a href="#" class="list-group-item text-center">
-                        <h4 class="fa fa-calendar sz"></h4><br/>Running Events
+                        <h4 class="fa fa-calendar sz"></h4><br/>All Events
                       </a>
                       <a href="#" class="list-group-item text-center">
                         <h4 class="fa fa-university sz"></h4><br/>All Courses
@@ -29,9 +29,11 @@
                       <a href="#" class="list-group-item text-center">
                         <h4 class="fa fa-globe sz"></h4><br/>Notifications
                       </a>
+                      <?php if ($profile->getId() == $user->getId()):?>
                       <a href="#" class="list-group-item text-center">
                         <h4 class="fa fa-wrench sz"></h4><br/>settings
                       </a>
+                      <?php endif;?>
                       
                     </div>
                   </div>
@@ -47,7 +49,7 @@
 
                     <!-- running events search -->
                     <div class="about-tab-content">
-                      <?php include $this->partPath("profile-parts/about/running_events");?>
+                      <?php include $this->partPath("profile-parts/about/all_events");?>
                       
                     </div>
                     <!-- all courses section -->
@@ -58,10 +60,13 @@
                     <div class="about-tab-content">
                       <?php include $this->partPath("profile-parts/about/notifications");?>
                     </div>
+                    <?php if ($profile->getId() == $user->getId()):?>
                     <!-- settings section-->
                     <div class="about-tab-content">
                       <?php include $this->partPath("profile-parts/about/settings");?>
                     </div>
+                    <?php endif;?>
+
                   </div>
                 </div>
               </div>

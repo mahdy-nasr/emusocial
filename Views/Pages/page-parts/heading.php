@@ -1,7 +1,7 @@
 
 	    <!-- cover content -->
 	    <div class="row">
-	      <div class="col-md-10 no-paddin-xs">
+	      <div class="col-md-offset-1 col-md-10 no-paddin-xs">
 	      	<!-- cover and profile image-->
 	        <div class="col-md-12 col-sm-12 col-xs-12 cover-content">
 				<div class="cover-container-course" >

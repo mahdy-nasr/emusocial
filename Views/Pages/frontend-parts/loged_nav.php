@@ -45,14 +45,14 @@
 					</style>
 					<ul class="dropdown-menu back-main-color"  >
 					    <li><a href="<?=$base?>profile">Profile timeline</a></li>
-					    <li><a href="#">About</a></li>
+					    <li><a href="<?=$base?>profile/about/">About</a></li>
 					    <li class="divider"></li>
 					    <li><a href="<?=$base?>home/logout">Logout</a></li>
 					</ul>
 
 				</li>
-				<li class=""><a href="<?=$base?>"><i class="fa fa-home"></i>&nbsp;Home</a></li>
-				<li><a href="messages.html"><i class="fa fa-comments"></i></a></li>
+				<!--li class=""><a href="<?=$base?>"><i class="fa fa-home"></i>&nbsp;Home</a></li-->
+				<li><a href="<?=$base?>chat/"><i class="fa fa-comments"></i></a></li>
 				<li><a href="notifications.html"><i class="fa fa-globe"></i></a></li>
 				<!--li class="active"><a href="home.html"><i class="fa fa-bars"></i>&nbsp;Home</a></li-->
 

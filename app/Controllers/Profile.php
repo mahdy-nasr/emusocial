@@ -63,7 +63,8 @@ class Profile extends Base_controller
     {
         $data = $this->data;
         $events = new \App\Models\EventCollection();
-        $data['events'] = $events->getUserRunningEvents($this->profile->getId());
+        $data['all_events'] = $events->getUserAllEvents($this->profile->getId());
+        $data['all_courses'] = $this->course_collection->getAllCoursesForStudent($this->profile->getId());
         $data['referer'] = '/profile/about/?id='.$this->profile->getId();
         $data['sub_page'] = 'about';
 
@@ -76,6 +77,7 @@ class Profile extends Base_controller
 
         $data['referer'] = '/profile/friends/?id='.$this->profile->getId();
         $data['sub_page'] = 'friends';
+        $data['all_friends'] = $this->user_collection->getUsers($this->friend->getFriendsId(0,100));
 
         echo $this->view->load('frontend:profile:friends',$data);   
     }
@@ -99,46 +101,25 @@ class Profile extends Base_controller
 
         echo $this->view->load('frontend:chat',$data);   
     }
-    public function addFriend()
+
+    public function editProfile()
     {
-        if (!$this->user->isLoggedIn())
-            return $this->redirect("/home/login/");
+        $upload =  new \App\Helpers\Upload('image');
+        
+        $result = [];
+        $upload->uploadAll(['profile_picture']);
+        if (!count($upload->getErrors())) {
+            $this->post_data['profile_picture'] = $upload->getResult()[0]['link'];
+        }
 
-        if (!($id = $this->request->getQueryParam('id'))) 
-            return $this->redirect("/profile");
-
-        $friend = new \App\Models\Friend($this->user->getId());
-        $friend->makeFriendRequist($id);
-        return $this->redirect("/profile?id=$id");
-
-    }
-
-    public function removeRequest()
-    {
-        if (!$this->user->isLoggedIn())
-            return $this->redirect("/home/login/");
-
-        if (!($id = $this->request->getQueryParam('id'))) 
-            return $this->redirect("/profile");
-
-        $friend = new \App\Models\Friend($this->user->getId());
-        $friend->removeFriendRequist($id);
-        return $this->redirect("/profile?id=$id");
-
-    }
-
-    public function acceptRequest()
-    {
-        if (!$this->user->isLoggedIn())
-            return $this->redirect("/home/login/");
-
-        if (!($id = $this->request->getQueryParam('id'))) 
-            return $this->redirect("/profile");
-
-        $friend = new \App\Models\Friend($this->user->getId());
-        $friend->acceptFriendRequist($id);
-        return $this->redirect("/profile?id=$id");
-
+        $upload =  new \App\Helpers\Upload('image');
+        $upload->uploadAll(['cover_picture']);
+        if (!count($upload->getErrors())) {
+            $this->post_data['cover_picture'] = $upload->getResult()[0]['link'];
+        }
+        
+        $this->user->editUserProfile($this->post_data);
+        return $this->redirect("/profile/about/");
     }
 
     private function init()

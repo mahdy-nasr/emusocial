@@ -170,12 +170,36 @@ class User extends \App\Base
         return $this->db->write("UPDATE user SET page_id = $page_id WHERE id = {$data['id']}");
 
     }
+
     public function deleteUser($id) 
     {
         $this->db->write("delete from page where user_id = ? ",[$id]);
         $this->db->write("delete from user where id = ? ",[$id]);
     }
 
+    public function editUserProfile($data)
+    {
+        $attributes = ['date_of_birth','phone_number','website','email','office','profile_picture','cover_picture'];
+        $qr='';
+        $update = [];
+        foreach ($attributes as $key) {
+            if (!isset($data[$key]) || empty($data[$key]))
+                continue;
+
+            $update[":$key"] = trim($data[$key]);
+            $qr .= ", $key = :$key";
+        }
+
+        if (isset($data['password']) && strlen($data['password']) > 4) {
+            $tm = time();
+            $update[':password'] = md5($tm.trim($data['password'])).":$tm";
+            $qr .= ", password = :password";
+        }
+
+        $qr = trim($qr,",");
+
+        return $this->db->write("UPDATE user SET $qr where id = {$this->id}",$update);
+    }
     public function logout() 
     {
         if (!$this->isLoggedIn()) 

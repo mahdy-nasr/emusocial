@@ -1,7 +1,9 @@
 <ul class="list-group">
   <li class="list-group-item"><i class="fa fa-user text-primary"></i>&nbsp; <?=ucwords($profile->getFullName())?></li>
-  <li class="list-group-item"><i class="fa fa-mobile text-primary"></i>&nbsp; <?=$profile->getIdentification()?></li>
-    <li class="list-group-item"><i class="fa fa-id-card-o text-primary"></i>&nbsp; <?=$profile->getIdentification()?></li>
+  <?php if($profile->getPhoneNumber() && strlen($profile->getPhoneNumber())>3):?>
+  <li class="list-group-item"><i class="fa fa-mobile text-primary"></i>&nbsp; <?=$profile->getPhoneNumber()?></li>
+  <?php endif;?>
+  <li class="list-group-item"><i class="fa fa-id-card-o text-primary"></i>&nbsp; <?=$profile->getIdentification()?></li>
 
   <li class="list-group-item"><i class="fa fa-university text-primary"></i>&nbsp; Department: <?=$profile->getDepartmentName()?></li>
   <li class="list-group-item"><i class="fa fa-transgender text-primary"></i>&nbsp; Gender: <?=ucfirst($profile->getGender())?></li>
@@ -12,7 +14,7 @@
       <li class="list-group-item"><i class="fa fa-calendar text-primary"></i>&nbsp; Born on <?=$profile->getDateOfBirth()?></li>
   <?php endif;?>
    <?php if($profile->getEmail()):?>
-      <li class="list-group-item"><i class="fa fa-envelope text-primary"></i>&nbsp; Born on <?=$profile->getEmail()?></li>
+      <li class="list-group-item"><i class="fa fa-envelope text-primary"></i>&nbsp; <?=$profile->getEmail()?></li>
   <?php endif;?>
 
                 

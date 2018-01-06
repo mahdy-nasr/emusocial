@@ -26,6 +26,8 @@ class Upload
         $this->path = dirname(Config::get('base/document')).'/public/uploads/';
         $this->link = 'uploads/';
         $this->type = $type;
+        $this->result = [];
+        $this->errors = [];
     }
     public function getErrors()
     {

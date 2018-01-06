@@ -30,7 +30,35 @@ $routes =
 
     '/likeComment' => 'post;likeApi;likeComment',
 
-    '/dislikeComment' => 'post;likeApi;dislikeComment'
+    '/dislikeComment' => 'post;likeApi;dislikeComment',
+    ///////////////////////////////////////////////////////////////////////////////
+    
+    '/chat/sendMessage' => 'post;chatApi;sendMessage',
+
+    '/chat/getNewMessages' => 'get;chatApi;getNewMessages',
+
+    '/chat/getMessages' => 'get;chatApi;getMessages',
+
+    ///////////////////////////////////////////////////////////////////////////////
+    
+    '/course/getStudents' => 'get;courseApi;getStudents',
+
+    '/course/getTimeline' => 'get;courseApi;getTimeline',
+
+    '/course/getAnnouncements' => 'get;courseApi;getAnnouncements',
+
+    '/course/getEvents' => 'get;courseApi;getEvents',
+
+    '/course/getGrades' => 'get;courseApi;getGrades',
+
+    '/course/getAdminFiles' => 'get;courseApi;getAdminFiles',
+
+    '/course/getAllFiles' => 'get;courseApi;getAllFiles',
+
+    '/course/getBroadcasts' => 'get;courseApi;getBroadcasts',
+
+    '/course/post' => 'post;courseApi;post',
+
 ];
 
 

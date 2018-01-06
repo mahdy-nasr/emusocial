@@ -1,11 +1,11 @@
 
-        <div class="col-md-10" style="margin-top:60px;">
+        <div class="col-md-10" style="margin-top:60px; ">
           <!--  chat content -->
           <div class="row">
             <div class="col-md-4 bg-white ">
              
 
-              <ul class="friend-list" style="box-shadow:0 0 10px gray;padding:5px; height:550px; overflow:scroll;">
+              <ul class="friend-list" style="box-shadow:0 0 10px gray;padding:5px; height:550px; overflow:scroll;display:none;">
                   <li class="active bounceInDown">
                     <a href="#" class="clearfix">
                       <img src="img/Friends/guy-2.jpg" alt="" class="img-circle">

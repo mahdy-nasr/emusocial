@@ -28,8 +28,8 @@
         position: relative;
     }
      div.std-div img{
-        width: 70%;
-        border-radius: 50%;
+        width: 85%;
+        border-radius: 10px;
         border:1px solid gray;
         margin: 0 auto;
         display: block;
@@ -62,9 +62,11 @@
         <div class='std-div'>
             <img src="<?=$base.$std->getProfilePicture();?>" >
             <h5><a href="<?=$base."profile/?id={$std->getId()}"?>"><?=$std->getFullName();?></a></h5>
-            <a <?php if($user->getId() != $std->getId())echo "href='#'";?> >
+            <?php if($user->getId() != $std->getId()):?>
+            <a href="<?=$base."chat/?id={$id}"?>" >
                 <i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;Message
             </a>
+            <?php endif;?>
         </div>
     </div>
 

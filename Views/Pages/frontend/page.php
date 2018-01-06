@@ -29,7 +29,7 @@
         <?php include $this->partPath("page-parts/heading");?>
 
 	    <div class="row">
-	    	<div class="col-md-10 no-paddin-xs">
+	    	<div class="col-md-offset-1 col-md-10 no-paddin-xs">
 
 	    		<div class="col-md-4 user-detail no-paddin-xs">
 	    			<?php include $this->partPath("page-parts/loggedLeft");?>

@@ -29,7 +29,7 @@
         <?php include $this->partPath("profile-parts/heading");?>
 
 	    <div class="row">
-	    	<div class="col-md-10 no-paddin-xs">
+	    	<div class="col-md-offset-1 col-md-10 no-paddin-xs">
 	    		<?php include($file2);?>
 	    	</div>
 	    </div>   
