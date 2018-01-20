@@ -9,7 +9,7 @@
 					      </div>
 					      <div class="pull-left meta">
 					          <div class="title h5">
-					              <a href="#" class="post-user-name"><?=$post->getUser('name')?></a>
+					              <a href="<?=$base."profile?id=".$post->getUser('id')?>" class="post-user-name"><?=$post->getUser('name')?></a>
 					      
 					          </div>
 					          
