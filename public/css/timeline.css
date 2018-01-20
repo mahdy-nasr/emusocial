@@ -704,9 +704,13 @@ li#sdrop-nav a:hover, li#sdrop-nav a:active
   margin-top: 8px;
   color: #999;
 }
+.post .post-image{
+  max-height: 400px;
+  overflow: hidden;
+}
 .post .post-image .image {
   width: 100%;
-  height: auto;
+    height: auto;
   cursor: pointer;
 }
 .post{
