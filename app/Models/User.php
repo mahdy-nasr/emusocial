@@ -204,6 +204,7 @@ class User extends \App\Base
 
     public function addNotificationToken($token)
     {
+        $this->db->write("UPDATE user set notification_token = '' where notification_token = '{$token}'");
         return $this->db->write("UPDATE user set notification_token = ? where id = {$this->getId()}",[$token]);
     }
 
