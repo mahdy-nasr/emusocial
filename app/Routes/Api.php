@@ -4,6 +4,8 @@ $routes =
 [
     '/student/login' => 'post;loginStudent;runPost',
 
+    '/user/saveToken' => 'post;loginStudent;saveToken',
+
     '/upload/{type}' => 'post;uploadApi;runPost',
     
     ///////////////////////////////////////////////////////////////////////////////
@@ -38,6 +40,8 @@ $routes =
     '/chat/getNewMessages' => 'get;chatApi;getNewMessages',
 
     '/chat/getMessages' => 'get;chatApi;getMessages',
+
+    '/chat/getSummary' => 'get;chatApi;getSummary',
 
     ///////////////////////////////////////////////////////////////////////////////
     

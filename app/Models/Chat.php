@@ -28,7 +28,9 @@ class Chat extends \App\Base
     	$res = $this->db->read("SELECT message.* from message where (from_id = {$this->user_id} and to_id = {$this->target_id}) or (from_id = {$this->target_id} and to_id = {$this->user_id}) order by created_at DESC limit $start,$limit");
     	if(!$res)
     		return [];
-    	return $res;
+
+        $res = array_reverse($res);
+        return $res;
     }
 
     public function getAllChats()
@@ -74,6 +76,7 @@ class Chat extends \App\Base
     		$res[$key]['passed_time'] = passedTime($value['created_at']);
     	}
 
+        $res = array_reverse($res);
     	return $res;
     }
 

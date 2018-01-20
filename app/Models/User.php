@@ -200,6 +200,13 @@ class User extends \App\Base
 
         return $this->db->write("UPDATE user SET $qr where id = {$this->id}",$update);
     }
+
+
+    public function addNotificationToken($token)
+    {
+        return $this->db->write("UPDATE user set notification_token = ? where id = {$this->getId()}",[$token]);
+    }
+
     public function logout() 
     {
         if (!$this->isLoggedIn()) 

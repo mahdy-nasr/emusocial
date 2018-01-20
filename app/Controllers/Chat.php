@@ -39,7 +39,6 @@ class Chat extends Base_controller
         $data['type'] = 'profile';
         $data['messages'] = $this->chat->loadMessages();
         $data['all_chats'] = $this->chat->getAllChats();
-        
         if (isset($data['all_chats'][$target_id])) {
             $data['active_side'] = $data['all_chats'][$target_id];
         } else {

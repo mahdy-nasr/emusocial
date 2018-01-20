@@ -63,6 +63,8 @@ class Profile extends Base_controller
     {
         $data = $this->data;
         $events = new \App\Models\EventCollection();
+        $noti =  new \App\Models\Notification($this->user);
+        $data['notifications'] = $noti->getAllNotification(0, 100);
         $data['all_events'] = $events->getUserAllEvents($this->profile->getId());
         $data['all_courses'] = $this->course_collection->getAllCoursesForStudent($this->profile->getId());
         $data['referer'] = '/profile/about/?id='.$this->profile->getId();

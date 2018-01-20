@@ -3,7 +3,7 @@
 	    		<div style="height: 600px; overflow-y: auto;position: fixed;">
 	    			<!-- user detail -->
 					<!-- groups -->
-					<div class="panel panel-white panel-groups">
+					<div class="panel panel-white panel-groups" >
 						<div class="panel-heading">
 						  <h3 class="panel-title">My Courses</h3>
 						</div>

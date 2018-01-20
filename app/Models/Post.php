@@ -213,7 +213,7 @@ class Post extends \App\Base implements \JsonSerializable
         $this->loadComments();
         $this->loadLikes();
         $this->loadUser();
-        return ;
+        return $this;
     }
 
     public function isAnnouncement()

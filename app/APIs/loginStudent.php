@@ -28,4 +28,19 @@ class loginStudent extends API
         return $this->response->withJson($result, 200);
     }
 
+
+    public function saveToken()
+    {
+        if (!$user = $this->authorized()) {
+            return $this->forbiddenResponse();
+        }
+
+        if (!isset($this->data['firebase_token']))
+            return $this->json(['RC'=>400,'msg'=>'No firebase_token']);
+
+        $user->addNotificationToken($this->data['firebase_token']);
+
+        return $this->json(['RC'=>200]);die;
+    }
+
 }

@@ -53,7 +53,7 @@
 				</li>
 				<!--li class=""><a href="<?=$base?>"><i class="fa fa-home"></i>&nbsp;Home</a></li-->
 				<li><a href="<?=$base?>chat/"><i class="fa fa-comments"></i></a></li>
-				<li><a href="notifications.html"><i class="fa fa-globe"></i></a></li>
+				<li><a href="<?=$base?>profile/about/#notifications"><i class="fa fa-globe"></i></a></li>
 				<!--li class="active"><a href="home.html"><i class="fa fa-bars"></i>&nbsp;Home</a></li-->
 
 				<li><a href="#" class="nav-controller"><i class="fa fa-user"></i> Chat</a></li>

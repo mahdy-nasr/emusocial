@@ -24,6 +24,9 @@ class Home extends Base_controller
         if (!$this->user->isLoggedIn()){
             return $this->redirect("/home/login/");
         }
+        
+
+        
         $courses = new \App\Models\Course_Collection();
         $events = new \App\Models\EventCollection();
         $posts_collection = new \App\Models\PostCollection($this->user->getPageId());
@@ -43,6 +46,8 @@ class Home extends Base_controller
     {
         if (!$this->user->isLoggedIn())
             return $this->redirect("/home/login/");
+
+        
 
         $page = new \App\Models\Page();
  

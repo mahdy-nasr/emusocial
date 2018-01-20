@@ -27,7 +27,19 @@ class chatApi extends API
 
         return $this->json(['RC'=>200], 200);
 
-    }//
+    }
+
+    public function getSummary()
+    {
+        if (!$user = $this->authorized()) {
+            return $this->forbiddenResponse();
+        }
+        $chat = new \App\Models\Chat($user->getId());
+        $res=["RC"=>200,"summary"=>$chat->getAllChats()];
+
+        return $this->json($res);
+
+    }
 
     public function getMessages()
     {

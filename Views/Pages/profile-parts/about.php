@@ -1,4 +1,6 @@
-
+<script type="text/javascript">
+ // (window.location.hash)
+</script>
           <style type="text/css">
             .sz{font-size: 24px;}
           </style>

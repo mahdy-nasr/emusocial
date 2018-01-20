@@ -1,5 +1,10 @@
 
 <!-- Timeline content -->
+<style type="text/css">
+	body{
+		background: #f4f4f4;
+	}
+</style>
     <div class="container container-timeline" style="margin-top:100px;">
     	<div class=" col-md-10">
 	    	<?php include $this->partPath("home-parts/loggedLeft");?>
