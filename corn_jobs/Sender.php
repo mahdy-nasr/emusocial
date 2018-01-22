@@ -37,7 +37,7 @@ class Sender
     private  function generateJson()
     {
         $data = array( "title" => $this->title, "body" => $this->msg,'message'=>'dfd',"icon" => $this->icon);
-        $data_string = json_encode(['registration_ids'=>$this->ids,'data'=>$data]); 
+        $data_string = json_encode(['registration_ids'=>$this->ids,'notification'=>$data]); 
         return $data_string;
     }
     public function send()
@@ -69,16 +69,16 @@ class Sender
         return $res_arr['success']>0;
     }
 }
-
+/*
 $ids = ["dZ9-7IWy0_k:APA91bHmy29IC6Sx00AiG3coW3IdiBjAPplG9DUhsKum5e3razbEHuhGgiAQ_mMz-jwbu5rDji1pEyw3XDFFi0cfj46GfF35jhAKqvEWAGvCgDGgtDFjnw8ZoYqZ2uavOdEMFghhL590"];                                                          
 
 var_dump($ids);
 $snd = new \Sender($ids);
 
-$res = $snd->setMessage("i like emu social")
+$res = $snd->setMessage("there is no class to day");
             ->send();
 
 var_dump($res);
 echo "\n";
-echo "The Result : ".$res;
+echo "The Result : ".$res;*/
 
