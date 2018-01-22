@@ -70,7 +70,7 @@ class Sender
     }
 }
 
-$ids = ["cg1Y32a94t4:APA91bGr-AQ1ud3MgxabHy7Wl8VB_TV04gG0UwMel3kxUAf68Ds7Z288mqnaXqOyZVKI5aaO-xKDEl3q66ueYIJ2QNFQGSIWG7qiaTiMOIkhMUe1AwBaejZ_rftMbkWlKXO5NGkESl5s"];                                                          
+$ids = ["dZ9-7IWy0_k:APA91bHmy29IC6Sx00AiG3coW3IdiBjAPplG9DUhsKum5e3razbEHuhGgiAQ_mMz-jwbu5rDji1pEyw3XDFFi0cfj46GfF35jhAKqvEWAGvCgDGgtDFjnw8ZoYqZ2uavOdEMFghhL590"];                                                          
 
 var_dump($ids);
 $snd = new \Sender($ids);

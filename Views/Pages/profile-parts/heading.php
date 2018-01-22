@@ -35,6 +35,12 @@
 				      			<span> Accept Requeste</span>
 				    		</a>
 					    <?php endif;?>
+					    <?php if ($diff):?>
+					    <a href="<?=$base?>chat/?id=<?=$profile->getId()?>" role="button" class="btn btn-inverse btn-outlined btn-retainBg btn-brightblue" type="button">
+					      <span>send Message</span>
+					    </a>
+					<?php endif;?>
+					    
 					   </div>
 					
 					</div>
