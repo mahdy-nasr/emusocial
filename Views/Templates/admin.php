@@ -29,12 +29,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.html">
-            <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Dashboard</span>
-          </a>
-        </li>
+        
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Admins">
           <a class="nav-link" href="<?=$base?>admin/adminsList">
             <i class="fa fa-fw fa-user"></i>
@@ -71,7 +66,7 @@
             <i class="fa fa-fw  fa-copy"></i>
             <span class="nav-link-text">Other Pages</span>
           </a>
-        </li-->
+        </li
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Announcments">
           <a class="nav-link" href="charts.html">
@@ -96,7 +91,7 @@
             <i class="fa fa-fw  fa-wrench"></i>
             <span class="nav-link-text">Settings</span>
           </a>
-        </li>
+        </li>-->
       </ul>
 
 

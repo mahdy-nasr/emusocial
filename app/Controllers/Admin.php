@@ -26,7 +26,7 @@ class Admin extends Base_controller
     {
       
         if($this->admin->isLoggedIn())
-            echo $this->view->load('admin:blank');
+            return $this->response->withStatus(302)->withHeader('Location', $this->Config::get('base/url').'/admin/adminsList');
         else
              return $this->response->withStatus(302)->withHeader('Location', $this->Config::get('base/url').'/admin/login');
         
