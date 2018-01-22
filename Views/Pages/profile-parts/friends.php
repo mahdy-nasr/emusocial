@@ -8,7 +8,7 @@
               <div class="panel-body panel-white" style="background:#fff;">
               <?php foreach ($all_friends as $friend) {?>
                 <div class="col-md-4">
-                    <div class="g-hover-card" style="box-shadow: 0 0 10px gray;">
+                    <div class="g-hover-card" style="box-shadow: 0 0 10px gray; ">
                         <img src="<?=$base.$friend->getCoverPicture()?>" alt="">
                         <div class="user-avatar">
                             <img src="<?=$base.$friend->getProfilePicture()?>" alt="">

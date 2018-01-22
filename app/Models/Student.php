@@ -49,12 +49,15 @@ class Student extends User
 
         $insert[]=isset($data['gender'])?$data['gender']:'male';
 
-
         if ($this->db->write('insert into user (`first_name`, `last_name`, `email`, `password`,`type`,`department_id`,`identification`,`gender`) values (?,?,?,?,?,?,?,?)',$insert)) {
             $insId = $this->db->last_id();
             //$this->db->write("insert into student (`student_number`,`user_id`) values (?,$insId)",[$data['student_number']]);
+            $token = md5($data['student_number'].$insId);
+            $this->db->write("UPDATE user set token = $token where id = $insId");
             $data['id'] = $insId;
             $this->createPage($data);
+            $token = md5($email.$res['id']);
+
             return $insId;
         }
         return false;

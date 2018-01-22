@@ -24,6 +24,7 @@ abstract class  API extends \App\Base
     public function authorized()
     {
         $user = new \App\Models\User();
+
         if (!isset($this->data['ACCESSTOKEN'])&&!isset($_SERVER['HTTP_ACCESSTOKEN'])&&!$user->isLoggedIn()) {
             return false;
         }

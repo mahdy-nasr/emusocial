@@ -34,7 +34,10 @@ class Home extends Base_controller
         $data['user'] = $this->user;
         $data['type'] = 'profile';
         $data['referer'] = "/";
-        $data['courses'] = $courses->getCoursesForStudent($this->user->getId());
+        if($this->user->getType()==2)
+            $data['courses'] = $courses->getCoursesForStudent($this->user->getId());
+        else 
+            $data['courses'] = $courses->getCoursesForInstructor($this->user->getId());
         $data['events'] = $events->getUserRunningEvents($this->user->getId());
         $data['posts'] = $posts_collection->getTimelinePosts($this->user->getId());
         $data['post_page_id'] = $this->user->getPageId();
@@ -74,6 +77,8 @@ class Home extends Base_controller
 
     public function login()
     {
+        if ($this->user->isLoggedIn())
+            return $this->redirect("/home/");
         $data = $this->request->getParsedBody();
         if(isset($data['identification'])&&isset($data['password'])) {
             if ($token = $this->user->login($data['identification'], $data['password'])) {

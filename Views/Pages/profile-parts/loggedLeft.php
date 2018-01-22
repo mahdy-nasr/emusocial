@@ -63,12 +63,14 @@
 						<div class="panel-body text-center">
 						  <ul class="friends">
 						  <?php foreach ($friends as $friend) {?>
-						    <li>
-						        <a href="#">
-						            <img src="<?=$base.$friend->getProfilePicture()?>"  title="<?=$friend->getName()?>" class="img-responsive ">
-						 
+						    <li style="">
+						        <a href="<?=$base.'profile/?id='.$friend->getId()?>">
+						            <img style='' src="<?=$base.$friend->getProfilePicture()?>"  title="<?=$friend->getName()?>" class="img-responsive" >
 						        </a>
-						        <h6 ><?=$friend->getName()?></h6>
+						        <div class='cvr'>
+						        	
+						        </div>
+						        <h6> <?=$friend->getName()?> </h6>
 						    </li>
 						    <?php }?>
 						  </ul>

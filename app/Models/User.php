@@ -59,10 +59,12 @@ class User extends \App\Base
     public function isLoggedIn()
     {
         if ($this->Session::exists($this->cookieName)) {
+
             $this->id = (int) $this->Session::get($this->cookieName);
             $this->loadUser();
             return true;
         } else if ($this->Cookie::exists($this->cookieName)) {
+
             $res = $this->db->readOne("select * from token where `token`.`token` = ?", [$this->Cookie::get($this->cookieName)]);
             $this->Session::put($this->cookieName, (int)$res['user_id']);
             $this->id = (int)$res['user_id'];
@@ -121,11 +123,11 @@ class User extends \App\Base
     {
         if(empty($access_token))
             return false;
-        $res = $this->db->readOne("select * from token where `token`.`token` = ?", [$access_token]);
+        $res = $this->db->readOne("select * from user where `token` = ?", [$access_token]);
         if (!$res)
             return false;
 
-        $this->id = (int)$res['user_id'];
+        $this->id = (int)$res['id'];
         $this->loadUser();
         return true;
 

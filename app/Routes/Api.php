@@ -7,6 +7,10 @@ $routes =
     '/user/saveToken' => 'post;loginStudent;saveToken',
 
     '/upload/{type}' => 'post;uploadApi;runPost',
+
+    '/notification/new' => 'get;notificationApi;newFun',
+
+    '/notification/all' => 'get;notificationApi;allFun',
     
     ///////////////////////////////////////////////////////////////////////////////
 

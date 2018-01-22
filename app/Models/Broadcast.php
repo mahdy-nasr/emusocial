@@ -105,4 +105,24 @@ class Broadcast extends \App\Base
     		return [];
     	return $res;
     }
+
+    public function getAllUserBroadcast($user_id=null,$user_type=2)
+    {
+        if (!$user_id)
+            $user_id = $this->user_id;
+        if (!$user_id) return false;
+
+        $wr="(broadcast.user_type = 2 or broadcast.user_type = 3)";
+        if ($user_type != 2)
+            $wr="(broadcast.user_type = 1 or broadcast.user_type = 3)";
+
+        
+        $res = $this->db->read("SELECT broadcast.*, course.code as course_code, CONCAT(user.first_name,' ',user.last_name) as username, user.id as user_id from broadcast left join user on  user.id = broadcast.user_id left join page on broadcast.page_id = page.id left join course on course.id = page.course_id where broadcast.page_id IN (select page.id from page right join page_user on page_user.page_id = page.id left join course on course.id = page.course_id where course.readonly = 0 and page_user.user_id = $user_id) and $wr order by broadcast.created_at desc");
+
+
+
+        if (!$res)
+            return [];
+        return $res;
+    }
 }

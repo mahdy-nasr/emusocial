@@ -56,7 +56,7 @@ class Notification extends \App\Base
     	$select = "user.*, noti.entity_id as noti_entity_id, noti.entity_name as noti_entity_name ,noti.info as noti_info ,noti.created_at as noti_created_at ";
         $from = "notification as noti left join user on user.id = noti.user_id";
         $wr = "({$this->loadFriendsNotifications()}) union ({$this->loadRelatedComments()}) union ({$this->loadNewPosts()}) union ({$this->loadRelatedPostLikes()}) union ({$this->loadRelatedCommentLikes()})";
-
+      //  echo "SELECT $select from $from where noti.id IN (select DISTINCT temp.id from ($wr) as temp) order by noti.created_at limit $start,$limit"; die;
         $res = $this->db->read("SELECT $select from $from where noti.id IN (select DISTINCT temp.id from ($wr) as temp) order by noti.created_at limit $start,$limit");
         if(!$res)
             return [];

@@ -35,8 +35,10 @@ class Chat extends \App\Base
 
     public function getAllChats()
     {
-    	$targets = "(SELECT chat_users.* from (select @user_id_var:={$this->user_id}) parm, chat_users) as targets";
+    	$targets = "(SELECT chat_users.* from (select @user_id_var:={$this->user_id}) parm, chat_users) as targets";;
+
     	$res = $this->db->read("SELECT user.*,message.msg ,message.created_at as message_created_at,message.from_id,message.new from $targets left join user on user.id = targets.target_id left join message on message.created_at = targets.created_at_date where targets.target_id = message.from_id or targets.target_id = message.to_id order by message.created_at DESC");
+
 
     	$output = [];
     	foreach ($res as $key => $value) {

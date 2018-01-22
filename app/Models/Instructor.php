@@ -52,6 +52,9 @@ class Instructor extends User
 
         if ($this->db->write('insert into user (`title`,`first_name`, `last_name`, `email`, `password`,`type`,`department_id`,`gender`)values (?,?,?,?,?,?,?,?)',$insert)) {
             $insId = $this->db->last_id();
+
+            $token = md5($data['email'].$insId);
+            $this->db->write("UPDATE user set token = $token where id = $insId");
             //$this->db->write("insert into instructor values (null,'','',$insId)");
             $data['id'] = $insId;
             $this->createPage($data);
