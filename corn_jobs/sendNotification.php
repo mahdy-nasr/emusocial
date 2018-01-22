@@ -5,11 +5,12 @@ $db = \App\Helpers\DB::getInstance();
 
 while(1) {
 
-$res = $db->read("SELECT distinct(token) from broadcast left join page_user on page_user.page_id = broadcast.page_id left join user on page_user.user_id = user.id where broadcast.pushed = 0");
+$res = $db->read("SELECT distinct(notification_token) from broadcast left join page_user on page_user.page_id = broadcast.page_id left join user on page_user.user_id = user.id where broadcast.pushed = 0");
 $ids = [];
 foreach ($res as $key => $arr) {
 	# code...
-	$ids[]=$arr['token'];
+	if($arr['notification_token'] !== null)
+	$ids[]=$arr['notification_token'];
 }
 
 
